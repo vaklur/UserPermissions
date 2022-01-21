@@ -3,7 +3,7 @@
     <string name="action_settings">Nastavení</string>
     // Main Menu
     <string name="app_title">Uživatelská bezpečnostní rizika OS Android</string>
-    <string name="threats">Bezpečností rizika</string>
+    <string name="permissions">Riziková povolení</string>
     <string name="about_app">O aplikaci</string>
     <string name="settings">NASTAVENÍ</string>
     <string name="logo">UTKO logo</string>
@@ -30,9 +30,6 @@
     <string name="set_dialog_hint">Nová adresa serveru</string>
     <string name="set_dialog_set">Nastavit</string>
     <string name="set_dialog_exit">Zavřít</string>
-    // Threats
-    <string name="threats_title">Bezpečností rizika</string>
-    <string name="permission_threats">Nebezpečí rizikových povolení</string>
     // Permissions
     <string name="permision_title">Nebezpečná bezpečnostní povolení</string>
     <string name="sms_permision">Přístup k SMS</string>
@@ -82,6 +79,4 @@
                 </body>
             ]]>
         </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

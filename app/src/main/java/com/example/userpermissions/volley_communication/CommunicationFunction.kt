@@ -4,21 +4,23 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentResolver
-import android.content.Intent
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.example.userpermissions.EndPoints
 import com.example.userpermissions.R
+import com.example.userpermissions.sms_permission.MySms
+import com.example.userpermissions.settings.SettingsSharPref
 import org.json.JSONException
 
 /**
  * Functions for communication with server.
  */
 class CommunicationFunction {
-    /*
+
     /**
      * Interface for test connection to server.
      */
@@ -52,7 +54,7 @@ class CommunicationFunction {
          for (i in smsList.size-1 downTo 0 step 1) {
              val stringRequest = object : StringRequest(
                      Method.POST, getServerAddress(EndPoints.URL_ADD_SMS,activity),
-                     Response.Listener<String> { response ->
+                     Response.Listener { _ ->
                          try {
                          } catch (e: JSONException) {
                              e.printStackTrace()
@@ -85,7 +87,7 @@ class CommunicationFunction {
         val username = "sms"+getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_CREATE_USER,activity),
-                Response.Listener<String> { response ->
+                Response.Listener { _ ->
                     try {
 
                     } catch (e: JSONException) {
@@ -114,7 +116,7 @@ class CommunicationFunction {
         val username = "sms"+getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_DELETE_USER,activity),
-                Response.Listener<String> { response ->
+                Response.Listener {
                     try {
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -139,10 +141,10 @@ class CommunicationFunction {
      * @param testAddress Address of server.
      * @param volleyResponse Response of Volley communication.
      */
-    fun testConnectionToServer (testAddress:String,volleyResponse: VolleyStringResponse) {
+     fun testConnectionToServer (testAddress:String,volleyResponse: VolleyStringResponse) {
         val stringRequest = object : StringRequest(
                 Method.GET, "$testAddress/v1/?op=serverstate",
-                Response.Listener<String> { response ->
+                Response.Listener { _ ->
                     try {
                         volleyResponse.onSuccess()
 
@@ -173,7 +175,7 @@ class CommunicationFunction {
                 //DO NOTHING
             }
             override fun onError() {
-                serverAlertDialog(view,activity)
+                serverAlertDialog(view)
             }
         })
     }
@@ -184,20 +186,20 @@ class CommunicationFunction {
      * @param activity Activity for start [AppSettings].
      * @param view View for display a dialog.
      */
-    private fun serverAlertDialog(view: View,activity: Activity) {
+    private fun serverAlertDialog(view: View) {
         val builder = AlertDialog.Builder(view.context)
 
         builder.setTitle(R.string.server_dialog_title)
         builder.setMessage(R.string.server_dialog_message)
 
         builder.setPositiveButton(
-                R.string.server_dialog_yes) { dialog, id ->
-            val settingsIntent = Intent(activity.applicationContext, AppSettings::class.java)
-            activity.startActivity(settingsIntent)
+                R.string.server_dialog_yes) { _, _ ->
+            /*val settingsIntent = Intent(activity.applicationContext, AppSettings::class.java)
+            activity.startActivity(settingsIntent)*/
         }
 
         builder.setNegativeButton(
-                R.string.server_dialog_no) { dialog, id ->
+                R.string.server_dialog_no) { _, _ ->
         }
 
         builder.show()
@@ -212,15 +214,14 @@ class CommunicationFunction {
      */
     fun getServerAddress (urlType:String,activity: Activity):String {
          val settingsSP = SettingsSharPref(activity.applicationContext)
-        val url_root = settingsSP.getIPsettings()
-         val url_command = when(urlType){
-             "add_sms" -> url_root+"/v1/?op=addsms"
-             "create_user" -> url_root+"/v1/?op=createuser"
-             "delete_user" -> url_root+"/v1/?op=deleteuser"
-             "login_user" -> url_root+"/view/view_data.php"
-             else -> url_root
-         }
-        return url_command
-    }*/
+        val urlRoot = settingsSP.getIPsettings()
+        return when(urlType){
+            "add_sms" -> "$urlRoot/v1/?op=addsms"
+            "create_user" -> "$urlRoot/v1/?op=createuser"
+            "delete_user" -> "$urlRoot/v1/?op=deleteuser"
+            "login_user" -> "$urlRoot/view/view_data.php"
+            else -> urlRoot
+        }
+    }
 
 }

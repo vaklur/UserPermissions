@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.userpermissions.sms_permission.settings.SettingsFragment"
+        android:name="com.example.userpermissions.settings.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
         android:id="@+id/aboutAppFragment"
@@ -30,12 +30,12 @@
         tools:layout="@layout/fragment_about_app" />
     <fragment
         android:id="@+id/permissionFragment"
-        android:name="com.example.userpermissions.PermissionFragment"
+        android:name="com.example.userpermissions.permission.PermissionFragment"
         android:label="fragment_permission"
         tools:layout="@layout/fragment_permission" >
         <action
-            android:id="@+id/action_permissionFragment_to_smsPermissionExampleFragment"
-            app:destination="@id/smsPermissionExampleFragment" />
+            android:id="@+id/action_permissionFragment_to_smsPermissionTheoryFragment"
+            app:destination="@id/smsPermissionTheoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/smsPermissionExampleFragment"

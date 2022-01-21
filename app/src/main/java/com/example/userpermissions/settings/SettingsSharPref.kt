@@ -1,4 +1,4 @@
-package com.example.userpermissions.sms_permission.settings
+package com.example.userpermissions.settings
 
 import android.content.Context
 import android.content.SharedPreferences

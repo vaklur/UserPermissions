@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.userpermissions.databinding.ActivityMainBinding
+import com.example.userpermissions.volley_communication.CommunicationFunction
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton(
             R.string.dialog_yes) { _, _ ->
             // Test connection to server
-            //CommunicationFunction().connectionToServer(this,binding.root)
+            CommunicationFunction().connectionToServer(this,binding.root)
         }
 
         builder.setNegativeButton(
