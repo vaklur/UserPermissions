@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sms_permission.settings.SettingsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="379dp"
+        android:layout_height="198dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/rectangle_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/settings_TV">
+
+        <TextView
+            android:id="@+id/settings_TV2"
+            android:layout_width="390dp"
+            android:layout_height="47dp"
+            android:gravity="center"
+            android:text="@string/IP_settings"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_TV3"
+            android:layout_width="246dp"
+            android:layout_height="40dp"
+            android:gravity="fill"
+            android:text="@string/actual_IP_text"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/state_TV"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV2" />
+
+        <TextView
+            android:id="@+id/state_TV"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/state_setting"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/settings_TV3"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV2" />
+
+        <TextView
+            android:id="@+id/actualIP_TV"
+            android:layout_width="246dp"
+            android:layout_height="40dp"
+            android:gravity="fill"
+            android:text="@string/actual_IP_setting"
+            app:layout_constraintEnd_toStartOf="@+id/state_TV"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV3" />
+
+        <TextView
+            android:id="@+id/stateActual_TV"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/state_unreachable_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/actualIP_TV"
+            app:layout_constraintTop_toBottomOf="@+id/state_TV" />
+
+        <Button
+            android:id="@+id/changeIP_BTN"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/change_setting"
+            app:layout_constraintEnd_toStartOf="@+id/stateActual_TV"
+            app:layout_constraintHorizontal_bias="0.035"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/actualIP_TV" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/settings_TV"
+        android:layout_width="390dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/settings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
