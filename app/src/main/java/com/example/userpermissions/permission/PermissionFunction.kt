@@ -44,14 +44,14 @@ class PermissionFunction {
         builder.apply {
             setMessage("Povolení k přístupu k $permissionName je vyžadováno pro praktický příklad.")
             setTitle("Žádost o povolení")
-            setPositiveButton("Nastavení"){ dialog, which ->
+            setPositiveButton("Nastavení"){ _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 val uri: Uri = Uri.fromParts("package", activity.packageName, null)
                 intent.data = uri
                 activity.startActivity(intent)
             }
-            setNegativeButton("Zavřít"){ dialog, which ->
+            setNegativeButton("Zavřít"){ _, _->
                 Toast.makeText(activity.application, "Praktická ukázka nemůže být spuštěna", Toast.LENGTH_SHORT).show()
             }
             val dialog = builder.create()

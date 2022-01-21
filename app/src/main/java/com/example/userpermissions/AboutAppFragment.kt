@@ -2,12 +2,11 @@ package com.example.userpermissions
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.userpermissions.databinding.FragmentAboutAppBinding
-import com.example.userpermissions.databinding.FragmentSettingsBinding
 
 class AboutAppFragment : Fragment() {
 

@@ -183,7 +183,6 @@ class CommunicationFunction {
     /**
      * Dialog that appears when the server is not available.
      *
-     * @param activity Activity for start [AppSettings].
      * @param view View for display a dialog.
      */
     private fun serverAlertDialog(view: View) {

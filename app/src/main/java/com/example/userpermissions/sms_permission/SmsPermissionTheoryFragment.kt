@@ -4,15 +4,13 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.R
-import com.example.userpermissions.databinding.FragmentMainMenuBinding
 import com.example.userpermissions.databinding.FragmentSmsPermissionTheoryBinding
 import com.example.userpermissions.permission.PermissionFunction
 import com.example.userpermissions.volley_communication.CommunicationFunction

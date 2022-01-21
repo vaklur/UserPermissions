@@ -40,12 +40,12 @@ class SettingsSharPref(context: Context) {
     /**
      * Delete all saved server address.
      */
-    fun clearIPsettings(){
+    /*fun clearIPsettings(){
         val editor = sharedPreferences.edit()
         editor.clear()
         editor.apply()
 
-    }
+    }*/
 
     /**
      * Return a list of all saved server address.

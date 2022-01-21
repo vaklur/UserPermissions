@@ -2,7 +2,6 @@ package com.example.userpermissions.sms_permission
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
-import android.os.Build
 import android.provider.Telephony
 import java.text.SimpleDateFormat
 

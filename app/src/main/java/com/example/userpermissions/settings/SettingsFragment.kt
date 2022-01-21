@@ -75,9 +75,7 @@ class SettingsFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (Patterns.WEB_URL.matcher(addressEditText.text.toString()).matches()){
-                }
-                else{
+                if (!Patterns.WEB_URL.matcher(addressEditText.text.toString()).matches()){
                     addressEditText.error = "Invalid Url"
                 }
             }

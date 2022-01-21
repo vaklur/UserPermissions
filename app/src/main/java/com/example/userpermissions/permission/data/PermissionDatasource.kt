@@ -8,7 +8,7 @@ import com.example.userpermissions.R
  */
 class PermissionDatasource {
     fun loadPermissions(): List<PermissionModel> {
-        return listOf<PermissionModel>(
+        return listOf(
             PermissionModel(R.string.sms_permision),
             PermissionModel(R.string.calendar_permision),
             PermissionModel(R.string.contacts_permision),

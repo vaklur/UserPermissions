@@ -1,13 +1,10 @@
 package com.example.userpermissions.permission
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.example.userpermissions.R
-import com.example.userpermissions.databinding.FragmentMainMenuBinding
+import androidx.fragment.app.Fragment
 import com.example.userpermissions.databinding.FragmentPermissionBinding
 import com.example.userpermissions.permission.adapter.PermissionItemAdapter
 import com.example.userpermissions.permission.data.PermissionDatasource

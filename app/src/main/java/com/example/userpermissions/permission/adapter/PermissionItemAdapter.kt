@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.userpermissions.permission.model.PermissionModel
 import com.example.userpermissions.R
+import com.example.userpermissions.permission.model.PermissionModel
 
 /**
  * Adapter for the [RecyclerView] in PermissionActivity. Displays PermissionDatasource data object.
