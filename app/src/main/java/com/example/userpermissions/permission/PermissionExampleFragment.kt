@@ -1,4 +1,4 @@
-package com.example.userpermissions.sms_permission
+package com.example.userpermissions.permission
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,19 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.EndPoints
 import com.example.userpermissions.R
-import com.example.userpermissions.databinding.FragmentSmsPermissionExampleBinding
+import com.example.userpermissions.databinding.FragmentPermissionExampleBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
-class SmsPermissionExampleFragment : Fragment() {
+class PermissionExampleFragment : Fragment() {
 
-    private var _binding: FragmentSmsPermissionExampleBinding? = null
+    private var _binding: FragmentPermissionExampleBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSmsPermissionExampleBinding.inflate(inflater,container,false)
+        _binding = FragmentPermissionExampleBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -52,7 +52,7 @@ class SmsPermissionExampleFragment : Fragment() {
         smsTheoryBTN.setOnClickListener {
             val bundle = Bundle()
             bundle.putBoolean("state", true)
-            findNavController().navigate(R.id.action_smsPermissionExampleFragment_to_smsPermissionTheoryFragment,bundle)
+            findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment,bundle)
         }
     }
 

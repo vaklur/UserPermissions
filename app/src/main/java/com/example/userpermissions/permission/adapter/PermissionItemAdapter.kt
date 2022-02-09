@@ -1,6 +1,7 @@
 package com.example.userpermissions.permission.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,14 +39,28 @@ class PermissionItemAdapter (
      * When user click in permission type button, the permission type activity starts.
      */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-            val item = dataset[position]
-            holder.permissionTypeBTN.text = context.resources.getString(item.stringResourceId)
-
-            holder.permissionTypeBTN.setOnClickListener {
-                if (context.resources.getString(item.stringResourceId) == context.getString(R.string.sms_permision)) {
-                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_smsPermissionTheoryFragment)
+        val item = dataset[position]
+        holder.permissionTypeBTN.text = context.resources.getString(item.stringResourceId)
+        /**
+         * Permissions IDs
+         * sms  - 1
+         * contacts - 2
+         * call logs - 3
+         */
+        holder.permissionTypeBTN.setOnClickListener {
+            val bundle = Bundle()
+            when {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.sms_permision) -> {
+                    bundle.putInt("permissionType",1)
+                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.contacts_permision) -> {
+                    bundle.putInt("permissionType",2)
+                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
+                }
+
             }
+        }
     }
 
     /**

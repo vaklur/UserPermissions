@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sms_permission.SmsPermissionExampleFragment">
+    tools:context=".permission.PermissionExampleFragment">
 
     <TextView
         android:id="@+id/loginSms_TV"
         android:layout_width="246dp"
         android:layout_height="41dp"
         android:layout_marginStart="81dp"
-        android:layout_marginLeft="81dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="71dp"
-        android:layout_marginRight="71dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/rectangle_back"
         android:gravity="center"

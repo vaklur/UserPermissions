@@ -62,6 +62,10 @@
             ]]>
         </string>
 
+    <string name="contact_theory">
+           Kontakty test
+        </string>
+
     // About app
     <string name="about_app_text">
             <![CDATA[
