@@ -12,8 +12,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.R
+import com.example.userpermissions.calendar_permission.CalendarFunction
+import com.example.userpermissions.calendar_permission.MyCalendarEvent
+import com.example.userpermissions.call_log_permission.CallLogFunction
 import com.example.userpermissions.contact_permission.ContactFunction
 import com.example.userpermissions.databinding.FragmentPermissionTheoryBinding
+import com.example.userpermissions.location_permission.LocationFunction
 import com.example.userpermissions.sms_permission.SmsFunction
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
@@ -56,6 +60,24 @@ class PermissionTheoryFragment : Fragment() {
                 permissionText = "Kontakty"
                 theoryText = resources.getString(R.string.contact_theory)
             }
+            3 -> {
+                permissionType = Manifest.permission.READ_CALL_LOG
+                requestCode = 103
+                permissionText = "Logy hovorů"
+                theoryText = resources.getString(R.string.calllog_theory)
+            }
+            4 -> {
+                permissionType = Manifest.permission.READ_CALENDAR
+                requestCode = 104
+                permissionText = "Údálosti v kalendáři"
+                theoryText = resources.getString(R.string.calendar_theory)
+            }
+            5 -> {
+                permissionType = Manifest.permission.ACCESS_FINE_LOCATION
+                requestCode = 105
+                permissionText = "Poloha"
+                theoryText = resources.getString(R.string.location_theory)
+            }
         }
 
         comFun.createUserInServer(requireActivity())
@@ -77,9 +99,23 @@ class PermissionTheoryFragment : Fragment() {
                             val contact = ContactFunction()
                             contact.readContacts(requireActivity().contentResolver, 10)
                         }
+                        3 ->{
+                            val callLog = CallLogFunction()
+                            callLog.readCallLogs(requireActivity().contentResolver, 10)
+                        }
+                        4 ->{
+                            val calendar = CalendarFunction()
+                            calendar.readCalendarEvents(requireActivity().contentResolver,10)
+                        }
+                        5 ->{
+                            val location = LocationFunction()
+                            location.getLastLocation(requireContext())
+                        }
                     }
                 }
-                findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
+                val bundle = Bundle()
+                bundle.putInt("permissionType",permissionId)
+                findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment,bundle)
             }
             else{
                 @Suppress("DEPRECATION")

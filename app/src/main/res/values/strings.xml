@@ -35,6 +35,7 @@
     <string name="sms_permision">Přístup k SMS</string>
     <string name="calendar_permision">Přístup ke kalendáři</string>
     <string name="contacts_permision">Přístup ke kontaktům</string>
+    <string name="calllog_permision">Přístup k záznamům hovorů</string>
     <string name="location_permision">Přístup k poloze</string>
     <string name="camera_permision">Přístup k fotoaparátu</string>
     <string name="storage_permission">Přístup do úložiště</string>
@@ -64,6 +65,18 @@
 
     <string name="contact_theory">
            Kontakty test
+        </string>
+
+    <string name="calllog_theory">
+           Logy test
+        </string>
+
+    <string name="calendar_theory">
+           Kalendář test
+        </string>
+
+    <string name="location_theory">
+           Poloha test
         </string>
 
     // About app

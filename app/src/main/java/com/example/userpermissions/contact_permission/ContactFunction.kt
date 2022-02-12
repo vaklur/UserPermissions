@@ -32,14 +32,12 @@ class ContactFunction {
             cursor.count
         }
 
-        var number: String
-        var name:String
 
 
         for (i in contactsCountHelp downTo 1 step 1){
             cursor.moveToNext()
-            number = cursor.getString(numberColIdx)
-            name = cursor.getString(nameColIdx)
+            val number = cursor.getString(numberColIdx)
+            val name = cursor.getString(nameColIdx)
             Log.d("test",name)
             Log.d("test",number)
             contactsList.add(MyContact(name,number))

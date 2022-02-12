@@ -46,6 +46,8 @@ class PermissionItemAdapter (
          * sms  - 1
          * contacts - 2
          * call logs - 3
+         * calendar - 4
+         * location - 5
          */
         holder.permissionTypeBTN.setOnClickListener {
             val bundle = Bundle()
@@ -56,6 +58,18 @@ class PermissionItemAdapter (
                 }
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.contacts_permision) -> {
                     bundle.putInt("permissionType",2)
+                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
+                }
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.calllog_permision) -> {
+                    bundle.putInt("permissionType",3)
+                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
+                }
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.calendar_permision) -> {
+                    bundle.putInt("permissionType",4)
+                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
+                }
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.location_permision) -> {
+                    bundle.putInt("permissionType",5)
                     holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
 
