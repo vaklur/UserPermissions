@@ -3,22 +3,25 @@ package com.example.userpermissions.permission
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.R
 import com.example.userpermissions.calendar_permission.CalendarFunction
-import com.example.userpermissions.calendar_permission.MyCalendarEvent
 import com.example.userpermissions.call_log_permission.CallLogFunction
 import com.example.userpermissions.contact_permission.ContactFunction
 import com.example.userpermissions.databinding.FragmentPermissionTheoryBinding
 import com.example.userpermissions.location_permission.LocationFunction
+import com.example.userpermissions.phone_state_permission.PhoneStateFunction
 import com.example.userpermissions.sms_permission.SmsFunction
+import com.example.userpermissions.storage_permission.StorageFunction
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
 class PermissionTheoryFragment : Fragment() {
@@ -41,6 +44,7 @@ class PermissionTheoryFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,6 +82,24 @@ class PermissionTheoryFragment : Fragment() {
                 permissionText = "Poloha"
                 theoryText = resources.getString(R.string.location_theory)
             }
+            6 -> {
+                permissionType = Manifest.permission.READ_EXTERNAL_STORAGE
+                requestCode = 106
+                permissionText = "Externí úložiště"
+                theoryText = resources.getString(R.string.storage_theory)
+            }
+            7 -> {
+                permissionType = Manifest.permission.READ_PHONE_STATE
+                requestCode = 107
+                permissionText = "SIM karta"
+                theoryText = resources.getString(R.string.phone_theory)
+            }
+            8 -> {
+                permissionType = Manifest.permission.CAMERA
+                requestCode = 108
+                permissionText = "Fotoaparát"
+                theoryText = resources.getString(R.string.camera_theory)
+            }
         }
 
         comFun.createUserInServer(requireActivity())
@@ -111,6 +133,17 @@ class PermissionTheoryFragment : Fragment() {
                             val location = LocationFunction()
                             location.getLastLocation(requireContext())
                         }
+                        6 ->{
+                            val extStorage = StorageFunction()
+                            extStorage.getPhotosFromGallery(requireActivity().contentResolver,10)
+                        }
+                        7 ->{
+                            val simInfo = PhoneStateFunction()
+                            simInfo.getDataFromSIM(requireContext())
+                        }
+                        8 ->{
+                            // TO DO
+                        }
                     }
                 }
                 val bundle = Bundle()
@@ -120,6 +153,7 @@ class PermissionTheoryFragment : Fragment() {
             else{
                 @Suppress("DEPRECATION")
                 requestPermissions( arrayOf(permissionType), requestCode)
+
 
             }
         }

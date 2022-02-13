@@ -48,31 +48,45 @@ class PermissionItemAdapter (
          * call logs - 3
          * calendar - 4
          * location - 5
+         * extStorage - 6
+         * sim - 7
+         * camera - 8
          */
         holder.permissionTypeBTN.setOnClickListener {
             val bundle = Bundle()
             when {
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.sms_permision) -> {
                     bundle.putInt("permissionType",1)
-                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.contacts_permision) -> {
                     bundle.putInt("permissionType",2)
-                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.calllog_permision) -> {
                     bundle.putInt("permissionType",3)
-                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.calendar_permision) -> {
                     bundle.putInt("permissionType",4)
-                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.location_permision) -> {
                     bundle.putInt("permissionType",5)
-                    holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment,bundle)
                 }
-
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.storage_permission) -> {
+                    bundle.putInt("permissionType",6)
+                }
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.phone_permission) -> {
+                    bundle.putInt("permissionType",7)
+                }
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permision) -> {
+                    bundle.putInt("permissionType",8)
+                }
+            }
+            if (context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permision)){
+                holder.permissionTypeBTN.findNavController()
+                    .navigate(R.id.action_permissionFragment_to_cameraFragment)
+            }
+            else {
+                holder.permissionTypeBTN.findNavController()
+                    .navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment, bundle)
             }
         }
     }

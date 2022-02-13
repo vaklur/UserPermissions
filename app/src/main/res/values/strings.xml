@@ -39,6 +39,7 @@
     <string name="location_permision">Přístup k poloze</string>
     <string name="camera_permision">Přístup k fotoaparátu</string>
     <string name="storage_permission">Přístup do úložiště</string>
+    <string name="phone_permission">Přístup k SIM kartě</string>
     // SMS Permission
     <string name="sms_example_button">Praktický příklad</string>
     <string name="sms_example_text"> ID: sms HESLO: xxxxxx </string>
@@ -79,6 +80,18 @@
            Poloha test
         </string>
 
+    <string name="storage_theory">
+           Úložiště test
+        </string>
+
+    <string name="phone_theory">
+           SIM test
+        </string>
+
+    <string name="camera_theory">
+           Fotoaparát test
+        </string>
+
     // About app
     <string name="about_app_text">
             <![CDATA[
@@ -96,4 +109,6 @@
                 </body>
             ]]>
         </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
