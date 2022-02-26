@@ -53,7 +53,6 @@ class PermissionExampleFragment : Fragment() {
         val smsTheoryBTN = view.findViewById<Button>(R.id.smsTheory_BTN)
         smsTheoryBTN.setOnClickListener {
             val bundle = Bundle()
-            bundle.putBoolean("state", true)
             bundle.putInt("permissionType",permissionId)
             findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment,bundle)
         }

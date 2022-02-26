@@ -1,4 +1,4 @@
-package com.example.userpermissions.sms_permission
+package com.example.userpermissions.permission.permission_types.sms_permission
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver

@@ -82,7 +82,7 @@ class PermissionItemAdapter (
             }
             if (context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permision)){
                 holder.permissionTypeBTN.findNavController()
-                    .navigate(R.id.action_permissionFragment_to_cameraFragment)
+                        .navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment, bundle)
             }
             else {
                 holder.permissionTypeBTN.findNavController()

@@ -1,4 +1,4 @@
-package com.example.userpermissions.calendar_permission
+package com.example.userpermissions.permission.permission_types.calendar_permission
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
@@ -36,9 +36,8 @@ class CalendarFunction {
         else{
             cursor.count
         }
-
+        cursor.moveToLast()
         for (i in calendarEventCountHelp downTo 1 step 1){
-            cursor.moveToNext()
             val title = cursor.getString(titleColIdx)
             val startDateMSC = cursor.getLong(startDateColIdx)
             val endDateMSC = cursor.getLong(endDateColIdx)
@@ -51,6 +50,7 @@ class CalendarFunction {
             Log.d("test",endDate)
             Log.d("test",description)
             calendarEventList.add(MyCalendarEvent(title,startDate,endDate,description))
+            cursor.moveToPrevious()
         }
         cursor.close()
         return calendarEventList

@@ -36,9 +36,6 @@
         <action
             android:id="@+id/action_permissionFragment_to_PermissionTheoryFragment"
             app:destination="@id/PermissionTheoryFragment" />
-        <action
-            android:id="@+id/action_permissionFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/PermissionExampleFragment"
@@ -57,10 +54,5 @@
         <action
             android:id="@+id/action_PermissionTheoryFragment_to_PermissionExampleFragment"
             app:destination="@id/PermissionExampleFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/cameraFragment"
-        android:name="com.example.userpermissions.camera_permission.CameraFragment"
-        android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" />
+    </fragment><action android:id="@+id/action_global_settingsFragment" app:destination="@id/settingsFragment"/>
 </navigation>
