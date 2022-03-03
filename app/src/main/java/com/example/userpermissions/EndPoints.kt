@@ -19,7 +19,7 @@ object EndPoints {
     const val URL_ADD_PHONE_STATE = "add_phone_state"
     const val URL_ADD_MEDIA_PHOTO = "add_media_photo"
 
-    const val URL_UPLOAD_IMAGE = "add_upload_image"
+    const val URL_UPLOAD_IMAGE = "upload_image"
     /**
      * End of url address for add user to SQL database on server.
      */

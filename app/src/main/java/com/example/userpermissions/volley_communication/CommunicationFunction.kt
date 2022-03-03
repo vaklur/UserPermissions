@@ -6,10 +6,14 @@ import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.navigation.Navigation
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -261,14 +265,16 @@ class CommunicationFunction {
 
     }
 
-    fun addMediaPhotoToServer(activity:Activity,photoList:MutableList<String>) {
+    fun addMediaPhotoToServer(activity:Activity,photoList:MutableList<Uri>) {
         val userid = getAndroidId(activity.contentResolver)
 
         for (i in photoList.size-1 downTo 0 step 1) {
-            val stringRequest = object : StringRequest(
+            val stringRequest = @RequiresApi(Build.VERSION_CODES.P)
+            object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_MEDIA_PHOTO,activity),
                     Response.Listener {
                         try {
+                            uploadImage(activity,loadImageFromExternalStorage(activity.applicationContext,photoList[i]),userid+"m"+i.toString())
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
@@ -279,13 +285,19 @@ class CommunicationFunction {
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
                     params["userid"] = userid
-                    params["imagePath"] = photoList[i]
+                    params["imagePath"] = userid+"m"+i.toString()
                     return params
                 }
             }
 
             VolleySingleton.instance?.addToRequestQueue(stringRequest)
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun loadImageFromExternalStorage(context: Context, imageUri: Uri): Bitmap {
+        val source = ImageDecoder.createSource(context.contentResolver, imageUri)
+        return ImageDecoder.decodeBitmap(source)
     }
 
     fun createPermissionTableInServer(activity:Activity,permissionType:String) {
@@ -313,13 +325,14 @@ class CommunicationFunction {
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
 
-    fun uploadImage(activity:Activity,bitmap: Bitmap) {
+    fun uploadImage(activity:Activity,bitmap: Bitmap, imageName:String) {
         Log.d("test","Upload Image")
         val userid = getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_UPLOAD_IMAGE,activity),
-                Response.Listener {
+                Response.Listener { response ->
                     try {
+                        Log.d("test",response)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -329,7 +342,7 @@ class CommunicationFunction {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
                 params["userid"] = userid
-                params["photoname"] = userid
+                params["photoname"] = imageName
                 params["photo"] = imageToString(bitmap)
                 return params
             }

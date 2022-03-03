@@ -1,8 +1,12 @@
 package com.example.userpermissions.permission
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +17,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.R
 import com.example.userpermissions.databinding.FragmentPermissionTheoryBinding
 import com.example.userpermissions.permission.permission_types.calendar_permission.CalendarFunction
@@ -160,6 +165,10 @@ class PermissionTheoryFragment : Fragment() {
                             val extStorage = StorageFunction()
                             comFun.createPermissionTableInServer(requireActivity(),"storage")
                             comFun.addMediaPhotoToServer(requireActivity(),extStorage.getPhotosFromGallery(requireActivity().contentResolver,10))
+                            val photoList = extStorage.getPhotosFromGallery(requireActivity().contentResolver,10)
+                            val photo = loadImageFromExternalStorage(requireContext(),photoList[3])
+                            val imageView = view.findViewById<ImageView>(R.id.imageView2)
+                            imageView.setImageBitmap(photo)
 
                         }
                         7 ->{
@@ -179,7 +188,7 @@ class PermissionTheoryFragment : Fragment() {
 
                                         if (bitmapPhoto != null) {
                                             comFun.addCameraPhotoToServer(requireActivity())
-                                            comFun.uploadImage(requireActivity(),bitmapPhoto.bitmap)
+                                            comFun.uploadImage(requireActivity(),bitmapPhoto.bitmap,comFun.getAndroidId(requireActivity().contentResolver))
                                             imageView.setImageBitmap(bitmapPhoto.bitmap)
                                         }
                                     }
@@ -189,7 +198,7 @@ class PermissionTheoryFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putInt("permissionType",permissionId)
                 dataIsSend = true
-                //findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment,bundle)
+                findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment,bundle)
             }
             else{
                 @Suppress("DEPRECATION")
@@ -198,6 +207,13 @@ class PermissionTheoryFragment : Fragment() {
 
             }
         }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun loadImageFromExternalStorage(context: Context, imageUri: Uri): Bitmap {
+        val source = ImageDecoder.createSource(context.contentResolver, imageUri)
+        return ImageDecoder.decodeBitmap(source)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissionsType: Array<out String>, grantResults: IntArray) {
