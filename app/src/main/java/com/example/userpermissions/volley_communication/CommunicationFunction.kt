@@ -154,13 +154,14 @@ class CommunicationFunction {
         }
     }
 
-    fun addCameraPhotoToServer(activity:Activity) {
+    fun addCameraPhotoToServer(activity:Activity,bitmap: Bitmap) {
         val userid = getAndroidId(activity.contentResolver)
 
             val stringRequest = object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_CAMERA_PHOTO,activity),
                     Response.Listener {
                         try {
+                            uploadImage(activity,bitmap,userid)
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }

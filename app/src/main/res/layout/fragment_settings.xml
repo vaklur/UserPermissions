@@ -7,6 +7,7 @@
     tools:context=".settings.SettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="379dp"
         android:layout_height="198dp"
         android:layout_marginTop="68dp"
@@ -87,6 +88,70 @@
             app:layout_constraintTop_toBottomOf="@+id/actualIP_TV" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
+        android:layout_width="384dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="292dp"
+        android:background="@drawable/rectangle_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/settings_TV">
+
+        <TextView
+            android:id="@+id/settings_TV4"
+            android:layout_width="390dp"
+            android:layout_height="47dp"
+            android:gravity="center"
+            android:text="@string/language_settings"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/settings_TV5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_TV5"
+            android:layout_width="246dp"
+            android:layout_height="40dp"
+            android:gravity="fill"
+            android:text="@string/actual_language_text"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/changeLanguage_BTN"
+            app:layout_constraintEnd_toStartOf="@+id/language_TV"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV4" />
+
+        <TextView
+            android:id="@+id/language_TV"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@string/actual_language_setting"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/settings_TV5"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV4"
+            app:layout_constraintVertical_bias="0.096" />
+
+        <Button
+            android:id="@+id/changeLanguage_BTN"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:text="@string/change_setting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.058"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/settings_TV"
         android:layout_width="390dp"
@@ -101,5 +166,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

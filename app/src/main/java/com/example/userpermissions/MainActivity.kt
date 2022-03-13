@@ -1,26 +1,61 @@
 package com.example.userpermissions
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
+import com.example.userpermissions.settings.LocaleUtil
+import com.example.userpermissions.settings.SettingsSharPref
 import com.example.userpermissions.volley_communication.CommunicationFunction
+import com.google.android.gms.auth.api.signin.internal.Storage
 
 class MainActivity : AppCompatActivity() {
 
+    private val comFun = CommunicationFunction()
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var oldPrefLocaleCode : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        resetTitle()
 
         appAlertDialog(binding.root)
 
+    }
+
+    private fun resetTitle() {
+        try {
+            val label = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA).labelRes
+            if (label != 0) {
+                setTitle(label)
+            }
+        } catch (e: PackageManager.NameNotFoundException) {}
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        oldPrefLocaleCode = newBase?.let { SettingsSharPref(it).getLanguageSettings() }.toString()
+        applyOverrideConfiguration(LocaleUtil.getLocalizedConfiguration(oldPrefLocaleCode))
+        super.attachBaseContext(newBase)
+    }
+
+    override fun onResume() {
+        val currentLocaleCode = SettingsSharPref(this).getLanguageSettings()
+        if(oldPrefLocaleCode != currentLocaleCode){
+            recreate() //locale is changed, restart the activity to update
+            oldPrefLocaleCode = currentLocaleCode
+        }
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,5 +104,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         builder.show()
+    }
+
+    override fun onBackPressed() {
+
+        val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        when (navigationController.currentDestination?.id) {
+            R.id.PermissionExampleFragment -> {
+                /*val bundle = Bundle()
+                bundle.putBoolean("dataIsSend",true)
+                navigationController.navigate(R.id.PermissionTheoryFragment,bundle)*/
+            }
+            R.id.PermissionTheoryFragment -> {
+                navigationController.navigate(R.id.permissionFragment)
+            }
+            R.id.permissionFragment -> {
+                navigationController.navigate(R.id.mainMenuFragment)
+            }
+            else -> {
+                super.onBackPressed()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("test","On Destroy Main Activity")
+        comFun.deleteUserInServer(this)
+
     }
 }

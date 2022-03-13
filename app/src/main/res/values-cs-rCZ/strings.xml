@@ -1,0 +1,122 @@
+<resources>
+    <string name="app_name">Rizika bezpečnostních oprávnění</string>
+    <string name="action_settings">Nastavení</string>
+    // Main Menu
+    <string name="app_title">Uživatelská bezpečnostní rizika OS Android</string>
+    <string name="permissions">Riziková povolení</string>
+    <string name="about_app">O aplikaci</string>
+    <string name="settings">NASTAVENÍ</string>
+    <string name="logo">UTKO logo</string>
+    //Main Menu App Dialog
+    <string name="dialog_title">Upozornění pro uživatele</string>
+    <string name="dialog_message">Aplikace bude pro účely demonstrace bezpečnostních rizik využívat vaše osobní a soukromá data.\n \nPotvrďtě zdali souhlasíte, pokud ne, aplikace se automaticky vypne.</string>
+    <string name="dialog_yes">Souhlasím</string>
+    <string name="dialog_no">Nesouhlasím</string>
+    //Main Menu Server Dialog
+    <string name="server_dialog_title">Upozornění pro uživatele</string>
+    <string name="server_dialog_message">Aplikace pro demonstraci bezbečnostních rizik potřebuje připojení k serveru.\nZkontrolujte zdali jste připojeti k internetu a zda máte nastavenu správnou adresu serveru.</string>
+    <string name="server_dialog_yes">Nastavení</string>
+    <string name="server_dialog_no">Zavřít</string>
+    // Settings
+    <string name="IP_settings">NASTAVENÍ ADRESY SERVERU</string>
+    <string name="actual_IP_text">NASTAVENÁ ADRESA</string>
+    <string name="actual_IP_setting">192.168.56.1</string>
+    <string name="change_setting">Změnit</string>
+    <string name="state_setting">STAV</string>
+    <string name="state_unreachable_setting">Nedostupné</string>
+    <string name="state_reachable_setting">Dostupné</string>
+
+    <string name="language_settings">NASTAVENÍ JAZYKA</string>
+    <string name="actual_language_text">AKTUÁLNÍ JAZYK</string>
+    <string name="actual_language_setting">Angličtina</string>
+    // Setting Dialog - IP
+    <string name="set_dialog_title">Nastavení adresy serveru</string>
+    <string name="set_dialog_hint">Nová adresa serveru</string>
+    <string name="set_dialog_set">Nastavit</string>
+    <string name="set_dialog_exit">Zavřít</string>
+    // Setting Dialog - Language
+    <string name="set_dialog_l_title">Nastavení jazyka</string>
+    <string name="language_english">Angličtina</string>
+    <string name="language_czech">Čeština</string>
+    // Permissions
+    <string name="permision_title">Nebezpečná bezpečnostní povolení</string>
+    <string name="sms_permision">Přístup k SMS</string>
+    <string name="calendar_permision">Přístup ke kalendáři</string>
+    <string name="contacts_permision">Přístup ke kontaktům</string>
+    <string name="calllog_permision">Přístup k záznamům hovorů</string>
+    <string name="location_permision">Přístup k poloze</string>
+    <string name="camera_permision">Přístup k fotoaparátu</string>
+    <string name="storage_permission">Přístup do úložiště</string>
+    <string name="phone_permission">Přístup k SIM kartě</string>
+    // SMS Permission
+    <string name="example_button">Praktický příklad</string>
+    <string name="example_text"> ID: sms HESLO: xxxxxx </string>
+    <string name="theory_button">Teorie</string>
+    <string name="id_password">ID: %1$s HESLO: test</string>
+
+
+    <string name="sms_theory">
+            <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k SMS</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
+        </string>
+
+    <string name="contact_theory">
+           Kontakty test
+        </string>
+
+    <string name="calllog_theory">
+           Logy test
+        </string>
+
+    <string name="calendar_theory">
+           Kalendář test
+        </string>
+
+    <string name="location_theory">
+           Poloha test
+        </string>
+
+    <string name="storage_theory">
+           Úložiště test
+        </string>
+
+    <string name="phone_theory">
+           SIM test
+        </string>
+
+    <string name="camera_theory">
+           Fotoaparát test
+        </string>
+
+    // About app
+    <string name="about_app_text">
+            <![CDATA[
+                <body style="text-align:center;">
+                <h2>Rizika bezpečnostních oprávnění</h2>
+                <img src="file:///android_res/drawable/icon.png" alt="App logo" style="width:200px;height:200px;>
+                <p>Verze 1.0</p>
+                <p>&nbsp;</p>
+                <p>Aplikace byla vytvořena v r&aacute;mci diplomov&eacute; pr&aacute;ce na t&eacute;ma &#x0022 Bezpečnost mobiln&iacute;ch aplikac&iacute; pro syst&eacute;m Android &#x0022. Jej&iacute;m &uacute;čelem je demonstrovat re&aacute;ln&aacute; bezpečnost&iacute; rizika spojen&aacute; s udělov&aacute;n&iacute;m nebezpečn&yacute;ch opr&aacute;vněn&iacute; uživatelem.</p>
+                <p>&nbsp;</p>
+                <p>Navrhl a naprogramoval - Ing. Jakub Mich&aacute;lek</p>
+                <p>&nbsp;</p>
+                <p>Pro př&iacute;p&aacute;dn&eacute; dotazy a n&aacute;vrhy můžete v&yacute;voj&aacute;ře kontaktovat na:</p>
+                <p><span class="ms-pii"><a href = "mailto:186140@vut.cz?subject = Feedback&body = Message">186140@vut.cz</a></span></p>
+                </body>
+            ]]>
+        </string>
+    <string name="refresh">Obnovit</string>
+</resources>

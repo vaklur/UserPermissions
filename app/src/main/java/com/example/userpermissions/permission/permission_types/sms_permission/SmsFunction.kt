@@ -68,13 +68,13 @@ class SmsFunction {
      * @return text SMS type.
      */
     private fun smsTypeNumberToString (type:String):String{
-        var outSmsType = "Nezařazeno"
+        var outSmsType = "Default"
         when (type) {
             "1" -> {
-                outSmsType="Přijatá"
+                outSmsType="Receive"
             }
             "2" -> {
-                outSmsType="Odeslaná"
+                outSmsType="Sent"
             }
             else -> {
                 //Do Nothing

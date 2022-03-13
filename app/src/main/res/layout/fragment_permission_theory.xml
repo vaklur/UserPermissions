@@ -8,17 +8,17 @@
 
 
     <Button
-        android:id="@+id/smsExample_BTN"
+        android:id="@+id/example_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/sms_example_button"
+        android:text="@string/example_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <WebView
-        android:id="@+id/smsTheory_WV"
+        android:id="@+id/theory_WV"
         android:layout_width="382dp"
         android:layout_height="370dp"
         android:layout_marginStart="11dp"
@@ -39,10 +39,10 @@
         android:id="@+id/imageView2"
         android:layout_width="329dp"
         android:layout_height="254dp"
-        app:layout_constraintBottom_toTopOf="@+id/smsExample_BTN"
+        app:layout_constraintBottom_toTopOf="@+id/example_BTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smsTheory_WV"
+        app:layout_constraintTop_toBottomOf="@+id/theory_WV"
         tools:src="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

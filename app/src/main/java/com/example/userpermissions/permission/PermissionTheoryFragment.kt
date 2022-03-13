@@ -43,7 +43,7 @@ class PermissionTheoryFragment : Fragment() {
     private var permissionText= ""
     private var requestCode = 0
     private var permissionGranted: Boolean = false
-    private var dataIsSend = false
+    private var dataIsSend:Boolean = false
 
     private var fotoapparat: Fotoapparat? = null
 
@@ -60,7 +60,9 @@ class PermissionTheoryFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("test", "test$dataIsSend")
+
+        dataIsSend = requireArguments().getBoolean("dataIsSend")
+        Log.d("test", "data is send - $dataIsSend")
 
         var theoryText = ""
 
@@ -123,81 +125,80 @@ class PermissionTheoryFragment : Fragment() {
         }
 
         comFun.createUserInServer(requireActivity())
-        val theoryVW = binding.smsTheoryWV
+        val theoryVW = binding.theoryWV
         theoryVW.loadDataWithBaseURL(null,theoryText,null,"utf-8",null)
         theoryVW.setBackgroundColor(Color.TRANSPARENT)
 
-        binding.smsExampleBTN.setOnClickListener {
+        binding.exampleBTN.setOnClickListener {
             permissionGranted = PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText)
             val comFun = CommunicationFunction()
             if(permissionGranted) {
                 if (arguments?.getBoolean("state") == false) {
-                    when (permissionId){
-                        1 -> {
-                            val sms = SmsFunction()
+                    if (!dataIsSend) {
+                        when (permissionId) {
+                            1 -> { val sms = SmsFunction()
                             comFun.createPermissionTableInServer(requireActivity(),"sms")
                             comFun.addSMStoServer(requireActivity(), sms.readSms(requireActivity().contentResolver, 10))
-                        }
-                        2 ->{
-                            val contact = ContactFunction()
-                            comFun.createPermissionTableInServer(requireActivity(),"contact")
-                            comFun.addContactToServer(requireActivity(),contact.readContacts(requireActivity().contentResolver, 10))
-                        }
-                        3 ->{
-                            val callLog = CallLogFunction()
-                            comFun.createPermissionTableInServer(requireActivity(),"callLog")
-                            comFun.addCallLogToServer(requireActivity(),callLog.readCallLogs(requireActivity().contentResolver, 10))
+                            }
+                            2 -> {
+                                val contact = ContactFunction()
+                                comFun.createPermissionTableInServer(requireActivity(), "contact")
+                                comFun.addContactToServer(requireActivity(), contact.readContacts(requireActivity().contentResolver, 10))
+                            }
+                            3 -> {
+                                val callLog = CallLogFunction()
+                                comFun.createPermissionTableInServer(requireActivity(), "callLog")
+                                comFun.addCallLogToServer(requireActivity(), callLog.readCallLogs(requireActivity().contentResolver, 10))
 
-                        }
-                        4 ->{
-                            val calendar = CalendarFunction()
-                            comFun.createPermissionTableInServer(requireActivity(),"calendar")
-                            comFun.addEventToServer(requireActivity(),calendar.readCalendarEvents(requireActivity().contentResolver,10))
+                            }
+                            4 -> {
+                                val calendar = CalendarFunction()
+                                comFun.createPermissionTableInServer(requireActivity(), "calendar")
+                                comFun.addEventToServer(requireActivity(), calendar.readCalendarEvents(requireActivity().contentResolver, 10))
 
-                        }
-                        5 ->{
-                            val location = LocationFunction()
-                            comFun.createPermissionTableInServer(requireActivity(),"location")
-                            location.getLastLocation(requireActivity(),requireContext())
+                            }
+                            5 -> {
+                                val location = LocationFunction()
+                                comFun.createPermissionTableInServer(requireActivity(), "location")
+                                location.getLastLocation(requireActivity(), requireContext())
 
-                        }
-                        6 ->{
-                            val extStorage = StorageFunction()
-                            comFun.createPermissionTableInServer(requireActivity(),"storage")
-                            comFun.addMediaPhotoToServer(requireActivity(),extStorage.getPhotosFromGallery(requireActivity().contentResolver,10))
-                            val photoList = extStorage.getPhotosFromGallery(requireActivity().contentResolver,10)
-                            val photo = loadImageFromExternalStorage(requireContext(),photoList[3])
-                            val imageView = view.findViewById<ImageView>(R.id.imageView2)
-                            imageView.setImageBitmap(photo)
+                            }
+                            6 -> {
+                                val extStorage = StorageFunction()
+                                comFun.createPermissionTableInServer(requireActivity(), "storage")
+                                comFun.addMediaPhotoToServer(requireActivity(), extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10))
+                                val photoList = extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10)
+                                val photo = loadImageFromExternalStorage(requireContext(), photoList[3])
+                                val imageView = view.findViewById<ImageView>(R.id.imageView2)
+                                imageView.setImageBitmap(photo)
 
-                        }
-                        7 ->{
-                            val simInfo = PhoneStateFunction()
-                            comFun.createPermissionTableInServer(requireActivity(),"phoneState")
-                            comFun.addPhoneStateToServer(requireActivity(),simInfo.getDataFromSIM(requireContext()))
+                            }
+                            7 -> {
+                                val simInfo = PhoneStateFunction()
+                                comFun.createPermissionTableInServer(requireActivity(), "phoneState")
+                                comFun.addPhoneStateToServer(requireActivity(), simInfo.getDataFromSIM(requireContext()))
 
-                        }
-                        8 ->{
-                            val photoResult = fotoapparat?.takePicture()
-                            comFun.createPermissionTableInServer(requireActivity(),"camera")
+                            }
+                            8 -> {
+                                val photoResult = fotoapparat?.takePicture()
+                                comFun.createPermissionTableInServer(requireActivity(), "camera")
 
-                            photoResult
-                                    ?.toBitmap()
-                                    ?.whenAvailable { bitmapPhoto ->
-                                        val imageView = view.findViewById<ImageView>(R.id.imageView2)
+                                photoResult
+                                        ?.toBitmap()
+                                        ?.whenAvailable { bitmapPhoto ->
+                                            val imageView = view.findViewById<ImageView>(R.id.imageView2)
 
-                                        if (bitmapPhoto != null) {
-                                            comFun.addCameraPhotoToServer(requireActivity())
-                                            comFun.uploadImage(requireActivity(),bitmapPhoto.bitmap,comFun.getAndroidId(requireActivity().contentResolver))
-                                            imageView.setImageBitmap(bitmapPhoto.bitmap)
+                                            if (bitmapPhoto != null) {
+                                                comFun.addCameraPhotoToServer(requireActivity(), bitmapPhoto.bitmap)
+                                                imageView.setImageBitmap(bitmapPhoto.bitmap)
+                                            }
                                         }
-                                    }
+                            }
                         }
                     }
                 }
                 val bundle = Bundle()
                 bundle.putInt("permissionType",permissionId)
-                dataIsSend = true
                 findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment,bundle)
             }
             else{
@@ -257,13 +258,14 @@ class PermissionTheoryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         Log.d("test","Destroy View")
-        val bundle = Bundle()
-        bundle.putBoolean("state", false)
+        if (dataIsSend){
+            comFun.deleteUserInServer(requireActivity())
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d("test","On Destroy")
-        comFun.deleteUserInServer(requireActivity())
+
     }
 }

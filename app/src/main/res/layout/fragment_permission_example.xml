@@ -7,44 +7,53 @@
     tools:context=".permission.PermissionExampleFragment">
 
     <TextView
-        android:id="@+id/loginSms_TV"
+        android:id="@+id/login_TV"
         android:layout_width="246dp"
         android:layout_height="41dp"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="71dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="6dp"
         android:background="@drawable/rectangle_back"
         android:gravity="center"
-        android:text="@string/sms_example_text"
+        android:text="@string/example_text"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/smsWeb_WV"
+        app:layout_constraintBottom_toTopOf="@+id/Web_WV"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/smsWeb_WV"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/smsTheory_BTN"
+        android:id="@+id/theory_BTN"
         android:layout_width="172dp"
         android:layout_height="38dp"
-        android:layout_marginBottom="7dp"
-        android:text="@string/sms_theory_button"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/theory_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Web_WV" />
+
+    <Button
+        android:id="@+id/refresh_BTN"
+        android:layout_width="172dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/refresh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smsWeb_WV" />
+        app:layout_constraintStart_toEndOf="@+id/theory_BTN"
+        app:layout_constraintTop_toBottomOf="@+id/Web_WV" />
 
     <WebView
-        android:id="@+id/smsWeb_WV"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/smsTheory_BTN"
+        android:id="@+id/Web_WV"
+        android:layout_width="400dp"
+        android:layout_height="600dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginSms_TV" />
+        app:layout_constraintTop_toBottomOf="@+id/login_TV" />
 </androidx.constraintlayout.widget.ConstraintLayout>

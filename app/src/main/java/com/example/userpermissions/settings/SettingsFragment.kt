@@ -35,23 +35,90 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val settingsSP = SettingsSharPref(requireContext())
+        binding.languageTV.text = getActualLanguage(settingsSP.getLanguageSettings())
         binding.actualIPTV.text= settingsSP.getIPsettings()
         val comFun = CommunicationFunction()
+        binding.changeLanguageBTN.isEnabled=false
         comFun.testConnectionToServer(settingsSP.getIPsettings(), object: CommunicationFunction.VolleyStringResponse {
             override fun onSuccess() {
                 binding.stateActualTV.text = requireContext().resources.getString(R.string.state_reachable_setting)
                 binding.stateActualTV.setBackgroundColor(Color.GREEN)
+                binding.changeLanguageBTN.isEnabled=true
             }
 
             override fun onError() {
                 binding.stateActualTV.text = resources.getString(R.string.state_unreachable_setting)
                 binding.stateActualTV.setBackgroundColor(Color.RED)
+                binding.changeLanguageBTN.isEnabled=true
             }
         })
 
         binding.changeIPBTN.setOnClickListener {
             showSetAddressDialog()
         }
+        binding.changeLanguageBTN.setOnClickListener {
+            showSetLanguageDialog()
+        }
+
+    }
+
+    private fun getActualLanguage(languageCode:String):String{
+        var actualLanguage:String = resources.getString(R.string.language_english)
+        if (languageCode =="en"){
+            actualLanguage = resources.getString(R.string.language_english)
+        }
+        else if(languageCode =="cs"){
+            actualLanguage = resources.getString(R.string.language_czech)
+        }
+        return  actualLanguage
+    }
+
+    private fun updateAppLocale(locale: String) {
+        SettingsSharPref(requireContext()).saveLanguageSettings(locale)
+        LocaleUtil.applyLocalizedContext(requireContext(), locale)
+    }
+
+    private fun showSetLanguageDialog(){
+        val settingsSP = SettingsSharPref(requireContext())
+        val languageCode = settingsSP.getLanguageSettings()
+        val dialog = Dialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_app_language_settings)
+
+        if (languageCode =="en"){
+            dialog.findViewById<RadioButton>(R.id.english_RB).isChecked = true
+        }
+        else {
+            dialog.findViewById<RadioButton>(R.id.czech_RB).isChecked = true
+        }
+
+        dialog.findViewById<Button>(R.id.saveSetLanguage_BTN).setOnClickListener {
+            if (dialog.findViewById<RadioButton>(R.id.english_RB).isChecked){
+                if (languageCode!="en"){
+                    updateAppLocale("en")
+                    dialog.dismiss()
+                    requireActivity().recreate()
+                }
+                else dialog.dismiss()
+            }
+            else {
+                if (languageCode!="cs"){
+                    updateAppLocale("cs")
+                    dialog.dismiss()
+                    requireActivity().recreate()
+                }
+                else dialog.dismiss()
+            }
+
+        }
+
+        dialog.findViewById<Button>(R.id.exitSetLanguage_BTN).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     /**

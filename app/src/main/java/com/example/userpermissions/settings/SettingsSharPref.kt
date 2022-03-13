@@ -28,6 +28,18 @@ class SettingsSharPref(context: Context) {
 
     }
 
+    fun saveLanguageSettings(language:String){
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+        editor.putString("language",language)
+        editor.apply()
+        editor.commit()
+    }
+
+    fun getLanguageSettings():String{
+        return sharedPreferences.getString("language",LocaleUtil.OPTION_PHONE_LANGUAGE).toString()
+    }
+
     /**
      * Return the saved server address.
      *
