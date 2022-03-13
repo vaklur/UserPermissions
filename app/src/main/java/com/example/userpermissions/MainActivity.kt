@@ -1,30 +1,36 @@
 package com.example.userpermissions
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.ConfigurationCompat
 import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
 import com.example.userpermissions.settings.LocaleUtil
 import com.example.userpermissions.settings.SettingsSharPref
 import com.example.userpermissions.volley_communication.CommunicationFunction
-import com.google.android.gms.auth.api.signin.internal.Storage
 
 class MainActivity : AppCompatActivity() {
 
     private val comFun = CommunicationFunction()
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var oldPrefLocaleCode : String
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val actualLocaleCode = SettingsSharPref(this).getLanguageSettings()
+        LocaleUtil.applyLocalizedContext(this, actualLocaleCode)
+        Log.d("test", actualLocaleCode)
         super.onCreate(savedInstanceState)
+
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -41,21 +47,6 @@ class MainActivity : AppCompatActivity() {
                 setTitle(label)
             }
         } catch (e: PackageManager.NameNotFoundException) {}
-    }
-
-    override fun attachBaseContext(newBase: Context?) {
-        oldPrefLocaleCode = newBase?.let { SettingsSharPref(it).getLanguageSettings() }.toString()
-        applyOverrideConfiguration(LocaleUtil.getLocalizedConfiguration(oldPrefLocaleCode))
-        super.attachBaseContext(newBase)
-    }
-
-    override fun onResume() {
-        val currentLocaleCode = SettingsSharPref(this).getLanguageSettings()
-        if(oldPrefLocaleCode != currentLocaleCode){
-            recreate() //locale is changed, restart the activity to update
-            oldPrefLocaleCode = currentLocaleCode
-        }
-        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,6 +111,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.permissionFragment -> {
                 navigationController.navigate(R.id.mainMenuFragment)
+            }
+            R.id.mainMenuFragment -> {
+                finish()
             }
             else -> {
                 super.onBackPressed()

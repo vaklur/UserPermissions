@@ -73,10 +73,7 @@ class SettingsFragment : Fragment() {
         return  actualLanguage
     }
 
-    private fun updateAppLocale(locale: String) {
-        SettingsSharPref(requireContext()).saveLanguageSettings(locale)
-        LocaleUtil.applyLocalizedContext(requireContext(), locale)
-    }
+
 
     private fun showSetLanguageDialog(){
         val settingsSP = SettingsSharPref(requireContext())
@@ -95,11 +92,13 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.findViewById<Button>(R.id.saveSetLanguage_BTN).setOnClickListener {
+
             if (dialog.findViewById<RadioButton>(R.id.english_RB).isChecked){
                 if (languageCode!="en"){
                     updateAppLocale("en")
                     dialog.dismiss()
                     requireActivity().recreate()
+                    Log.d("test","English language")
                 }
                 else dialog.dismiss()
             }
@@ -108,6 +107,7 @@ class SettingsFragment : Fragment() {
                     updateAppLocale("cs")
                     dialog.dismiss()
                     requireActivity().recreate()
+                    Log.d("test","Czech language")
                 }
                 else dialog.dismiss()
             }
@@ -119,6 +119,11 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    private fun updateAppLocale(locale: String) {
+        SettingsSharPref(requireContext()).saveLanguageSettings(locale)
+        LocaleUtil.applyLocalizedContext(requireContext(), locale)
     }
 
     /**

@@ -48,11 +48,12 @@
     <string name="camera_permision">Access to Camera</string>
     <string name="storage_permission">Access to storage</string>
     <string name="phone_permission">Access to SIM card</string>
-    // SMS Permission
+    // Permission - example + theory
     <string name="example_button">Practical example</string>
     <string name="example_text">" ID: sms PASSWORD: xxxxxx "</string>
     <string name="theory_button">Theory</string>
     <string name="id_password">ID: %1$s PASSWORD: test</string>
+    <string name="refresh">Refresh</string>
 
 
     <string name="sms_theory">
@@ -105,19 +106,18 @@
     <string name="about_app_text">
             <![CDATA[
                 <body style="text-align:center;">
-                <h2>Rizika bezpečnostních oprávnění</h2>
+                <h2>Risk of security authorisations</h2>
                 <img src="file:///android_res/drawable/icon.png" alt="App logo" style="width:200px;height:200px;>
-                <p>Verze 1.0</p>
+                <p>Version 1.0</p>
                 <p>&nbsp;</p>
-                <p>Aplikace byla vytvořena v r&aacute;mci diplomov&eacute; pr&aacute;ce na t&eacute;ma &#x0022 Bezpečnost mobiln&iacute;ch aplikac&iacute; pro syst&eacute;m Android &#x0022. Jej&iacute;m &uacute;čelem je demonstrovat re&aacute;ln&aacute; bezpečnost&iacute; rizika spojen&aacute; s udělov&aacute;n&iacute;m nebezpečn&yacute;ch opr&aacute;vněn&iacute; uživatelem.</p>
+                <p>The application was created as part of a diploma thesis on the topic: &#x0022 Security of mobile applications for Android &#x0022. Its purpose is to demonstrate the real security risks associated with granting unsafe authorizations to users. <p>&nbsp;</p>
+                <p>Designed and programmed by - Ing. Jakub Mich&aacute;lek</p>
                 <p>&nbsp;</p>
-                <p>Navrhl a naprogramoval - Ing. Jakub Mich&aacute;lek</p>
-                <p>&nbsp;</p>
-                <p>Pro př&iacute;p&aacute;dn&eacute; dotazy a n&aacute;vrhy můžete v&yacute;voj&aacute;ře kontaktovat na:</p>
+                <p>For any questions or suggestions, you can contact the developer at:</p>
                 <p><span class="ms-pii"><a href = "mailto:186140@vut.cz?subject = Feedback&body = Message">186140@vut.cz</a></span></p>
                 </body>
             ]]>
         </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="refresh">Refresh</string>
+
+
 </resources>
