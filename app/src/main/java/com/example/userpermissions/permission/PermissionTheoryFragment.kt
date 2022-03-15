@@ -73,52 +73,52 @@ class PermissionTheoryFragment : Fragment() {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
                 requestCode = 101
-                permissionText = "SMS"
+                permissionText = getString(R.string.sms)
                 theoryText = resources.getString(R.string.sms_theory)
             }
             2 -> {
                 permissionType = Manifest.permission.READ_CONTACTS
                 requestCode = 102
-                permissionText = "Kontakty"
+                permissionText = getString(R.string.contacts)
                 theoryText = resources.getString(R.string.contact_theory)
             }
             3 -> {
                 permissionType = Manifest.permission.READ_CALL_LOG
                 requestCode = 103
-                permissionText = "Logy hovorů"
+                permissionText = getString(R.string.calllog)
                 theoryText = resources.getString(R.string.calllog_theory)
             }
             4 -> {
                 permissionType = Manifest.permission.READ_CALENDAR
                 requestCode = 104
-                permissionText = "Údálosti v kalendáři"
+                permissionText = getString(R.string.calendar)
                 theoryText = resources.getString(R.string.calendar_theory)
             }
             5 -> {
                 permissionType = Manifest.permission.ACCESS_FINE_LOCATION
                 requestCode = 105
-                permissionText = "Poloha"
+                permissionText = getString(R.string.location)
                 theoryText = resources.getString(R.string.location_theory)
             }
             6 -> {
                 permissionType = Manifest.permission.READ_EXTERNAL_STORAGE
                 requestCode = 106
-                permissionText = "Externí úložiště"
+                permissionText = getString(R.string.storage)
                 theoryText = resources.getString(R.string.storage_theory)
             }
             7 -> {
                 permissionType = Manifest.permission.READ_PHONE_STATE
                 requestCode = 107
-                permissionText = "SIM karta"
+                permissionText = getString(R.string.phone)
                 theoryText = resources.getString(R.string.phone_theory)
             }
             8 -> {
                 permissionType = Manifest.permission.CAMERA
                 requestCode = 108
-                permissionText = "Fotoaparát"
+                permissionText = getString(R.string.camera)
                 theoryText = resources.getString(R.string.camera_theory)
                 createFotoapparat()
-                if (PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText)){
+                if (PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText,requireContext())){
                     fotoapparat?.start()
                 }
             }
@@ -130,7 +130,7 @@ class PermissionTheoryFragment : Fragment() {
         theoryVW.setBackgroundColor(Color.TRANSPARENT)
 
         binding.exampleBTN.setOnClickListener {
-            permissionGranted = PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText)
+            permissionGranted = PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText,requireContext())
             val comFun = CommunicationFunction()
             if(permissionGranted) {
                 if (arguments?.getBoolean("state") == false) {
@@ -167,10 +167,10 @@ class PermissionTheoryFragment : Fragment() {
                                 val extStorage = StorageFunction()
                                 comFun.createPermissionTableInServer(requireActivity(), "storage")
                                 comFun.addMediaPhotoToServer(requireActivity(), extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10))
-                                val photoList = extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10)
+                                /*val photoList = extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10)
                                 val photo = loadImageFromExternalStorage(requireContext(), photoList[3])
                                 val imageView = view.findViewById<ImageView>(R.id.imageView2)
-                                imageView.setImageBitmap(photo)
+                                imageView.setImageBitmap(photo)*/
 
                             }
                             7 -> {
@@ -220,11 +220,11 @@ class PermissionTheoryFragment : Fragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissionsType: Array<out String>, grantResults: IntArray) {
         fun innerCheck(name: String){
             permissionGranted = if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(requireActivity().application, "$name povolení zamítnuto", Toast.LENGTH_SHORT).show()
-                PermissionFunction().showSettingsDialog(requireActivity(),permissionText)
+                Toast.makeText(requireActivity().application, name+" "+getString(R.string.permission_not_granted), Toast.LENGTH_SHORT).show()
+                PermissionFunction().showSettingsDialog(requireActivity(),permissionText,requireContext())
                 false
             } else{
-                Toast.makeText(requireActivity().application, "$name povolení uděleno", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity().application, name+" "+getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
                 if (permissionId == 8){
                 fotoapparat?.start()
                 }
@@ -248,7 +248,7 @@ class PermissionTheoryFragment : Fragment() {
                         logcat()
                 ),
                 cameraErrorCallback = { error ->
-                    println("Recorder errors: $error")
+                    Log.d("test","Recorder errors: $error")
                 }
         )
 

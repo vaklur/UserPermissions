@@ -43,8 +43,4 @@ class MainMenuFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
-
-
 }

@@ -98,7 +98,6 @@ class SettingsFragment : Fragment() {
                     updateAppLocale("en")
                     dialog.dismiss()
                     requireActivity().recreate()
-                    Log.d("test","English language")
                 }
                 else dialog.dismiss()
             }
@@ -107,7 +106,6 @@ class SettingsFragment : Fragment() {
                     updateAppLocale("cs")
                     dialog.dismiss()
                     requireActivity().recreate()
-                    Log.d("test","Czech language")
                 }
                 else dialog.dismiss()
             }
@@ -148,7 +146,7 @@ class SettingsFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!Patterns.WEB_URL.matcher(addressEditText.text.toString()).matches()){
-                    addressEditText.error = "Invalid Url"
+                    addressEditText.error = getString(R.string.invalid_address)
                 }
             }
         })
@@ -156,14 +154,14 @@ class SettingsFragment : Fragment() {
 
         val addressSpinner = dialog.findViewById<Spinner>(R.id.setAddress_S)
         val list = settingsSP.getIpsettingsSet()?.toMutableList()
-        list?.add("Vlastní adresa")
-        val addressAdapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, list as MutableList<String>)
-        addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        list?.add(getString(R.string.own_address))
+        val addressAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, list as MutableList<String>)
+        //addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         addressSpinner!!.adapter = addressAdapter
         addressSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectItem = list[position]
-                if (selectItem == "Vlastní adresa"){
+                if (selectItem == getString(R.string.own_address)){
                     addressEditText.visibility = View.VISIBLE
                     addressEditText.hint = ""
                     newAddress = true
@@ -190,7 +188,6 @@ class SettingsFragment : Fragment() {
             } else{
                 addressSpinner.selectedItem.toString()
             }
-            Log.d("test",addressToSave)
             val comFun = CommunicationFunction()
             comFun.testConnectionToServer(addressToSave, object: CommunicationFunction.VolleyStringResponse {
                 override fun onSuccess() {
@@ -199,12 +196,12 @@ class SettingsFragment : Fragment() {
                     binding.actualIPTV.text= settingsSP.getIPsettings()
                     binding.stateActualTV.text = resources.getString(R.string.state_reachable_setting)
                     binding.stateActualTV.setBackgroundColor(Color.GREEN)
-                    Toast.makeText(requireContext(),"Connection OK", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),getString(R.string.connection_ok), Toast.LENGTH_LONG).show()
                     dialog.dismiss()
                 }
 
                 override fun onError() {
-                    Toast.makeText(requireContext(),"No Connection", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),getString(R.string.connection_bad), Toast.LENGTH_LONG).show()
                 }
             })
         }

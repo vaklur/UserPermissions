@@ -34,6 +34,10 @@
     <string name="set_dialog_hint">Nová adresa serveru</string>
     <string name="set_dialog_set">Nastavit</string>
     <string name="set_dialog_exit">Zavřít</string>
+    <string name="invalid_address">Neplatná URL</string>
+    <string name="own_address">Vlastní adresa</string>
+    <string name="connection_ok">Připojení v pořádku</string>
+    <string name="connection_bad">Nelze se připojit</string>
     // Setting Dialog - Language
     <string name="set_dialog_l_title">Nastavení jazyka</string>
     <string name="language_english">Angličtina</string>
@@ -48,11 +52,30 @@
     <string name="camera_permision">Přístup k fotoaparátu</string>
     <string name="storage_permission">Přístup do úložiště</string>
     <string name="phone_permission">Přístup k SIM kartě</string>
+
+    <string name="sms">SMS</string>
+    <string name="calendar">Události z kalendáře</string>
+    <string name="contacts">Kontakty</string>
+    <string name="calllog">Záznamy hovorů</string>
+    <string name="location">Poloha</string>
+    <string name="camera">Fotoaparát</string>
+    <string name="storage">Externí úložiště</string>
+    <string name="phone">SIM karta</string>
+
+    <string name="permission_granted">povolení uděleno</string>
+    <string name="permission_not_granted">povolení neuděleno</string>
+    // Permission function - settings dialog
+    <string name="permission_function_dialog_message">Povolení k přístupu k %1$s je vyžadováno pro praktický příklad.</string>
+    <string name="permission_function_dialog_title">Žádost o povolení</string>
+    <string name="permission_function_dialog_settings">Nastavení</string>
+    <string name="permission_function_dialog_cancel">Zavřít</string>
+    <string name="permission_function_dialog_toast">Praktická ukázka nemůže být spuštěna</string>
     // SMS Permission
     <string name="example_button">Praktický příklad</string>
     <string name="example_text"> ID: sms HESLO: xxxxxx </string>
     <string name="theory_button">Teorie</string>
-    <string name="id_password">ID: %1$s HESLO: test</string>
+    <string name="id">ID: %1$s </string>
+    <string name="password">HESLO: %1$s</string>
 
 
     <string name="sms_theory">
@@ -74,31 +97,129 @@
         </string>
 
     <string name="contact_theory">
-           Kontakty test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k SMS</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="calllog_theory">
-           Logy test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k SMS</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="calendar_theory">
-           Kalendář test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k SMS</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="location_theory">
-           Poloha test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k poloze</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="storage_theory">
-           Úložiště test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k SMS</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="phone_theory">
-           SIM test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k SIM kart&eacute;</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="camera_theory">
-           Fotoaparát test
+           <![CDATA[
+                <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k fotoaparátu</h2>
+                <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>
+                <ul>
+                <li>Přij&iacute;mat SMS a zpracov&aacute;vat je na pozad&iacute;</li>
+                <li>Přij&iacute;mat MMS a WAP zpr&aacute;vy</li>
+                <li>Č&iacute;st přijat&eacute; a odeslan&eacute; SMS</li>
+                <li>Odes&iacute;lat SMS</li>
+                </ul>
+                <p><strong>Praktick&yacute; př&iacute;klad</strong></p>
+                <ul>
+                <li>Demonstrace zneužit&iacute; dan&eacute;ho povolen&iacute;, konkr&eacute;tně čten&eacute; SMS zpr&aacute;v</li>
+                <li>Je nutn&eacute; m&iacute;t př&iacute;stup k internetu a povolit dan&eacute; povolen&iacute;</li>
+                </ul>
+            ]]>
         </string>
 
     // About app

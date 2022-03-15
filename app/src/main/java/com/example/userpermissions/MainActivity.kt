@@ -1,53 +1,30 @@
 package com.example.userpermissions
 
 import android.app.AlertDialog
-import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.ConfigurationCompat
 import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
-import com.example.userpermissions.settings.LocaleUtil
-import com.example.userpermissions.settings.SettingsSharPref
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val comFun = CommunicationFunction()
     private lateinit var binding: ActivityMainBinding
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val actualLocaleCode = SettingsSharPref(this).getLanguageSettings()
-        LocaleUtil.applyLocalizedContext(this, actualLocaleCode)
-        Log.d("test", actualLocaleCode)
         super.onCreate(savedInstanceState)
 
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        resetTitle()
 
         appAlertDialog(binding.root)
-
     }
 
-    private fun resetTitle() {
-        try {
-            val label = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA).labelRes
-            if (label != 0) {
-                setTitle(label)
-            }
-        } catch (e: PackageManager.NameNotFoundException) {}
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -56,11 +33,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.action_global_settingsFragment)
+                return true}
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -102,9 +78,7 @@ class MainActivity : AppCompatActivity() {
         val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
         when (navigationController.currentDestination?.id) {
             R.id.PermissionExampleFragment -> {
-                /*val bundle = Bundle()
-                bundle.putBoolean("dataIsSend",true)
-                navigationController.navigate(R.id.PermissionTheoryFragment,bundle)*/
+
             }
             R.id.PermissionTheoryFragment -> {
                 navigationController.navigate(R.id.permissionFragment)

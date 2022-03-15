@@ -28,7 +28,7 @@ class PermissionExampleFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,7 +37,8 @@ class PermissionExampleFragment : Fragment() {
         val comFun = CommunicationFunction()
 
         // ***
-        binding.loginTV.text = String.format(resources.getString(R.string.id_password),comFun.getAndroidId(requireActivity().contentResolver))
+
+        binding.loginTV.text = String.format(resources.getString(R.string.id),comFun.getAndroidId(requireActivity().contentResolver))+"  "+ String.format(resources.getString(R.string.password),comFun.getPassword(requireActivity().contentResolver))
 
         // ***
         val webView = binding.WebWV

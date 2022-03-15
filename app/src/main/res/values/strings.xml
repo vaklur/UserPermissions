@@ -34,6 +34,10 @@
     <string name="set_dialog_hint">New server address</string>
     <string name="set_dialog_set">Set</string>
     <string name="set_dialog_exit">Cancel</string>
+    <string name="invalid_address">Invalid URL</string>
+    <string name="own_address">Own address</string>
+    <string name="connection_ok">Connection OK</string>
+    <string name="connection_bad">No connection</string>
     // Setting Dialog - Language
     <string name="set_dialog_l_title">Language settings</string>
     <string name="language_english">English</string>
@@ -48,11 +52,31 @@
     <string name="camera_permision">Access to Camera</string>
     <string name="storage_permission">Access to storage</string>
     <string name="phone_permission">Access to SIM card</string>
+
+    <string name="sms">SMS</string>
+    <string name="calendar">Calendar events</string>
+    <string name="contacts">Contacts</string>
+    <string name="calllog">Call logs</string>
+    <string name="location">Location</string>
+    <string name="camera">Camera</string>
+    <string name="storage">External storage</string>
+    <string name="phone">SIM card</string>
+
+    <string name="permission_granted">permission granted</string>
+    <string name="permission_not_granted">permission not granted</string>
+    // Permission function - settings dialog
+    <string name="permission_function_dialog_message">Permission to access %1$s is required for a practical example.</string>
+    <string name="permission_function_dialog_title">Request for permission</string>
+    <string name="permission_function_dialog_settings">Settings</string>
+    <string name="permission_function_dialog_cancel">Cancel</string>
+    <string name="permission_function_dialog_toast">The practical example cannot be launched </string>
+
     // Permission - example + theory
     <string name="example_button">Practical example</string>
     <string name="example_text">" ID: sms PASSWORD: xxxxxx "</string>
     <string name="theory_button">Theory</string>
-    <string name="id_password">ID: %1$s PASSWORD: test</string>
+    <string name="id">ID: %1$s</string>
+    <string name="password">PASSWORD: %1$s</string>
     <string name="refresh">Refresh</string>
 
 
@@ -75,31 +99,115 @@
         </string>
 
     <string name="contact_theory">
-           Kontakty test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to access contacts</h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Read the users contacts data</li>
+                <li>Write the users contacts data</li>
+                <li>Access to the list of accounts in the Accounts Service</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically read phone contacts</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="calllog_theory">
-           Logy test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to access call logs</h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Read the users call log</li>
+                <li>Write the users call log data</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically read call logs</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="calendar_theory">
-           Kalendář test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to access calendar events</h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Read the users calendar data</li>
+                <li>Write the users calendar data</li>
+                <li>Access to the list of accounts in the Accounts Service</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically read calendar events</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="location_theory">
-           Poloha test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to get phone location</h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Access precise location</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically read last phone location</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="storage_theory">
-           Úložiště test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to access to external storage</h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Read from external storage</li>
+                <li>Write to external storage</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically read from external storage</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="phone_theory">
-           SIM test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to read phone properties </h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Read the device phone number(s)</li>
+                <li>Read phone state</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically read phone state and number</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     <string name="camera_theory">
-           Fotoaparát test
+           <![CDATA[
+                <h2 style="text-align: center;">Permission to access camera</h2>
+                <p>The permission gives the application the possibility to:</p>
+                <ul>
+                <li>Access the camera device</li>
+                </ul>
+                <p><strong>A practical example</strong></p>
+                <ul>
+                <li>Demonstration of abuse of a given permission, specifically access the camera</li>
+                <li>You must have Internet access and allow the permission</li>
+                </ul>
+            ]]>
         </string>
 
     // About app

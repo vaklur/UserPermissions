@@ -18,7 +18,7 @@ class LocaleUtil  {
          * when preference value = "sys_def" returns the locale of current system
          * else it returns the locale code e.g. "en", "bn" etc.
          */
-        fun getLocaleFromPrefCode(prefCode: String): Locale{
+        private fun getLocaleFromPrefCode(prefCode: String): Locale{
             val localeCode = if(prefCode != OPTION_PHONE_LANGUAGE) {
                 prefCode
             } else {
@@ -37,7 +37,7 @@ class LocaleUtil  {
             return getLocalizedConfiguration(locale)
         }
 
-        fun getLocalizedConfiguration(locale: Locale): Configuration {
+        private fun getLocalizedConfiguration(locale: Locale): Configuration {
             val config = Configuration()
             return config.apply {
                 config.setLayoutDirection(locale)
@@ -85,16 +85,5 @@ class LocaleUtil  {
             }
         }
 
-        /*fun getLocalizedResources(resources: Resources, prefLocaleCode: String): Resources {
-            val locale = getLocaleFromPrefCode(prefLocaleCode)
-            val config = resources.configuration
-            @Suppress("DEPRECATION")
-            config.locale = locale
-            config.setLayoutDirection(locale)
-
-            @Suppress("DEPRECATION")
-            resources.updateConfiguration(config, resources.displayMetrics)
-            return resources
-        }*/
     }
 }
