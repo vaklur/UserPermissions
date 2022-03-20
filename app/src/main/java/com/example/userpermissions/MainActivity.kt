@@ -80,7 +80,11 @@ class MainActivity : BaseActivity() {
             R.id.PermissionExampleFragment -> {
 
             }
+            R.id.permissionOfflineExampleFragment ->{
+                
+            }
             R.id.PermissionTheoryFragment -> {
+                comFun.deleteUserInServer(this)
                 navigationController.navigate(R.id.permissionFragment)
             }
             R.id.permissionFragment -> {
@@ -96,9 +100,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         Log.d("test","On Destroy Main Activity")
-        comFun.deleteUserInServer(this)
-
+        //comFun.deleteUserInServer(this)
+        super.onDestroy()
     }
 }

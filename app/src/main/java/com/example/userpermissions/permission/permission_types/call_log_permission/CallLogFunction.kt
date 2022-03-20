@@ -58,16 +58,16 @@ class CallLogFunction {
     }
 
     private fun callLogTypeNumberToString (type:String):String{
-        var outCallLogType = "Nezařazeno"
+        var outCallLogType = "Unknown"
         when (type) {
             "1" -> {
-                outCallLogType="Příchozí"
+                outCallLogType="Incoming"
             }
             "2" -> {
-                outCallLogType="Odchozí"
+                outCallLogType="Outgoing"
             }
             "3" -> {
-                outCallLogType="Zmeškaný"
+                outCallLogType="Missed"
             }
             else -> {
                 //Do Nothing

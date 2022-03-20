@@ -13,10 +13,10 @@ class LocationFunction {
 
     @SuppressLint("MissingPermission")
     fun getLastLocation (activity: Activity, context: Context){
-        var latitude = "" // šířka
-        var longitude = "" // délka
-        var accuracy = "" // přesnost
-        var altitude =  "" // n.m.v
+        var latitude: String // šířka
+        var longitude: String // délka
+        var accuracy: String // přesnost
+        var altitude: String // n.m.v
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location->

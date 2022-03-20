@@ -25,7 +25,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserPermissions"
         android:usesCleartextTraffic="true"
-        android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
         <activity
             android:name=".MainActivity"

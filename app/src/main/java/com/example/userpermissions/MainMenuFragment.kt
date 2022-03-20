@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.userpermissions.databinding.FragmentMainMenuBinding
+import com.example.userpermissions.volley_communication.CommunicationFunction
 
 
 class MainMenuFragment : Fragment() {
 
     private var _binding: FragmentMainMenuBinding? = null
     private val binding get() = _binding!!
+
+    private val comFun = CommunicationFunction()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +31,7 @@ class MainMenuFragment : Fragment() {
 
         binding.permissionsBTN.setOnClickListener {
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_permissionFragment)
+            comFun.deleteUserInServer(requireActivity())
         }
 
         binding.settingsBTN.setOnClickListener {

@@ -8,7 +8,6 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.userpermissions.permission.permission_types.call_log_permission.MyCallLog
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 

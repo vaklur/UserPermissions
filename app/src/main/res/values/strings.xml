@@ -79,6 +79,16 @@
     <string name="password">PASSWORD: %1$s</string>
     <string name="refresh">Refresh</string>
 
+    <string name="example_off_text">Example of abuse %1$s permission</string>
+
+    //Permission item lists
+
+    <string name="sms_title">SMS title</string>
+    <string name="sms_date">Date: </string>
+    <string name="sms_number">Phone: </string>
+    <string name="sms_text">Text: </string>
+    <string name="sms_type">Type: </string>
+
 
     <string name="sms_theory">
             <![CDATA[

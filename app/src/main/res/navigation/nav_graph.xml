@@ -54,5 +54,17 @@
         <action
             android:id="@+id/action_PermissionTheoryFragment_to_PermissionExampleFragment"
             app:destination="@id/PermissionExampleFragment" />
+        <action
+            android:id="@+id/action_PermissionTheoryFragment_to_permissionOfflineExampleFragment"
+            app:destination="@id/permissionOfflineExampleFragment" />
     </fragment><action android:id="@+id/action_global_settingsFragment" app:destination="@id/settingsFragment"/>
+    <fragment
+        android:id="@+id/permissionOfflineExampleFragment"
+        android:name="com.example.userpermissions.permission.offline_example.PermissionOfflineExampleFragment"
+        android:label="fragment_permission_offline_example"
+        tools:layout="@layout/fragment_permission_offline_example" >
+        <action
+            android:id="@+id/action_permissionOfflineExampleFragment_to_PermissionTheoryFragment"
+            app:destination="@id/PermissionTheoryFragment" />
+    </fragment>
 </navigation>
