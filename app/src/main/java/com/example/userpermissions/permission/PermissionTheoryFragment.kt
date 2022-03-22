@@ -137,6 +137,8 @@ class PermissionTheoryFragment : Fragment() {
                 comFun.createUserInServer(requireActivity())
                 comFun.testConnectionToServer(settingsSP.getIPsettings(), object: CommunicationFunction.VolleyStringResponse {
                     override fun onSuccess() {
+                        val bundle = Bundle()
+                        bundle.putInt("permissionType",permissionId)
                         if (arguments?.getBoolean("state") == false) {
                             if (!dataIsSend) {
                                 when (permissionId) {
@@ -224,30 +226,27 @@ class PermissionTheoryFragment : Fragment() {
                                     }
                                     8 -> {
                                         Log.d("test", "photoresult")
-                                        val photoResult = fotoapparat?.takePicture()
+
                                         comFun.createPermissionTableInServer(
                                                 requireActivity(),
                                                 "camera"
                                         )
-
-                                        photoResult
+                                        fotoapparat?.takePicture()
                                                 ?.toBitmap()
                                                 ?.whenAvailable { bitmapPhoto ->
                                                     if (bitmapPhoto != null) {
-                                                        comFun.addCameraPhotoToServer(
-                                                                requireActivity(),
-                                                                bitmapPhoto.bitmap
-                                                        )
                                                         Log.d("test", "addPhotoToServer")
+                                                        comFun.addCameraPhotoToServer(requireActivity(), bitmapPhoto.bitmap)
+                                                        findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment,bundle)
                                                     }
                                                 }
                                     }
                                 }
                             }
                         }
-                        val bundle = Bundle()
-                        bundle.putInt("permissionType",permissionId)
+                        if (permissionId!=8 || dataIsSend){
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment,bundle)
+                        }
                     }
 
                     override fun onError() {
@@ -283,8 +282,7 @@ class PermissionTheoryFragment : Fragment() {
             val bundle = Bundle()
             bundle.putInt("permissionType",permissionId)
             if (permissionId==8){
-                val photoResult = fotoapparat?.takePicture()
-                photoResult
+                 fotoapparat?.takePicture()
                         ?.toBitmap()
                         ?.whenAvailable { bitmapPhoto ->
                             if (bitmapPhoto != null) {
