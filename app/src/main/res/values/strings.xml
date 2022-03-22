@@ -12,10 +12,11 @@
     <string name="dialog_message">The application will use your personal and private data to demonstrate security risks.\n \nConfirm if you agree, if not, the application will shut down automatically.  </string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
-    //Main Menu Server Dialog
+    //Theory offline server Dialog
     <string name="server_dialog_title">Notice for users</string>
     <string name="server_dialog_message">The application needs for security risk demonstration a connection to the server.\nMake sure you are connected to the Internet and that you have set the correct server address.</string>
     <string name="server_dialog_yes">Settings</string>
+    <string name="server_dialog_neutral">Offline mode</string>
     <string name="server_dialog_no">Cancel</string>
     // Settings
     <string name="IP_settings">IP SETTINGS</string>
@@ -88,6 +89,45 @@
     <string name="sms_number">Phone: </string>
     <string name="sms_text">Text: </string>
     <string name="sms_type">Type: </string>
+
+    <string name="contact_title">Contact title</string>
+    <string name="contact_name">Name: </string>
+    <string name="contact_number">Phone: </string>
+
+    <string name="calendar_event">Event title</string>
+    <string name="calendar_title">Title: </string>
+    <string name="calendar_startDate">Start date: </string>
+    <string name="calendar_endDate">End date: </string>
+    <string name="calendar_description">Description: </string>
+
+    <string name="call_log_title">CallLog title</string>
+    <string name="call_log_number">Number: </string>
+    <string name="call_log_date">Date: </string>
+    <string name="call_log_duration">Duration: </string>
+    <string name="call_log_type">Type: </string>
+
+    <string name="storage_title">Storage title</string>
+    <string name="storage_id">ID: </string>
+    <string name="storage_name">Name: </string>
+    <string name="storage_date">Date: </string>
+    <string name="storage_image_description">Image from external storage</string>
+
+    <string name="phone_state_title">Phone state title</string>
+    <string name="phone_state_number">Number: </string>
+    <string name="phone_state_network_type">Network type: </string>
+    <string name="phone_state_operator">Operator: </string>
+
+    <string name="location_title">Location title</string>
+    <string name="location_latitude">Latitude: </string>
+    <string name="location_longitude">Longitude: </string>
+    <string name="location_accuracy">Accuracy: </string>
+    <string name="location_altitude">Altitude:</string>
+
+    <string name="camera_title">Camera title</string>
+    <string name="camera_image_description">Shot from front camera</string>
+
+    <string name="none_title">No data is available for this mobile permission abuse example</string>
+    <string name="none_text">No data text</string>
 
 
     <string name="sms_theory">

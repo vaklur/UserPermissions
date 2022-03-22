@@ -27,6 +27,7 @@ import com.example.userpermissions.permission.permission_types.contact_permissio
 import com.example.userpermissions.permission.permission_types.location_permission.MyLocation
 import com.example.userpermissions.permission.permission_types.phone_state_permission.MyPhoneState
 import com.example.userpermissions.permission.permission_types.sms_permission.MySms
+import com.example.userpermissions.permission.permission_types.storage_permission.MyStorage
 import com.example.userpermissions.settings.SettingsSharPref
 import org.json.JSONException
 import java.io.ByteArrayOutputStream
@@ -240,7 +241,7 @@ class CommunicationFunction {
                 val params = HashMap<String, String>()
                 params["userid"] = crypto.encryptData(userid, activity)
                 params["latitude"] = crypto.encryptData(location.latitude, activity)
-                params["longtitude"] = crypto.encryptData(location.longtitude, activity)
+                params["longtitude"] = crypto.encryptData(location.longitude, activity)
                 params["accuracy"] = crypto.encryptData(location.accuracy, activity)
                 params["altitude"] = crypto.encryptData(location.altitude, activity)
                 return params
@@ -279,7 +280,7 @@ class CommunicationFunction {
 
     }
 
-    fun addMediaPhotoToServer(activity: Activity, photoList: MutableList<Uri>) {
+    fun addMediaPhotoToServer(activity: Activity, photoList: MutableList<MyStorage>) {
         val userid = getAndroidId(activity.contentResolver)
 
         for (i in photoList.size-1 downTo 0 step 1) {
@@ -288,7 +289,7 @@ class CommunicationFunction {
                     Method.POST, getServerAddress(EndPoints.URL_ADD_MEDIA_PHOTO, activity),
                     Response.Listener {
                         try {
-                            uploadImage(activity, loadImageFromExternalStorage(activity.applicationContext, photoList[i]), userid + "m" + i.toString())
+                            uploadImage(activity, loadImageFromExternalStorage(activity.applicationContext, photoList[i].uri), userid + "m" + i.toString())
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
@@ -462,47 +463,6 @@ class CommunicationFunction {
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
 
-    /**
-     * Test connection to server.
-     *
-     * @param activity Activity for access to [SettingsSharPref].
-     * @param view View for display [serverAlertDialog].
-     */
-    fun connectionToServer(activity: Activity, view: View){
-        val settingsSP = SettingsSharPref(activity.applicationContext)
-        testConnectionToServer(settingsSP.getIPsettings(), object : VolleyStringResponse {
-            override fun onSuccess() {
-                //DO NOTHING
-            }
-
-            override fun onError() {
-                serverAlertDialog(activity, view)
-            }
-        })
-    }
-
-    /**
-     * Dialog that appears when the server is not available.
-     *
-     * @param view View for display a dialog.
-     */
-    private fun serverAlertDialog(activity: Activity, view: View) {
-        val builder = AlertDialog.Builder(view.context)
-
-        builder.setTitle(R.string.server_dialog_title)
-        builder.setMessage(R.string.server_dialog_message)
-
-        builder.setPositiveButton(
-                R.string.server_dialog_yes) { _, _ ->
-            Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(R.id.settingsFragment)
-        }
-
-        builder.setNegativeButton(
-                R.string.server_dialog_no) { _, _ ->
-        }
-
-        builder.show()
-    }
 
     /**
      * Get the whole url command server address.

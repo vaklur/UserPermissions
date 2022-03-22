@@ -12,10 +12,11 @@
     <string name="dialog_message">Aplikace bude pro účely demonstrace bezpečnostních rizik využívat vaše osobní a soukromá data.\n \nPotvrďtě zdali souhlasíte, pokud ne, aplikace se automaticky vypne.</string>
     <string name="dialog_yes">Souhlasím</string>
     <string name="dialog_no">Nesouhlasím</string>
-    //Main Menu Server Dialog
+    //Theory offline server Dialog
     <string name="server_dialog_title">Upozornění pro uživatele</string>
     <string name="server_dialog_message">Aplikace pro demonstraci bezbečnostních rizik potřebuje připojení k serveru.\nZkontrolujte zdali jste připojeti k internetu a zda máte nastavenu správnou adresu serveru.</string>
     <string name="server_dialog_yes">Nastavení</string>
+    <string name="server_dialog_neutral">Offline režim</string>
     <string name="server_dialog_no">Zavřít</string>
     // Settings
     <string name="IP_settings">NASTAVENÍ ADRESY SERVERU</string>
@@ -81,12 +82,50 @@
 
     //Permission item lists
 
-    <string name="sms_title">SMS název</string>
+    <string name="sms_title">SMS</string>
     <string name="sms_date">Datum: </string>
     <string name="sms_number">Tel. číslo: </string>
     <string name="sms_text">Text: </string>
     <string name="sms_type">Typ: </string>
 
+    <string name="contact_title">Kontakt</string>
+    <string name="contact_name">Jméno: </string>
+    <string name="contact_number">Tel. číslo:</string>
+
+    <string name="calendar_event">Název události</string>
+    <string name="calendar_title">Titulek: </string>
+    <string name="calendar_startDate">Začátek: </string>
+    <string name="calendar_endDate">Konec: </string>
+    <string name="calendar_description">Popis: </string>
+
+    <string name="call_log_title">Záznam hovorů</string>
+    <string name="call_log_number">Tel. číslo: </string>
+    <string name="call_log_date">Datum: </string>
+    <string name="call_log_duration">Trvání: </string>
+    <string name="call_log_type">Typ: </string>
+
+    <string name="storage_title">Obrázek z úložiště</string>
+    <string name="storage_id">ID: </string>
+    <string name="storage_name">Název: </string>
+    <string name="storage_date">Datum: </string>
+    <string name="storage_image_description">Obrázek z externího úložiště</string>
+
+    <string name="phone_state_title">SIM</string>
+    <string name="phone_state_number">Tel. číslo: </string>
+    <string name="phone_state_network_type">Typ sítě: </string>
+    <string name="phone_state_operator">Mob. operátor: </string>
+
+    <string name="location_title">Poloha</string>
+    <string name="location_latitude">Zaměpisná šířka: </string>
+    <string name="location_longitude">Zěmepisná délka: </string>
+    <string name="location_accuracy">Přesnost: </string>
+    <string name="location_altitude">Nadmořská výška:</string>
+
+    <string name="camera_title">Snímek z fotoaparátu</string>
+    <string name="camera_image_description">Snímek z předního fotoaparátu</string>
+
+    <string name="none_title">Pro tento příklad zneužití mobilního oprávnění nejsou k dispozici žádná data</string>
+    <string name="none_text">Žádná data</string>
 
     <string name="sms_theory">
             <![CDATA[

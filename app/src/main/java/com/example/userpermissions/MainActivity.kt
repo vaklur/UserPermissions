@@ -60,8 +60,6 @@ class MainActivity : BaseActivity() {
 
         builder.setPositiveButton(
             R.string.dialog_yes) { _, _ ->
-            // Test connection to server
-            CommunicationFunction().connectionToServer(this,binding.root)
         }
 
         builder.setNegativeButton(

@@ -14,8 +14,8 @@ import java.util.ArrayList
 class StorageFunction {
     @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("SimpleDateFormat")
-    fun getPhotosFromGallery(contentResolver: ContentResolver, photosCount: Int):MutableList<Uri>{
-        val photoNameList: MutableList<Uri> = ArrayList()
+    fun getPhotosFromGallery(contentResolver: ContentResolver, photosCount: Int):MutableList<MyStorage>{
+        val photoNameList: MutableList<MyStorage> = ArrayList()
 
         val idCol = MediaStore.Images.Media._ID
         val nameCol = MediaStore.Images.Media.DISPLAY_NAME
@@ -47,10 +47,7 @@ class StorageFunction {
             val dateMSC = cursor.getLong(dateColIdx)
             val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
             val date = simpleDateFormat.format(dateMSC)
-            Log.d("test",id)
-            Log.d("test",name)
-            Log.d("test",date)
-            photoNameList.add(ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toLong()))
+            photoNameList.add(MyStorage(id,name,date,ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toLong())))
             cursor.moveToNext()
         }
         cursor.close()

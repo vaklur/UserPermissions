@@ -1,38 +1,37 @@
 package com.example.userpermissions.permission.offline_example
 
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.R
 import com.example.userpermissions.databinding.FragmentPermissionOfflineExampleBinding
-import com.example.userpermissions.permission.data.PermissionDatasource
 import com.example.userpermissions.permission.permission_types.calendar_permission.CalendarFunction
+import com.example.userpermissions.permission.permission_types.calendar_permission.MyCalendarAdapter
 import com.example.userpermissions.permission.permission_types.call_log_permission.CallLogFunction
+import com.example.userpermissions.permission.permission_types.call_log_permission.MyCallLogAdapter
+import com.example.userpermissions.permission.permission_types.camera_permission.MyCameraAdapter
 import com.example.userpermissions.permission.permission_types.contact_permission.ContactFunction
+import com.example.userpermissions.permission.permission_types.contact_permission.MyContactAdapter
 import com.example.userpermissions.permission.permission_types.location_permission.LocationFunction
+import com.example.userpermissions.permission.permission_types.phone_state_permission.MyPhoneStateAdapter
 import com.example.userpermissions.permission.permission_types.phone_state_permission.PhoneStateFunction
 import com.example.userpermissions.permission.permission_types.sms_permission.MySmsAdapter
 import com.example.userpermissions.permission.permission_types.sms_permission.SmsFunction
+import com.example.userpermissions.permission.permission_types.storage_permission.MyStorageAdapter
 import com.example.userpermissions.permission.permission_types.storage_permission.StorageFunction
-import io.fotoapparat.Fotoapparat
-import io.fotoapparat.log.logcat
-import io.fotoapparat.log.loggers
-import io.fotoapparat.parameter.ScaleType
-import io.fotoapparat.selector.front
 
 
 class PermissionOfflineExampleFragment : Fragment() {
 
     private var _binding: FragmentPermissionOfflineExampleBinding? = null
     private val binding get() = _binding!!
-
-    private var fotoapparat: Fotoapparat? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -45,64 +44,107 @@ class PermissionOfflineExampleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val permissionId = requireArguments().getInt("permissionType")
-
+        val recyclerView = binding.exampleOffRV
         when (permissionId) {
             1 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.sms)))
                 val sms = SmsFunction()
-                val smsRecyclerView = binding.exampleOffRV
-                val smsAdapter = MySmsAdapter(sms.readSms(requireActivity().contentResolver, 10))
-                smsRecyclerView.adapter = smsAdapter
-                smsRecyclerView.setHasFixedSize(true)
+                val smsMessages = sms.readSms(requireActivity().contentResolver, 10)
+                if (smsMessages.size!=0) {
+                    val smsAdapter = MySmsAdapter(smsMessages)
+                    recyclerView.adapter = smsAdapter
+                }
+                else {
+                    val smsAdapter = NoItemAdapter()
+                    recyclerView.adapter = smsAdapter
+                }
             }
             2 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.contacts)))
                 val contact = ContactFunction()
-                contact.readContacts(requireActivity().contentResolver, 10)
-
+                val contacts = contact.readContacts(requireActivity().contentResolver, 10)
+                if (contacts.size!=0){
+                val contactAdapter = MyContactAdapter(contacts)
+                recyclerView.adapter = contactAdapter
+                }
+                else{
+                    val contactAdapter = NoItemAdapter()
+                    recyclerView.adapter = contactAdapter
+                }
             }
             3 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.calllog)))
                 val callLog = CallLogFunction()
-                callLog.readCallLogs(requireActivity().contentResolver, 10)
+                val callLogs = callLog.readCallLogs(requireActivity().contentResolver, 10)
+                if (callLogs.size!=0){
+                    val callLogAdapter = MyCallLogAdapter(callLogs)
+                    recyclerView.adapter = callLogAdapter
+                }
+                else{
+                    val callLogAdapter = NoItemAdapter()
+                    recyclerView.adapter = callLogAdapter
+                }
             }
             4 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.calendar)))
                 val calendar = CalendarFunction()
-                calendar.readCalendarEvents(requireActivity().contentResolver, 10)
+                val calendarEvents = calendar.readCalendarEvents(requireActivity().contentResolver, 10)
+                if (calendarEvents.size!=0){
+                    val calendarAdapter = MyCalendarAdapter(calendar.readCalendarEvents(requireActivity().contentResolver, 10))
+                    recyclerView.adapter = calendarAdapter
+                }
+                else{
+                    val calendarAdapter = NoItemAdapter()
+                    recyclerView.adapter = calendarAdapter
+                }
+
 
             }
             5 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.location)))
                 val location = LocationFunction()
-                //location.getLastLocation(requireActivity(), requireContext())
+                location.getLastLocation(requireContext(),binding.root)
 
             }
             6 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.storage)))
                 val extStorage = StorageFunction()
-                extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10)
+                val photos = extStorage.getPhotosFromGallery(requireActivity().contentResolver, 10)
+                if (photos.size!=0){
+                val extStorageAdapter = MyStorageAdapter(requireContext(),photos)
+                recyclerView.adapter = extStorageAdapter
+                }
+                else{
+                    val extStorageAdapter = NoItemAdapter()
+                    recyclerView.adapter = extStorageAdapter
+                }
             }
             7 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.phone)))
                 val simInfo = PhoneStateFunction()
-                simInfo.getDataFromSIM(requireContext())
+                val simInformation = simInfo.getDataFromSIM(requireContext())
+                if (simInformation.phoneNumber!=""){
+                    val simInfoAdapter = MyPhoneStateAdapter(simInformation)
+                    recyclerView.adapter = simInfoAdapter
+                }
+                else {
+                    val simInfoAdapter = NoItemAdapter()
+                    recyclerView.adapter = simInfoAdapter
+                }
             }
             8 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.camera)))
-                createFotoapparat()
-                val photoResult = fotoapparat?.takePicture()
-
-                photoResult
-                    ?.toBitmap()
-                    ?.whenAvailable { bitmapPhoto ->
-                        if (bitmapPhoto != null) {
-                            bitmapPhoto.bitmap
-                            Log.d("test", "addPhotoToServer")
-                        }
-                    }
+                val photo: Bitmap? = requireArguments().getParcelable("photo")
+                if (photo!=null){
+                val cameraAdapter = MyCameraAdapter(photo)
+                recyclerView.adapter = cameraAdapter}
+                else{
+                    val cameraAdapter = NoItemAdapter()
+                    recyclerView.adapter = cameraAdapter
+                }
             }
         }
+        recyclerView.setHasFixedSize(true)
 
         binding.theoryOffBTN.setOnClickListener {
             val bundle = Bundle()
@@ -112,27 +154,9 @@ class PermissionOfflineExampleFragment : Fragment() {
         }
     }
 
-    private fun createFotoapparat(){
-        val cameraView = binding.exampleCW
-
-        fotoapparat = Fotoapparat(
-            context = requireContext(),
-            view = cameraView,
-            scaleType = ScaleType.CenterCrop,
-            lensPosition = front(),
-            logger = loggers(
-                logcat()
-            ),
-            cameraErrorCallback = { error ->
-                Log.d("test","Recorder errors: $error")
-            }
-        )
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        fotoapparat?.stop()
         _binding=null
     }
 }

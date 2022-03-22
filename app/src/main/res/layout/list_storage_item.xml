@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/storage_title_TV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background = "@color/gray"
+        android:text="@string/storage_title"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rectangle_back_v1">
+        <TextView
+            android:id="@+id/storage_id_text_TV"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/storage_id" />
+
+        <TextView
+            android:id="@+id/storage_id_TV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/storage_id" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rectangle_back_v1">
+        <TextView
+            android:id="@+id/storage_name_text_TV"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/storage_name" />
+
+        <TextView
+            android:id="@+id/storage_name_TV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/storage_name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rectangle_back_v1">
+        <TextView
+            android:id="@+id/storage_date_text_TV"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/storage_date" />
+
+        <TextView
+            android:id="@+id/storage_date_TV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/storage_date" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rectangle_back_v1">
+        <ImageView
+            android:id="@+id/storage_image_IV"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:contentDescription="@string/storage_image_description"
+            />
+    </LinearLayout>
+</LinearLayout>
