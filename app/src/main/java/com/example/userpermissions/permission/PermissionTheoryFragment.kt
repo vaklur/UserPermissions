@@ -130,10 +130,10 @@ class PermissionTheoryFragment : Fragment() {
         theoryVW.setBackgroundColor(Color.TRANSPARENT)
 
         binding.exampleBTN.setOnClickListener {
-            binding.exampleBTN.isEnabled = false
             permissionGranted = PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText,requireContext())
             val comFun = CommunicationFunction()
             if(permissionGranted) {
+                binding.exampleBTN.isEnabled = false
                 comFun.createUserInServer(requireActivity())
                 comFun.testConnectionToServer(settingsSP.getIPsettings(), object: CommunicationFunction.VolleyStringResponse {
                     override fun onSuccess() {

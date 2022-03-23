@@ -1,5 +1,6 @@
 package com.example.userpermissions.permission.permission_types.location_permission
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,14 +27,15 @@ class MyLocationAdapter (
 
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset
         val locationTitle = "Last known location"
         holder.titleTV.text = locationTitle
-        holder.latitudeTV.text = item.latitude
-        holder.longitudeTV.text = item.longitude
-        holder.accuracyTV.text = item.accuracy
-        holder.altitudeTV.text = item.altitude
+        holder.latitudeTV.text = "N " + item.latitude
+        holder.longitudeTV.text ="E" + item.longitude
+        holder.accuracyTV.text = item.accuracy + " m"
+        holder.altitudeTV.text = item.altitude + " m MSL"
 
 
     }

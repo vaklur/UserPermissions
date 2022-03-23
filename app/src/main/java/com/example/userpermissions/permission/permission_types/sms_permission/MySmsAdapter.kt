@@ -29,7 +29,7 @@ class MySmsAdapter (
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        val smsTitle = "sms $position"
+        val smsTitle = "SMS $position"
         holder.titleTV.text = smsTitle
         holder.dateTV.text = item.date
         holder.numberTV.text = item.number

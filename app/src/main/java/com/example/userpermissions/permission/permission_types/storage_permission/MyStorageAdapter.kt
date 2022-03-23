@@ -36,7 +36,7 @@ class MyStorageAdapter(
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        val storageTitle = "storage $position"
+        val storageTitle = "Image $position"
         holder.titleTV.text = storageTitle
         holder.idTV.text = item.id
         holder.nameTV.text = item.name

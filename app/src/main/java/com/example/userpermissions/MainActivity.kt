@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
@@ -76,7 +77,7 @@ class MainActivity : BaseActivity() {
         val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
         when (navigationController.currentDestination?.id) {
             R.id.PermissionExampleFragment -> {
-
+                Toast.makeText(this,R.string.back_to_theory,Toast.LENGTH_LONG).show()
             }
             R.id.permissionOfflineExampleFragment ->{
                 
