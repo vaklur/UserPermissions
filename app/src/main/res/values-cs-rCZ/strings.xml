@@ -71,12 +71,14 @@
     <string name="permission_function_dialog_settings">Nastavení</string>
     <string name="permission_function_dialog_cancel">Zavřít</string>
     <string name="permission_function_dialog_toast">Praktická ukázka nemůže být spuštěna</string>
-    // SMS Permission
+    // Permission example + theory
     <string name="example_button">Praktický příklad</string>
     <string name="example_text"> ID: sms HESLO: xxxxxx </string>
     <string name="theory_button">Teorie</string>
     <string name="id">ID: %1$s </string>
     <string name="password">HESLO: %1$s</string>
+
+    <string name="progres_bar_text">Snaha o připojení k serveru…</string>
 
     <string name="example_off_text">Příklad zneužití povolení přístupu k %1$s</string>
 

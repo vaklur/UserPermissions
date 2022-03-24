@@ -6,6 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".permission.PermissionTheoryFragment">
 
+    <TextView
+        android:id="@+id/theoryProgressBar_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="350dp"
+        android:minWidth="200dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/progres_bar_text" />
+
+    <ProgressBar
+        android:id="@+id/theory_PB"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="300dp"
+        android:indeterminate="true"
+        android:minWidth="200dp"
+        android:minHeight="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/example_BTN"
@@ -19,16 +44,17 @@
 
     <WebView
         android:id="@+id/theory_WV"
-        android:layout_width="389dp"
-        android:layout_height="650dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="11dp"
         android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/example_BTN"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <io.fotoapparat.view.CameraView
         android:id="@+id/theory_CW"
