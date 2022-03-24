@@ -80,7 +80,7 @@ class MainActivity : BaseActivity() {
                 Toast.makeText(this,R.string.back_to_theory,Toast.LENGTH_LONG).show()
             }
             R.id.permissionOfflineExampleFragment ->{
-                
+                Toast.makeText(this,R.string.back_to_theory,Toast.LENGTH_LONG).show()
             }
             R.id.PermissionTheoryFragment -> {
                 comFun.deleteUserInServer(this)

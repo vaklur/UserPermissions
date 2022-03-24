@@ -45,6 +45,7 @@ class StorageFunction {
             val id = cursor.getString(idColIdx)
             val name = cursor.getString(nameColIdx)
             val dateMSC = cursor.getLong(dateColIdx)
+            Log.d("test",name)
             val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
             val date = simpleDateFormat.format(dateMSC)
             photoNameList.add(MyStorage(id,name,date,ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toLong())))

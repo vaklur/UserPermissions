@@ -2,7 +2,6 @@ package com.example.userpermissions.volley_communication
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
@@ -12,15 +11,12 @@ import android.os.Build
 import android.provider.Settings
 import android.util.Base64
 import android.util.Log
-import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.navigation.Navigation
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.example.userpermissions.Cryptography
 import com.example.userpermissions.EndPoints
-import com.example.userpermissions.R
 import com.example.userpermissions.permission.permission_types.calendar_permission.MyCalendarEvent
 import com.example.userpermissions.permission.permission_types.call_log_permission.MyCallLog
 import com.example.userpermissions.permission.permission_types.contact_permission.MyContact

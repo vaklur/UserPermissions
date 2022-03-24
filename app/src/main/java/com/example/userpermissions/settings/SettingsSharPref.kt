@@ -37,7 +37,7 @@ class SettingsSharPref(context: Context) {
     }
 
     fun getLanguageSettings():String{
-        return sharedPreferences.getString("language",LocaleUtil.OPTION_PHONE_LANGUAGE).toString()
+        return sharedPreferences.getString("language","en").toString()
     }
 
     /**
@@ -46,7 +46,7 @@ class SettingsSharPref(context: Context) {
      * @return Saved url address of server.
      */
     fun getIPsettings():String{
-        return sharedPreferences.getString("ipAddress","http://unsecureapp.tode.cz").toString()
+        return sharedPreferences.getString("ipAddress","http://unsecureapp.tode.cz/permissions").toString()
     }
 
     /**
