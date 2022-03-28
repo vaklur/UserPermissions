@@ -2,7 +2,9 @@ package com.example.userpermissions.permission.permission_types.sms_permission
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
+import android.content.Context
 import android.provider.Telephony
+import com.example.userpermissions.R
 import java.text.SimpleDateFormat
 
 /**
@@ -18,7 +20,7 @@ class SmsFunction {
      * @return List of received and sent SMS.
      */
     @SuppressLint("SimpleDateFormat")
-    fun readSms(contentResolver: ContentResolver, smsCount: Int):MutableList<MySms> {
+    fun readSms( smsCount: Int,contentResolver: ContentResolver,context: Context):MutableList<MySms> {
         val smsList: MutableList<MySms> = ArrayList()
         val numberCol = Telephony.TextBasedSmsColumns.ADDRESS
         val textCol = Telephony.TextBasedSmsColumns.BODY
@@ -50,7 +52,7 @@ class SmsFunction {
             cursor.moveToNext()
             val number = cursor.getString(numberColIdx)
             val text = cursor.getString(textColIdx)
-            val type = smsTypeNumberToString(cursor.getString(typeColIdx))
+            val type = smsTypeNumberToString(cursor.getString(typeColIdx),context)
             val dateMSC = cursor.getLong(dateColIdx)
             val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
             val date = simpleDateFormat.format(dateMSC)
@@ -67,14 +69,14 @@ class SmsFunction {
      * @param type Type of sms 1-> received SMS 2-> sent.
      * @return text SMS type.
      */
-    private fun smsTypeNumberToString (type:String):String{
-        var outSmsType = "Default"
+    private fun smsTypeNumberToString (type:String,context: Context):String{
+        var outSmsType = context.getString(R.string.unknown)
         when (type) {
             "1" -> {
-                outSmsType="Receive"
+                outSmsType=context.getString(R.string.sms_received)
             }
             "2" -> {
-                outSmsType="Sent"
+                outSmsType=context.getString(R.string.sms_sent)
             }
             else -> {
                 //Do Nothing

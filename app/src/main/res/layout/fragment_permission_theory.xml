@@ -6,32 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".permission.PermissionTheoryFragment">
 
-    <TextView
-        android:id="@+id/theoryProgressBar_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="350dp"
-        android:minWidth="200dp"
-        android:textAlignment="center"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/progres_bar_text" />
-
-    <ProgressBar
-        android:id="@+id/theory_PB"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="300dp"
-        android:indeterminate="true"
-        android:minWidth="200dp"
-        android:minHeight="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/example_BTN"
         android:layout_width="wrap_content"
@@ -55,6 +29,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/theoryProgressBar_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="350dp"
+        android:minWidth="200dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/progres_bar_text" />
+
+    <ProgressBar
+        android:id="@+id/theory_PB"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="300dp"
+        android:indeterminate="true"
+        android:minWidth="200dp"
+        android:minHeight="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <io.fotoapparat.view.CameraView
         android:id="@+id/theory_CW"

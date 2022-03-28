@@ -1,5 +1,6 @@
 package com.example.userpermissions.permission.permission_types.sms_permission
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import com.example.userpermissions.R
 
 
 class MySmsAdapter (
-        private val dataset: List<MySms>
+        private val context: Context,
+        private val smsList: List<MySms>
 ) : RecyclerView.Adapter<MySmsAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,17 +28,15 @@ class MySmsAdapter (
     }
 
 
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        val smsTitle = "SMS $position"
+        val item = smsList[position]
+        val smsTitle = context.getString(R.string.sms_title)+" "+position.toString()
         holder.titleTV.text = smsTitle
         holder.dateTV.text = item.date
         holder.numberTV.text = item.number
         holder.textTV.text = item.text
         holder.typeTV.text = item.type
-
         }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = smsList.size
 }

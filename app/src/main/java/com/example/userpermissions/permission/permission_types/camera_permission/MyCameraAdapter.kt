@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userpermissions.R
 
 class MyCameraAdapter (
-        private val dataset:Bitmap
+        private val photo:Bitmap
         ):RecyclerView.Adapter<MyCameraAdapter.ItemViewHolder>(){
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //val titleTV: TextView = view.findViewById(R.id.camera_title_TV)
         val photoIV: ImageView= view.findViewById(R.id.camera_image_IV)
     }
 
@@ -23,10 +21,8 @@ class MyCameraAdapter (
         return ItemViewHolder(adapterLayout)
     }
 
-
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset
+        val item = photo
         holder.photoIV.setImageBitmap(item)
 
     }

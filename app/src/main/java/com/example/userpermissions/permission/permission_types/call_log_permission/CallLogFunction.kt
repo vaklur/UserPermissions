@@ -2,14 +2,15 @@ package com.example.userpermissions.permission.permission_types.call_log_permiss
 
 import android.annotation.SuppressLint
 import android.content.ContentResolver
+import android.content.Context
 import android.provider.CallLog
-import android.util.Log
+import com.example.userpermissions.R
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CallLogFunction {
     @SuppressLint("SimpleDateFormat")
-    fun readCallLogs (contentResolver: ContentResolver, callLogCount: Int):MutableList<MyCallLog>{
+    fun readCallLogs (callLogCount: Int,contentResolver: ContentResolver,context: Context):MutableList<MyCallLog>{
         val callLogList: MutableList<MyCallLog> = ArrayList()
 
         val numberCol = CallLog.Calls.NUMBER
@@ -40,14 +41,10 @@ class CallLogFunction {
         for (i in callLogCountHelp downTo 1 step 1){
             val number = cursor.getString(numberColIdx)
             val duration = cursor.getString(durationColIdx)
-            val type = callLogTypeNumberToString(cursor.getString(typeColIdx))
+            val type = callLogTypeNumberToString(cursor.getString(typeColIdx),context)
             val dateMSC = cursor.getLong(dateColIdx)
             val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
             val date = simpleDateFormat.format(dateMSC)
-            Log.d("test",number)
-            Log.d("test",date)
-            Log.d("test",duration)
-            Log.d("test",type)
             callLogList.add(MyCallLog(number,date,duration,type))
             cursor.moveToPrevious()
         }
@@ -57,17 +54,17 @@ class CallLogFunction {
 
     }
 
-    private fun callLogTypeNumberToString (type:String):String{
-        var outCallLogType = "Unknown"
+    private fun callLogTypeNumberToString (type:String,context: Context):String{
+        var outCallLogType = context.getString(R.string.unknown)
         when (type) {
             "1" -> {
-                outCallLogType="Incoming"
+                outCallLogType=context.getString(R.string.call_log_incoming)
             }
             "2" -> {
-                outCallLogType="Outgoing"
+                outCallLogType=context.getString(R.string.call_log_outgoing)
             }
             "3" -> {
-                outCallLogType="Missed"
+                outCallLogType=context.getString(R.string.call_log_missed)
             }
             else -> {
                 //Do Nothing

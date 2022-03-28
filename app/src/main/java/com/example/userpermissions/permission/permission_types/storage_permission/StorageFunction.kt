@@ -3,13 +3,12 @@ package com.example.userpermissions.permission.permission_types.storage_permissi
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentUris
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
-import java.util.ArrayList
+import java.util.*
 
 class StorageFunction {
     @RequiresApi(Build.VERSION_CODES.Q)

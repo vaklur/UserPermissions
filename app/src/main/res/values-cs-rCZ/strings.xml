@@ -14,7 +14,11 @@
     <string name="dialog_no">Nesouhlasím</string>
     //Theory offline server Dialog
     <string name="server_dialog_title">Upozornění pro uživatele</string>
-    <string name="server_dialog_message">Aplikace pro demonstraci bezbečnostních rizik potřebuje připojení k serveru.\nZkontrolujte zdali jste připojeti k internetu a zda máte nastavenu správnou adresu serveru.</string>
+    <string name="server_dialog_message">
+        Aplikace pro demonstraci bezpečnostních rizik potřebuje připojení k serveru.\n
+        Zkontrolujte zdali jste připojeni k internetu a zda máte nastavenu správnou adresu serveru.\n
+        Lze zvolit i offline příklad, který ukáže, které data by se odeslala na server.
+    </string>
     <string name="server_dialog_yes">Nastavení</string>
     <string name="server_dialog_neutral">Offline režim</string>
     <string name="server_dialog_no">Zavřít</string>
@@ -22,10 +26,12 @@
     <string name="IP_settings">NASTAVENÍ ADRESY SERVERU</string>
     <string name="actual_IP_text">NASTAVENÁ ADRESA</string>
     <string name="actual_IP_setting">192.168.56.1</string>
+    <string name="refresh_setting">Obnovit</string>
     <string name="change_setting">Změnit</string>
     <string name="state_setting">STAV</string>
     <string name="state_unreachable_setting">Nedostupné</string>
     <string name="state_reachable_setting">Dostupné</string>
+    <string name="state_connecting_setting">Připojování</string>
 
     <string name="language_settings">NASTAVENÍ JAZYKA</string>
     <string name="actual_language_text">AKTUÁLNÍ JAZYK</string>
@@ -71,6 +77,17 @@
     <string name="permission_function_dialog_settings">Nastavení</string>
     <string name="permission_function_dialog_cancel">Zavřít</string>
     <string name="permission_function_dialog_toast">Praktická ukázka nemůže být spuštěna</string>
+
+    // Permission function
+    <string name="sms_received">Přijatá</string>
+    <string name="sms_sent">Odeslaná</string>
+
+    <string name="call_log_incoming">Příchozí</string>
+    <string name="call_log_outgoing">Odchozí</string>
+    <string name="call_log_missed">Zmeškaný</string>
+
+    <string name="unknown">Neznámý</string>
+
     // Permission example + theory
     <string name="example_button">Praktický příklad</string>
     <string name="example_text"> ID: sms HESLO: xxxxxx </string>
@@ -80,13 +97,13 @@
 
     <string name="progres_bar_text">Snaha o připojení k serveru…</string>
 
-    <string name="example_off_text">Příklad zneužití povolení přístupu k %1$s</string>
+    <string name="example_off_text">Příklad zneužití povolení přístupu - %1$s</string>
 
     <string name="back_to_theory"> Pokud chcete jít zpět, zmáčkněte tlačítko  "Teorie"</string>
 
     //Permission item lists
 
-    <string name="sms_title">SMS</string>
+    <string name="sms_title">SMS zpráva </string>
     <string name="sms_date">Datum: </string>
     <string name="sms_number">Tel. číslo: </string>
     <string name="sms_text">Text: </string>
@@ -96,7 +113,7 @@
     <string name="contact_name">Jméno: </string>
     <string name="contact_number">Tel. číslo:</string>
 
-    <string name="calendar_event">Název události</string>
+    <string name="calendar_event">Událost</string>
     <string name="calendar_title">Titulek: </string>
     <string name="calendar_startDate">Začátek: </string>
     <string name="calendar_endDate">Konec: </string>
@@ -108,22 +125,23 @@
     <string name="call_log_duration">Trvání: </string>
     <string name="call_log_type">Typ: </string>
 
-    <string name="storage_title">Obrázek z úložiště</string>
+    <string name="storage_title">Obrázek z externího úložiště</string>
     <string name="storage_id">ID: </string>
     <string name="storage_name">Název: </string>
     <string name="storage_date">Datum: </string>
     <string name="storage_image_description">Obrázek z externího úložiště</string>
 
-    <string name="phone_state_title">SIM</string>
+    <string name="phone_state_title">Informace ze SIM karty</string>
     <string name="phone_state_number">Tel. číslo: </string>
     <string name="phone_state_network_type">Typ sítě: </string>
     <string name="phone_state_operator">Mob. operátor: </string>
 
-    <string name="location_title">Poloha</string>
+    <string name="location_title">Poslední známá poloha</string>
     <string name="location_latitude">Zaměpisná šířka: </string>
     <string name="location_longitude">Zěmepisná délka: </string>
     <string name="location_accuracy">Přesnost: </string>
     <string name="location_altitude">Nadmořská výška:</string>
+
 
     <string name="camera_title">Snímek z fotoaparátu</string>
     <string name="camera_image_description">Snímek z předního fotoaparátu</string>

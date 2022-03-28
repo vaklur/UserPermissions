@@ -28,6 +28,12 @@ class SettingsSharPref(context: Context) {
 
     }
 
+
+    /**
+     * Save the actual application language.
+     *
+     * @param language Actual application language to save.
+     */
     fun saveLanguageSettings(language:String){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
@@ -36,6 +42,11 @@ class SettingsSharPref(context: Context) {
         editor.commit()
     }
 
+    /**
+     * Return the saved application language.
+     *
+     * @return Saved application language.
+     */
     fun getLanguageSettings():String{
         return sharedPreferences.getString("language","en").toString()
     }
@@ -48,16 +59,6 @@ class SettingsSharPref(context: Context) {
     fun getIPsettings():String{
         return sharedPreferences.getString("ipAddress","http://unsecureapp.tode.cz/permissions").toString()
     }
-
-    /**
-     * Delete all saved server address.
-     */
-    /*fun clearIPsettings(){
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-
-    }*/
 
     /**
      * Return a list of all saved server address.

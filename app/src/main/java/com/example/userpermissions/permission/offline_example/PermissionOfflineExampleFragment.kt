@@ -3,7 +3,6 @@ package com.example.userpermissions.permission.offline_example
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,9 +48,9 @@ class PermissionOfflineExampleFragment : Fragment() {
             1 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.sms)))
                 val sms = SmsFunction()
-                val smsMessages = sms.readSms(requireActivity().contentResolver, 10)
+                val smsMessages = sms.readSms(10,requireActivity().contentResolver,requireContext())
                 if (smsMessages.size!=0) {
-                    val smsAdapter = MySmsAdapter(smsMessages)
+                    val smsAdapter = MySmsAdapter(requireContext(),smsMessages)
                     recyclerView.adapter = smsAdapter
                 }
                 else {
@@ -64,7 +63,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                 val contact = ContactFunction()
                 val contacts = contact.readContacts(requireActivity().contentResolver, 10)
                 if (contacts.size!=0){
-                val contactAdapter = MyContactAdapter(contacts)
+                val contactAdapter = MyContactAdapter(requireContext(),contacts)
                 recyclerView.adapter = contactAdapter
                 }
                 else{
@@ -75,9 +74,9 @@ class PermissionOfflineExampleFragment : Fragment() {
             3 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.calllog)))
                 val callLog = CallLogFunction()
-                val callLogs = callLog.readCallLogs(requireActivity().contentResolver, 10)
+                val callLogs = callLog.readCallLogs(10,requireActivity().contentResolver,requireContext())
                 if (callLogs.size!=0){
-                    val callLogAdapter = MyCallLogAdapter(callLogs)
+                    val callLogAdapter = MyCallLogAdapter(requireContext(),callLogs)
                     recyclerView.adapter = callLogAdapter
                 }
                 else{
@@ -90,7 +89,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                 val calendar = CalendarFunction()
                 val calendarEvents = calendar.readCalendarEvents(requireActivity().contentResolver, 10)
                 if (calendarEvents.size!=0){
-                    val calendarAdapter = MyCalendarAdapter(calendar.readCalendarEvents(requireActivity().contentResolver, 10))
+                    val calendarAdapter = MyCalendarAdapter(requireContext(),calendar.readCalendarEvents(requireActivity().contentResolver, 10))
                     recyclerView.adapter = calendarAdapter
                 }
                 else{

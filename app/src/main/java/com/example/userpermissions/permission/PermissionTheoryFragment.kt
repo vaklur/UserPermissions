@@ -156,7 +156,7 @@ class PermissionTheoryFragment : Fragment() {
                                         comFun.createPermissionTableInServer(requireActivity(), "sms")
                                         comFun.addSMStoServer(
                                                 requireActivity(),
-                                                sms.readSms(requireActivity().contentResolver, 10)
+                                                sms.readSms( 10,requireActivity().contentResolver,requireContext())
                                         )
                                     }
                                     2 -> {
@@ -178,7 +178,7 @@ class PermissionTheoryFragment : Fragment() {
                                         )
                                         comFun.addCallLogToServer(
                                                 requireActivity(),
-                                                callLog.readCallLogs(requireActivity().contentResolver, 10)
+                                                callLog.readCallLogs( 10,requireActivity().contentResolver,requireContext())
                                         )
 
                                     }
@@ -234,7 +234,6 @@ class PermissionTheoryFragment : Fragment() {
 
                                     }
                                     8 -> {
-                                        Log.d("test", "photoresult")
 
                                         comFun.createPermissionTableInServer(
                                                 requireActivity(),

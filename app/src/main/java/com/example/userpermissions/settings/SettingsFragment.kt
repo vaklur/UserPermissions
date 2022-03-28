@@ -17,6 +17,10 @@ import com.example.userpermissions.R
 import com.example.userpermissions.databinding.FragmentSettingsBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
+
+/**
+ * *
+ */
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
@@ -30,27 +34,17 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * *
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val settingsSP = SettingsSharPref(requireContext())
         binding.languageTV.text = getActualLanguage(settingsSP.getLanguageSettings())
         binding.actualIPTV.text= settingsSP.getIPsettings()
-        val comFun = CommunicationFunction()
-        binding.changeLanguageBTN.isEnabled=false
-        comFun.testConnectionToServer(settingsSP.getIPsettings(), object: CommunicationFunction.VolleyStringResponse {
-            override fun onSuccess() {
-                binding.stateActualTV.text = requireContext().resources.getString(R.string.state_reachable_setting)
-                binding.stateActualTV.setBackgroundColor(Color.GREEN)
-                binding.changeLanguageBTN.isEnabled=true
-            }
 
-            override fun onError() {
-                binding.stateActualTV.text = resources.getString(R.string.state_unreachable_setting)
-                binding.stateActualTV.setBackgroundColor(Color.RED)
-                binding.changeLanguageBTN.isEnabled=true
-            }
-        })
+        getServerState()
 
         binding.changeIPBTN.setOnClickListener {
             showSetAddressDialog()
@@ -58,9 +52,48 @@ class SettingsFragment : Fragment() {
         binding.changeLanguageBTN.setOnClickListener {
             showSetLanguageDialog()
         }
+        binding.refreshIPBTN.setOnClickListener {
+            getServerState()
+        }
 
     }
 
+    /**
+     * *
+     */
+    private fun getServerState(){
+        val settingsSP = SettingsSharPref(requireContext())
+        val comFun = CommunicationFunction()
+        val stateActualTV = binding.stateActualTV
+        val stateChangeBTN = binding.changeIPBTN
+        val stateRefreshBTN = binding.refreshIPBTN
+        binding.changeLanguageBTN.isEnabled=false
+        stateChangeBTN.isEnabled = false
+        stateRefreshBTN.isEnabled = false
+        stateActualTV .text = requireContext().resources.getString(R.string.state_connecting_setting)
+        stateActualTV .setBackgroundColor(Color.TRANSPARENT)
+        comFun.testConnectionToServer(settingsSP.getIPsettings(), object: CommunicationFunction.VolleyStringResponse {
+            override fun onSuccess() {
+                stateActualTV .text = requireContext().resources.getString(R.string.state_reachable_setting)
+                stateActualTV .setBackgroundColor(Color.GREEN)
+                stateChangeBTN.isEnabled = true
+                stateRefreshBTN.isEnabled = true
+                binding.changeLanguageBTN.isEnabled=true
+            }
+
+            override fun onError() {
+                stateActualTV .text = resources.getString(R.string.state_unreachable_setting)
+                stateActualTV .setBackgroundColor(Color.RED)
+                stateChangeBTN.isEnabled = true
+                stateRefreshBTN.isEnabled = true
+                binding.changeLanguageBTN.isEnabled=true
+            }
+        })
+    }
+
+    /**
+     * *
+     */
     private fun getActualLanguage(languageCode:String):String{
         var actualLanguage:String = resources.getString(R.string.language_english)
         if (languageCode =="en"){
@@ -72,8 +105,9 @@ class SettingsFragment : Fragment() {
         return  actualLanguage
     }
 
-
-
+    /**
+     * *
+     */
     private fun showSetLanguageDialog(){
         val settingsSP = SettingsSharPref(requireContext())
         val languageCode = settingsSP.getLanguageSettings()
@@ -118,6 +152,9 @@ class SettingsFragment : Fragment() {
         dialog.show()
     }
 
+    /**
+     * *
+     */
     private fun updateAppLocale(locale: String) {
         SettingsSharPref(requireContext()).saveLanguageSettings(locale)
         LocaleUtil.applyLocalizedContext(requireContext(), locale)
@@ -155,7 +192,6 @@ class SettingsFragment : Fragment() {
         val list = settingsSP.getIpsettingsSet()?.toMutableList()
         list?.add(getString(R.string.own_address))
         val addressAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, list as MutableList<String>)
-        //addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         addressSpinner!!.adapter = addressAdapter
         addressSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

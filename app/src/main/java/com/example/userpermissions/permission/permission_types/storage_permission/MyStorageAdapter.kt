@@ -16,7 +16,7 @@ import com.example.userpermissions.R
 
 class MyStorageAdapter(
         private val context: Context,
-        private val dataset: List<MyStorage>
+        private val imageList: List<MyStorage>
 ):RecyclerView.Adapter<MyStorageAdapter.ItemViewHolder>(){
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,11 +32,10 @@ class MyStorageAdapter(
         return ItemViewHolder(adapterLayout)
     }
 
-
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        val storageTitle = "Image $position"
+        val item = imageList[position]
+        val storageTitle = context.getString(R.string.storage_title)+" "+position.toString()
         holder.titleTV.text = storageTitle
         holder.idTV.text = item.id
         holder.nameTV.text = item.name
@@ -45,7 +44,7 @@ class MyStorageAdapter(
         holder.imageIV.setImageBitmap(bitmapImage)
     }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = imageList.size
 }
 
 @RequiresApi(Build.VERSION_CODES.P)

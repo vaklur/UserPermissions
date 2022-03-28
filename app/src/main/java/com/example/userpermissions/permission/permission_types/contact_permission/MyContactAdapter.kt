@@ -1,5 +1,6 @@
 package com.example.userpermissions.permission.permission_types.contact_permission
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.userpermissions.R
 
 class MyContactAdapter (
-        private val dataset: List<MyContact>
+        private val context:Context,
+        private val contactList: List<MyContact>
 ) : RecyclerView.Adapter<MyContactAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -22,17 +24,13 @@ class MyContactAdapter (
         return ItemViewHolder(adapterLayout)
     }
 
-
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        val contactTitle = "Contact $position"
+        val item = contactList[position]
+        val contactTitle = context.getString(R.string.contact_title)+" "+position.toString()
         holder.titleTV.text = contactTitle
         holder.nameTV.text = item.name
         holder.numberTV.text = item.phoneNumber
-
-
     }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = contactList.size
 }

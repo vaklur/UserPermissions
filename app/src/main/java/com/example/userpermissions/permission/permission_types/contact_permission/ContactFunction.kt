@@ -24,7 +24,6 @@ class ContactFunction {
         val nameColIdx = cursor!!.getColumnIndex(nameCol)
         val numberColIdx = cursor.getColumnIndex(numberCol)
 
-
         val contactsCountHelp: Int = if (contactsCount < cursor.count){
             contactsCount
         }
@@ -32,14 +31,10 @@ class ContactFunction {
             cursor.count
         }
 
-
-
         for (i in contactsCountHelp downTo 1 step 1){
             cursor.moveToNext()
             val number = cursor.getString(numberColIdx)
             val name = cursor.getString(nameColIdx)
-            Log.d("test",name)
-            Log.d("test",number)
             contactsList.add(MyContact(name,number))
         }
         cursor.close()

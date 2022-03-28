@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.userpermissions.R
 
 class MyPhoneStateAdapter(
-        private val dataset:MyPhoneState
+        private val phoneState:MyPhoneState
 ):RecyclerView.Adapter<MyPhoneStateAdapter.ItemViewHolder>(){
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titleTV: TextView = view.findViewById(R.id.phone_state_title_TV)
         val numberTV: TextView = view.findViewById(R.id.phone_state_number_TV)
         val networkTypeTV: TextView = view.findViewById(R.id.phone_state_network_type_TV)
         val operatorTV: TextView = view.findViewById(R.id.phone_state_operator_TV)
@@ -26,9 +25,7 @@ class MyPhoneStateAdapter(
 
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset
-        val phoneStateTitle = "Information from SIM card"
-        holder.titleTV.text = phoneStateTitle
+        val item = phoneState
         holder.numberTV.text = item.phoneNumber
         holder.networkTypeTV.text = item.dataNetworkState
         holder.operatorTV.text = item.operator

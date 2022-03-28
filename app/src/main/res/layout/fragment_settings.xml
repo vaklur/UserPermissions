@@ -70,7 +70,7 @@
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="@string/state_unreachable_setting"
+            android:text="@string/state_connecting_setting"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/actualIP_TV"
@@ -86,6 +86,16 @@
             app:layout_constraintHorizontal_bias="0.035"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/actualIP_TV" />
+
+        <Button
+            android:id="@+id/refreshIP_BTN"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/refresh_setting"
+            app:layout_constraintHorizontal_bias="0.035"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stateActual_TV" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

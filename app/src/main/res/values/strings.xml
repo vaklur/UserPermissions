@@ -14,7 +14,11 @@
     <string name="dialog_no">No</string>
     //Theory offline server Dialog
     <string name="server_dialog_title">Notice for users</string>
-    <string name="server_dialog_message">The application needs for security risk demonstration a connection to the server.\nMake sure you are connected to the Internet and that you have set the correct server address.</string>
+    <string name="server_dialog_message">
+        The application needs for security risk demonstration a connection to the server.\n
+        Make sure you are connected to the Internet and that you have set the correct server address.\n
+        You can also choose an offline example that shows which data would be sent to the server.
+    </string>
     <string name="server_dialog_yes">Settings</string>
     <string name="server_dialog_neutral">Offline mode</string>
     <string name="server_dialog_no">Cancel</string>
@@ -23,9 +27,11 @@
     <string name="actual_IP_text">ACTUAL IP ADDRESS</string>
     <string name="actual_IP_setting">192.168.56.1</string>
     <string name="change_setting">Change</string>
+    <string name="refresh_setting">Refresh</string>
     <string name="state_setting">STATE</string>
     <string name="state_unreachable_setting">Unavailable</string>
     <string name="state_reachable_setting">Available</string>
+    <string name="state_connecting_setting">Connecting</string>
 
     <string name="language_settings">LANGUAGE SETTINGS</string>
     <string name="actual_language_text">ACTUAL LANGUAGE</string>
@@ -72,6 +78,16 @@
     <string name="permission_function_dialog_cancel">Cancel</string>
     <string name="permission_function_dialog_toast">The practical example cannot be launched </string>
 
+    // Permission function
+    <string name="sms_received">Received</string>
+    <string name="sms_sent">Sent</string>
+
+    <string name="call_log_incoming">Incoming</string>
+    <string name="call_log_outgoing">Outgoing</string>
+    <string name="call_log_missed">Missed</string>
+
+    <string name="unknown">Unknown</string>
+
     // Permission - example + theory
     <string name="example_button">Practical example</string>
     <string name="example_text">" ID: sms PASSWORD: xxxxxx "</string>
@@ -88,40 +104,40 @@
 
     //Permission item lists
 
-    <string name="sms_title">SMS title</string>
+    <string name="sms_title">SMS message </string>
     <string name="sms_date">Date: </string>
     <string name="sms_number">Phone: </string>
     <string name="sms_text">Text: </string>
     <string name="sms_type">Type: </string>
 
-    <string name="contact_title">Contact title</string>
+    <string name="contact_title">Contact</string>
     <string name="contact_name">Name: </string>
     <string name="contact_number">Phone: </string>
 
-    <string name="calendar_event">Event title</string>
+    <string name="calendar_event">Event</string>
     <string name="calendar_title">Title: </string>
     <string name="calendar_startDate">Start date: </string>
     <string name="calendar_endDate">End date: </string>
     <string name="calendar_description">Description: </string>
 
-    <string name="call_log_title">CallLog title</string>
+    <string name="call_log_title">CallLog </string>
     <string name="call_log_number">Number: </string>
     <string name="call_log_date">Date: </string>
     <string name="call_log_duration">Duration: </string>
     <string name="call_log_type">Type: </string>
 
-    <string name="storage_title">Storage title</string>
+    <string name="storage_title">Image from external storage</string>
     <string name="storage_id">ID: </string>
     <string name="storage_name">Name: </string>
     <string name="storage_date">Date: </string>
     <string name="storage_image_description">Image from external storage</string>
 
-    <string name="phone_state_title">Phone state title</string>
+    <string name="phone_state_title">Information from SIM card</string>
     <string name="phone_state_number">Number: </string>
     <string name="phone_state_network_type">Network type: </string>
     <string name="phone_state_operator">Operator: </string>
 
-    <string name="location_title">Location title</string>
+    <string name="location_title">Last known location</string>
     <string name="location_latitude">Latitude: </string>
     <string name="location_longitude">Longitude: </string>
     <string name="location_accuracy">Accuracy: </string>

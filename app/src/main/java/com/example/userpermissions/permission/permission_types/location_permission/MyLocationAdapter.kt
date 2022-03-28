@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.userpermissions.R
 
 class MyLocationAdapter (
-        private val dataset:MyLocation
+        private val location:MyLocation
         ):RecyclerView.Adapter<MyLocationAdapter.ItemViewHolder>(){
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titleTV: TextView = view.findViewById(R.id.location_title_TV)
         val latitudeTV: TextView = view.findViewById(R.id.location_latitude_TV)
         val longitudeTV: TextView = view.findViewById(R.id.location_longitude_TV)
         val accuracyTV: TextView = view.findViewById(R.id.location_accuracy_TV)
@@ -25,19 +24,13 @@ class MyLocationAdapter (
         return ItemViewHolder(adapterLayout)
     }
 
-
-
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset
-        val locationTitle = "Last known location"
-        holder.titleTV.text = locationTitle
+        val item = location
         holder.latitudeTV.text = "N " + item.latitude
         holder.longitudeTV.text ="E" + item.longitude
         holder.accuracyTV.text = item.accuracy + " m"
         holder.altitudeTV.text = item.altitude + " m MSL"
-
-
     }
 
     override fun getItemCount() = 1

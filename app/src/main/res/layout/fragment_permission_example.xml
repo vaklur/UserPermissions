@@ -51,7 +51,7 @@
 
     <WebView
         android:id="@+id/Web_WV"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="600dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

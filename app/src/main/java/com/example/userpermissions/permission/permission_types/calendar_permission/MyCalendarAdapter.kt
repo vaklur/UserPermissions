@@ -1,5 +1,6 @@
 package com.example.userpermissions.permission.permission_types.calendar_permission
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.userpermissions.R
 
 class MyCalendarAdapter (
-        private val dataset: List<MyCalendarEvent>
+        private val context: Context,
+        private val eventList: List<MyCalendarEvent>
         ): RecyclerView.Adapter<MyCalendarAdapter.ItemViewHolder>(){
 
             class ItemViewHolder(view: View):RecyclerView.ViewHolder(view){
@@ -25,8 +27,8 @@ class MyCalendarAdapter (
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        val calendarTitle = "Event $position"
+        val item = eventList[position]
+        val calendarTitle = context.getString(R.string.calendar_title)+" "+position.toString()
         holder.titleTv.text = calendarTitle
         holder.title1Tv.text = item.title
         holder.startDateTv.text = item.startDate
@@ -34,5 +36,5 @@ class MyCalendarAdapter (
         holder.descriptionTv.text = item.description
     }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = eventList.size
 }
