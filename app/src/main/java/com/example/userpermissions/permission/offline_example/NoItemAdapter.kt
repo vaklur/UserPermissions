@@ -15,10 +15,7 @@ class NoItemAdapter:RecyclerView.Adapter<NoItemAdapter.ItemViewHolder>() {
         return ItemViewHolder(adapterLayout)
     }
 
-
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-
-    }
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) { }
 
     override fun getItemCount() = 1
 }

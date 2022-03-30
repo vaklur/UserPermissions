@@ -6,7 +6,7 @@ import com.example.userpermissions.R
 /**
  * Load a string list of all dangerous permission which will be demonstrated in the application.
  */
-class PermissionDatasource {
+class PermissionList {
     fun loadPermissions(): List<PermissionModel> {
         return listOf(
             PermissionModel(R.string.sms_permision),

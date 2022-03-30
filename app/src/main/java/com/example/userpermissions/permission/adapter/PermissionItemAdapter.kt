@@ -12,11 +12,11 @@ import com.example.userpermissions.R
 import com.example.userpermissions.permission.model.PermissionModel
 
 /**
- * Adapter for the [RecyclerView] in PermissionActivity. Displays PermissionDatasource data object.
+ * Adapter for the [RecyclerView] in PermissionActivity. Displays PermissionList data object.
  */
 class PermissionItemAdapter (
     private val context: Context,
-    private val dataset: List<PermissionModel>
+    private val permissionList: List<PermissionModel>
     ) : RecyclerView.Adapter<PermissionItemAdapter.ItemViewHolder>() {
 
     /**
@@ -39,7 +39,7 @@ class PermissionItemAdapter (
      * When user click in permission type button, the permission type activity starts.
      */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
+        val item = permissionList[position]
         holder.permissionTypeBTN.text = context.resources.getString(item.stringResourceId)
         /**
          * Permissions IDs
@@ -92,7 +92,7 @@ class PermissionItemAdapter (
     }
 
     /**
-     * Return a size of the dataset.
+     * Return a size of the permissionList.
      */
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = permissionList.size
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.userpermissions.databinding.FragmentPermissionBinding
 import com.example.userpermissions.permission.adapter.PermissionItemAdapter
-import com.example.userpermissions.permission.data.PermissionDatasource
+import com.example.userpermissions.permission.data.PermissionList
 
 class PermissionFragment : Fragment() {
 
@@ -25,10 +25,10 @@ class PermissionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val permissionDataset = PermissionDatasource().loadPermissions()
+        val permissionData = PermissionList().loadPermissions()
 
         val recyclerView = binding.PermissionRV
-        recyclerView.adapter = PermissionItemAdapter(requireContext(), permissionDataset)
+        recyclerView.adapter = PermissionItemAdapter(requireContext(), permissionData)
 
         recyclerView.setHasFixedSize(true)
 

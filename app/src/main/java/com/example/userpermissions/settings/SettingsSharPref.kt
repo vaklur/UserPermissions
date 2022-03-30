@@ -11,6 +11,8 @@ import android.content.SharedPreferences
  */
 class SettingsSharPref(context: Context) {
 
+    private val defaultAddress = "https://vaklur.cz/permissions"
+    private val defaultLanguage = "en"
     private var settingsFile = "settings"
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(settingsFile, Context.MODE_PRIVATE)
 
@@ -25,7 +27,6 @@ class SettingsSharPref(context: Context) {
         editor.putString("ipAddress",address)
         editor.apply()
         editor.commit()
-
     }
 
 
@@ -48,7 +49,7 @@ class SettingsSharPref(context: Context) {
      * @return Saved application language.
      */
     fun getLanguageSettings():String{
-        return sharedPreferences.getString("language","en").toString()
+        return sharedPreferences.getString("language",defaultLanguage).toString()
     }
 
     /**
@@ -57,7 +58,7 @@ class SettingsSharPref(context: Context) {
      * @return Saved url address of server.
      */
     fun getIPsettings():String{
-        return sharedPreferences.getString("ipAddress","http://unsecureapp.tode.cz/permissions").toString()
+        return sharedPreferences.getString("ipAddress",defaultAddress).toString()
     }
 
     /**
@@ -65,7 +66,7 @@ class SettingsSharPref(context: Context) {
      *
      * @return List of all saved server address.
      */
-    fun getIpsettingsSet(): MutableSet<String>? {
+    fun getIPsettingsSet(): MutableSet<String>? {
         val defaultSet = mutableSetOf<String>()
         defaultSet.add(getIPsettings())
         return sharedPreferences.getStringSet("ipAddressSet",defaultSet)
@@ -76,9 +77,9 @@ class SettingsSharPref(context: Context) {
      *
      * @param address New server address to save to the list.
      */
-    fun addAddressToIpsettingsSet(address:String){
+    fun addAddressToIPsettingsSet(address:String){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        val ipAddressSet = getIpsettingsSet()
+        val ipAddressSet = getIPsettingsSet()
         if (ipAddressSet?.size!! > 5){
             ipAddressSet.remove(ipAddressSet.first())
         }

@@ -174,12 +174,8 @@ class SettingsFragment : Fragment() {
         val addressEditText = dialog.findViewById<EditText>(R.id.setAddress_ET)
         addressEditText.visibility = View.GONE
         addressEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!Patterns.WEB_URL.matcher(addressEditText.text.toString()).matches()){
                     addressEditText.error = getString(R.string.invalid_address)
@@ -189,7 +185,7 @@ class SettingsFragment : Fragment() {
 
 
         val addressSpinner = dialog.findViewById<Spinner>(R.id.setAddress_S)
-        val list = settingsSP.getIpsettingsSet()?.toMutableList()
+        val list = settingsSP.getIPsettingsSet()?.toMutableList()
         list?.add(getString(R.string.own_address))
         val addressAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, list as MutableList<String>)
         addressSpinner!!.adapter = addressAdapter
@@ -205,12 +201,9 @@ class SettingsFragment : Fragment() {
                     addressEditText.visibility = View.GONE
                     newAddress=false
                 }
-
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
 
@@ -227,14 +220,13 @@ class SettingsFragment : Fragment() {
             comFun.testConnectionToServer(addressToSave, object: CommunicationFunction.VolleyStringResponse {
                 override fun onSuccess() {
                     settingsSP.saveIPsettings(addressToSave)
-                    settingsSP.addAddressToIpsettingsSet(addressToSave)
+                    settingsSP.addAddressToIPsettingsSet(addressToSave)
                     binding.actualIPTV.text= settingsSP.getIPsettings()
                     binding.stateActualTV.text = resources.getString(R.string.state_reachable_setting)
                     binding.stateActualTV.setBackgroundColor(Color.GREEN)
                     Toast.makeText(requireContext(),getString(R.string.connection_ok), Toast.LENGTH_LONG).show()
                     dialog.dismiss()
                 }
-
                 override fun onError() {
                     Toast.makeText(requireContext(),getString(R.string.connection_bad), Toast.LENGTH_LONG).show()
                 }

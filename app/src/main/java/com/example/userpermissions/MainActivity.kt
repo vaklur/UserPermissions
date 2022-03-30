@@ -97,10 +97,4 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
-    override fun onDestroy() {
-        Log.d("test","On Destroy Main Activity")
-        //comFun.deleteUserInServer(this)
-        super.onDestroy()
-    }
 }

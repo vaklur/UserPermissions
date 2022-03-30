@@ -37,7 +37,7 @@ class PermissionExampleFragment : Fragment() {
 
         // ***
 
-        binding.loginTV.text = String.format(resources.getString(R.string.id),comFun.getAndroidId(requireActivity().contentResolver))+"  "+ String.format(resources.getString(R.string.password),comFun.getPassword(requireActivity().contentResolver))
+        binding.loginTV.text = String.format(resources.getString(R.string.id),comFun.getAndroidId(requireActivity().contentResolver))+"  "+String.format(resources.getString(R.string.password),comFun.getPassword(requireActivity().contentResolver))
 
         // ***
         val webView = binding.WebWV
