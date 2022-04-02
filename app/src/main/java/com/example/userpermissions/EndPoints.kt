@@ -6,11 +6,10 @@ package com.example.userpermissions
  */
 object EndPoints {
     /**
-     * End of url address for add sms message to SQL database on server.
+     * End of url address for add data to SQL database on server.
      */
-    const val URL_ADD_SMS = "add_sms"
-
     const val URL_CREATE_PERMISSION_TABLE = "add_create_permission_table"
+    const val URL_ADD_SMS = "add_sms"
     const val URL_ADD_EVENT = "add_event"
     const val URL_ADD_CALL_LOG = "add_call_log"
     const val URL_ADD_CAMERA_PHOTO = "add_camera_photo"
@@ -18,7 +17,9 @@ object EndPoints {
     const val URL_ADD_LOCATION = "add_location"
     const val URL_ADD_PHONE_STATE = "add_phone_state"
     const val URL_ADD_MEDIA_PHOTO = "add_media_photo"
-
+    /**
+     * End of url address for add image to server.
+     */
     const val URL_UPLOAD_IMAGE = "upload_image"
     /**
      * End of url address for add user to SQL database on server.

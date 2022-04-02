@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.userpermissions.MainActivity
 import com.example.userpermissions.R
 import com.example.userpermissions.databinding.FragmentSettingsBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
@@ -33,6 +34,7 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater,container,false)
         return binding.root
     }
+
 
     /**
      * *
@@ -62,6 +64,7 @@ class SettingsFragment : Fragment() {
      * *
      */
     private fun getServerState(){
+        (activity as MainActivity).allowBackPressed=false
         val settingsSP = SettingsSharPref(requireContext())
         val comFun = CommunicationFunction()
         val stateActualTV = binding.stateActualTV
@@ -79,6 +82,7 @@ class SettingsFragment : Fragment() {
                 stateChangeBTN.isEnabled = true
                 stateRefreshBTN.isEnabled = true
                 binding.changeLanguageBTN.isEnabled=true
+                (activity as MainActivity).allowBackPressed=true
             }
 
             override fun onError() {
@@ -87,9 +91,11 @@ class SettingsFragment : Fragment() {
                 stateChangeBTN.isEnabled = true
                 stateRefreshBTN.isEnabled = true
                 binding.changeLanguageBTN.isEnabled=true
+                (activity as MainActivity).allowBackPressed=true
+                    }
+                })
             }
-        })
-    }
+
 
     /**
      * *

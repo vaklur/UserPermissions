@@ -34,6 +34,7 @@ class VolleySingleton : Application() {
         requestQueue?.add(request)
     }
 
+
     companion object {
         private val TAG = VolleySingleton::class.java.simpleName
         @get:Synchronized var instance: VolleySingleton? = null

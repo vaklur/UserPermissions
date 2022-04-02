@@ -2,7 +2,6 @@ package com.example.userpermissions
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,11 +10,19 @@ import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
+/**
+ *
+ */
 class MainActivity : BaseActivity() {
+
+    var allowBackPressed = true
 
     private val comFun = CommunicationFunction()
     private lateinit var binding: ActivityMainBinding
 
+    /**
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,13 +33,18 @@ class MainActivity : BaseActivity() {
         appAlertDialog(binding.root)
     }
 
-
+    /**
+     *
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
+    /**
+     *
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
@@ -47,7 +59,7 @@ class MainActivity : BaseActivity() {
      * <p>
      * If the user:
      * <p>
-     * agree: the application starts and the connection to the server is verified.
+     * agree: the application starts.
      * <p>
      * disagree: the app is terminated.
      *
@@ -72,8 +84,11 @@ class MainActivity : BaseActivity() {
         builder.show()
     }
 
+    /**
+     *
+     */
     override fun onBackPressed() {
-
+        if (allowBackPressed){
         val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
         when (navigationController.currentDestination?.id) {
             R.id.PermissionExampleFragment -> {
@@ -96,5 +111,6 @@ class MainActivity : BaseActivity() {
                 super.onBackPressed()
             }
         }
+    }
     }
 }
