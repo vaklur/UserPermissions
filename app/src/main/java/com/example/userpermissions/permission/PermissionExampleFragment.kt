@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.EndPoints
 import com.example.userpermissions.R
@@ -15,6 +16,8 @@ import com.example.userpermissions.databinding.FragmentPermissionExampleBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
 class PermissionExampleFragment : Fragment() {
+
+    private lateinit var permissionVM: PermissionViewModel
 
     private var _binding: FragmentPermissionExampleBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +34,9 @@ class PermissionExampleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val permissionId = requireArguments().getInt("permissionType")
+        // Initialize ViewModel
+        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
+
 
         val comFun = CommunicationFunction()
 
@@ -41,8 +46,8 @@ class PermissionExampleFragment : Fragment() {
 
         // ***
         val webView = binding.WebWV
-        val webSettings = webView.settings
-        webSettings.javaScriptEnabled = true
+        /*val webSettings = webView.settings
+        webSettings.javaScriptEnabled = true*/
         webView .webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 if (url != null) {
@@ -54,10 +59,8 @@ class PermissionExampleFragment : Fragment() {
         webView.loadUrl(comFun.getServerAddress(EndPoints.URL_LOGIN_USER,requireActivity()))
 
         binding.theoryBTN.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("permissionType",permissionId)
-            bundle.putBoolean("dataIsSend",true)
-            findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment,bundle)
+            permissionVM.saveDataIsSend(true)
+            findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment)
         }
 
         binding.refreshBTN.setOnClickListener {

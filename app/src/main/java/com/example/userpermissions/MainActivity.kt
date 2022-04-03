@@ -6,8 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
+import com.example.userpermissions.permission.PermissionViewModel
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
 /**
@@ -20,6 +22,8 @@ class MainActivity : BaseActivity() {
     private val comFun = CommunicationFunction()
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var permissionVM: PermissionViewModel
+
     /**
      *
      */
@@ -31,6 +35,8 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
 
         appAlertDialog(binding.root)
+
+        permissionVM = ViewModelProvider(this).get(PermissionViewModel::class.java)
     }
 
     /**
@@ -92,14 +98,16 @@ class MainActivity : BaseActivity() {
         val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
         when (navigationController.currentDestination?.id) {
             R.id.PermissionExampleFragment -> {
-                Toast.makeText(this,R.string.back_to_theory,Toast.LENGTH_LONG).show()
+                permissionVM.saveDataIsSend(true)
+                navigationController.navigate(R.id.PermissionTheoryFragment)
             }
             R.id.permissionOfflineExampleFragment ->{
-                Toast.makeText(this,R.string.back_to_theory,Toast.LENGTH_LONG).show()
+                navigationController.navigate(R.id.PermissionTheoryFragment)
             }
             R.id.PermissionTheoryFragment -> {
                 comFun.deleteUserInServer(this)
                 navigationController.navigate(R.id.permissionFragment)
+                permissionVM.clear()
             }
             R.id.permissionFragment -> {
                 navigationController.navigate(R.id.mainMenuFragment)

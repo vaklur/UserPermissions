@@ -3,8 +3,10 @@ package com.example.userpermissions.permission
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.userpermissions.R
 import com.example.userpermissions.permission.permission_types.calendar_permission.CalendarFunction
@@ -17,18 +19,29 @@ import com.example.userpermissions.permission.permission_types.storage_permissio
 import com.example.userpermissions.settings.SettingsSharPref
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
-class PermissionTheoryViewModel:ViewModel() {
+class PermissionViewModel:ViewModel() {
 
     private val comFun = CommunicationFunction()
 
     private var permissionId = 0
     private var dataIsSend = false
 
+    private var bitmapPhoto:Bitmap? = null
+
     var ipSettings = ""
     var theoryText = ""
     var permissionType = ""
-    var permissionText= "x"
+    var permissionText= ""
     var requestCode = 0
+
+    fun savePhoto (photo:Bitmap){
+        bitmapPhoto=photo
+    }
+
+    fun getPhoto(): Bitmap? {
+        return bitmapPhoto
+    }
+
 
     fun savePermissionID (newPermissionId:Int){
         permissionId = newPermissionId
@@ -100,6 +113,11 @@ class PermissionTheoryViewModel:ViewModel() {
                 theoryText = context.resources.getString(R.string.camera_theory)
             }
         }
+    }
+
+    fun clear(){
+        permissionId=0
+        dataIsSend=false
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)

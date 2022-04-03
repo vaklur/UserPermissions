@@ -100,8 +100,6 @@
 
     <string name="example_off_text">Example of abuse %1$s permission</string>
 
-    <string name="back_to_theory">If you want to go back, press the button "Theory"</string>
-
     //Permission item lists
 
     <string name="sms_title">SMS message </string>

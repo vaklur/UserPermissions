@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.userpermissions.R
 import com.example.userpermissions.databinding.FragmentPermissionOfflineExampleBinding
+import com.example.userpermissions.permission.PermissionViewModel
 import com.example.userpermissions.permission.permission_types.calendar_permission.CalendarFunction
 import com.example.userpermissions.permission.permission_types.calendar_permission.MyCalendarAdapter
 import com.example.userpermissions.permission.permission_types.call_log_permission.CallLogFunction
@@ -29,6 +31,8 @@ import com.example.userpermissions.permission.permission_types.storage_permissio
 
 class PermissionOfflineExampleFragment : Fragment() {
 
+    private lateinit var permissionVM: PermissionViewModel
+
     private var _binding: FragmentPermissionOfflineExampleBinding? = null
     private val binding get() = _binding!!
 
@@ -42,7 +46,10 @@ class PermissionOfflineExampleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val permissionId = requireArguments().getInt("permissionType")
+        // Initialize ViewModel
+        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
+
+        val permissionId = permissionVM.getPermissionID()
         val recyclerView = binding.exampleOffRV
         when (permissionId) {
             1 -> {
@@ -133,7 +140,7 @@ class PermissionOfflineExampleFragment : Fragment() {
             }
             8 -> {
                 binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.camera)))
-                val photo: Bitmap? = requireArguments().getParcelable("photo")
+                val photo: Bitmap? = permissionVM.getPhoto()
                 if (photo!=null){
                 val cameraAdapter = MyCameraAdapter(photo)
                 recyclerView.adapter = cameraAdapter}
