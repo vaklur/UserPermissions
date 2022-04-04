@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.userpermissions.R
 import com.example.userpermissions.permission.permission_types.calendar_permission.CalendarFunction
@@ -19,13 +18,13 @@ import com.example.userpermissions.permission.permission_types.storage_permissio
 import com.example.userpermissions.settings.SettingsSharPref
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
+/**
+ * View model for managing permission fragments data.
+ */
 class PermissionViewModel:ViewModel() {
-
-    private val comFun = CommunicationFunction()
 
     private var permissionId = 0
     private var dataIsSend = false
-
     private var bitmapPhoto:Bitmap? = null
 
     var ipSettings = ""
@@ -41,7 +40,6 @@ class PermissionViewModel:ViewModel() {
     fun getPhoto(): Bitmap? {
         return bitmapPhoto
     }
-
 
     fun savePermissionID (newPermissionId:Int){
         permissionId = newPermissionId
@@ -59,6 +57,11 @@ class PermissionViewModel:ViewModel() {
         return dataIsSend
     }
 
+    /**
+     * Initialize variables in permission theory fragment based on permission ID.
+     *
+     * @param context Application context.
+     */
     fun initialize(context: Context){
         val settingsSP = SettingsSharPref(context)
         ipSettings = settingsSP.getIPsettings()
@@ -115,13 +118,24 @@ class PermissionViewModel:ViewModel() {
         }
     }
 
+    /**
+     * Clear a set view model variables
+     */
     fun clear(){
         permissionId=0
         dataIsSend=false
+        bitmapPhoto = null
     }
 
+    /**
+     * Send permission data to server based on permission ID.
+     *
+     * @param activity Fragment activity.
+     * @param context Application context.
+     */
     @RequiresApi(Build.VERSION_CODES.Q)
     fun sendDataToServer (activity: Activity, context: Context){
+        val comFun = CommunicationFunction()
         when (permissionId) {
             1 -> {
                 val sms = SmsFunction()

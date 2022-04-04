@@ -20,7 +20,7 @@ import com.example.userpermissions.volley_communication.CommunicationFunction
 
 
 /**
- * *
+ * Fragment for application settings - server address and language
  */
 class SettingsFragment : Fragment() {
 
@@ -37,7 +37,7 @@ class SettingsFragment : Fragment() {
 
 
     /**
-     * *
+     * * Create view, load saved settings and define onClickListeners
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,11 +57,10 @@ class SettingsFragment : Fragment() {
         binding.refreshIPBTN.setOnClickListener {
             getServerState()
         }
-
     }
 
     /**
-     * *
+     * Function for get actual server state and set the widgets based on server state
      */
     private fun getServerState(){
         (activity as MainActivity).allowBackPressed=false
@@ -92,13 +91,17 @@ class SettingsFragment : Fragment() {
                 stateRefreshBTN.isEnabled = true
                 binding.changeLanguageBTN.isEnabled=true
                 (activity as MainActivity).allowBackPressed=true
-                    }
-                })
             }
+        })
+    }
 
 
     /**
-     * *
+     * Function that returns the full name of the current language, depending on the local language code.
+     *
+     * @param languageCode Code of actual language.
+     *
+     * @return Full name of actual language.
      */
     private fun getActualLanguage(languageCode:String):String{
         var actualLanguage:String = resources.getString(R.string.language_english)
@@ -112,7 +115,7 @@ class SettingsFragment : Fragment() {
     }
 
     /**
-     * *
+     * Show dialog for change language settings
      */
     private fun showSetLanguageDialog(){
         val settingsSP = SettingsSharPref(requireContext())
@@ -131,7 +134,6 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.findViewById<Button>(R.id.saveSetLanguage_BTN).setOnClickListener {
-
             if (dialog.findViewById<RadioButton>(R.id.english_RB).isChecked){
                 if (languageCode!="en"){
                     updateAppLocale("en")
@@ -150,7 +152,6 @@ class SettingsFragment : Fragment() {
             }
 
         }
-
         dialog.findViewById<Button>(R.id.exitSetLanguage_BTN).setOnClickListener {
             dialog.dismiss()
         }
@@ -159,7 +160,9 @@ class SettingsFragment : Fragment() {
     }
 
     /**
-     * *
+     * Function for updating a application actual language
+     *
+     * @param locale Code for new set language
      */
     private fun updateAppLocale(locale: String) {
         SettingsSharPref(requireContext()).saveLanguageSettings(locale)
@@ -211,9 +214,6 @@ class SettingsFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-
-
-
 
         dialog.findViewById<Button>(R.id.saveSetAddress_BTN).setOnClickListener {
 

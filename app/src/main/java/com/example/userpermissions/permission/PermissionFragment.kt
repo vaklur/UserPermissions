@@ -9,6 +9,9 @@ import com.example.userpermissions.databinding.FragmentPermissionBinding
 import com.example.userpermissions.permission.adapter.PermissionItemAdapter
 import com.example.userpermissions.permission.data.PermissionList
 
+/**
+ * Fragment with menu for select a abuse permission example.
+ */
 class PermissionFragment : Fragment() {
 
 
@@ -23,6 +26,9 @@ class PermissionFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Create a menu for select a abuse permission example.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val permissionData = PermissionList().loadPermissions()

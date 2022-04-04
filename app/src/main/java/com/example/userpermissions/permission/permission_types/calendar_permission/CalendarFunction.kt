@@ -7,7 +7,17 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Functions to read calendar events from phone.
+ */
 class CalendarFunction {
+    /**
+     * Return a list of calendar events, the number of events is specified by the variable calendarEventCount.
+     *
+     * @param contentResolver ContentResolver for read SMS from device.
+     * @param calendarEventCount The int number of events to be read.
+     * @return List of calendar events.
+     */
     @SuppressLint("SimpleDateFormat")
     fun readCalendarEvents (contentResolver: ContentResolver, calendarEventCount: Int):MutableList<MyCalendarEvent>{
         val calendarEventList: MutableList<MyCalendarEvent> = ArrayList()

@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.userpermissions.databinding.FragmentAboutAppBinding
 
+/**
+ * Fragment which display information about application
+ */
 class AboutAppFragment : Fragment() {
 
     private var _binding: FragmentAboutAppBinding? = null
@@ -21,6 +24,9 @@ class AboutAppFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * When view is created load information about app to WebView
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.aboutAppWV.loadDataWithBaseURL(null,resources.getString(R.string.about_app_text), null,"utf-8",null)

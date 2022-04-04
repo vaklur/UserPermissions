@@ -8,7 +8,18 @@ import com.example.userpermissions.R
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Functions to read call logs from phone.
+ */
 class CallLogFunction {
+    /**
+     * Return a list of call logs, the number of call logs is specified by the variable callLogCount.
+     *
+     * @param contentResolver ContentResolver for read call logs from device.
+     * @param callLogCount The int number of call logs to be read.
+     * @param context Application context.
+     * @return List of call logs.
+     */
     @SuppressLint("SimpleDateFormat")
     fun readCallLogs (callLogCount: Int,contentResolver: ContentResolver,context: Context):MutableList<MyCallLog>{
         val callLogList: MutableList<MyCallLog> = ArrayList()
@@ -54,6 +65,13 @@ class CallLogFunction {
 
     }
 
+    /**
+     * The method that replaces the numeric parameter type with related text.
+     *
+     * @param type Type of call log  1 -> Incoming call, 2 -> Outgoing call, 3 -> Missed call, other -> Unknown.
+     * @param context Application context.
+     * @return text call log type.
+     */
     private fun callLogTypeNumberToString (type:String,context: Context):String{
         var outCallLogType = context.getString(R.string.unknown)
         when (type) {

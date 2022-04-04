@@ -6,7 +6,14 @@ import java.security.KeyFactory
 import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
 
+/**
+ * Class that contains functions for symmetric and asymmetric cryptography
+ */
 class Cryptography {
+
+    /**
+     * Function for encrypt data with RSA algorithm and saved public key
+     */
     fun encryptData(dataToEncrypt:String,context: Context):String{
         // public key generator
         val pubKeyFile = context.assets.open("userpublic.pem").bufferedReader().use { it.readText() }

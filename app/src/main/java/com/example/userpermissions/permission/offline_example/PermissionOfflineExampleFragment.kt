@@ -28,7 +28,9 @@ import com.example.userpermissions.permission.permission_types.sms_permission.Sm
 import com.example.userpermissions.permission.permission_types.storage_permission.MyStorageAdapter
 import com.example.userpermissions.permission.permission_types.storage_permission.StorageFunction
 
-
+/**
+ * Fragment for display a offline practical example of selected permission abuse.
+ */
 class PermissionOfflineExampleFragment : Fragment() {
 
     private lateinit var permissionVM: PermissionViewModel
@@ -42,6 +44,9 @@ class PermissionOfflineExampleFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * When view created get data from ViewModel and load a recyclerView with data that would be sent to the server.
+     */
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -153,10 +158,7 @@ class PermissionOfflineExampleFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
 
         binding.theoryOffBTN.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt("permissionType",permissionId)
-            bundle.putBoolean("dataIsSend",false)
-            findNavController().navigate(R.id.action_permissionOfflineExampleFragment_to_PermissionTheoryFragment,bundle)
+            findNavController().navigate(R.id.action_permissionOfflineExampleFragment_to_PermissionTheoryFragment)
         }
     }
 

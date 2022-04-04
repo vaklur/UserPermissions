@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userpermissions.R
 
+/**
+ * Adapter for displaying data if there is no data on the device for the selected permission.
+ */
 class NoItemAdapter:RecyclerView.Adapter<NoItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view)

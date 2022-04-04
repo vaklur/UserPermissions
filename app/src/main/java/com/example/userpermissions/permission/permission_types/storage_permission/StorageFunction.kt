@@ -10,7 +10,17 @@ import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Functions to read photos from phone external storage.
+ */
 class StorageFunction {
+    /**
+     * Return a list of photos, the number of photos is specified by the variable photosCount.
+     *
+     * @param contentResolver ContentResolver for read photos from device.
+     * @param photosCount The int number of photos to be read.
+     * @return List of photos.
+     */
     @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("SimpleDateFormat")
     fun getPhotosFromGallery(contentResolver: ContentResolver, photosCount: Int):MutableList<MyStorage>{

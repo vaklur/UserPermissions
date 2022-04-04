@@ -15,6 +15,9 @@ import com.example.userpermissions.R
 import com.example.userpermissions.databinding.FragmentPermissionExampleBinding
 import com.example.userpermissions.volley_communication.CommunicationFunction
 
+/**
+ * Fragment for display a practical example of selected permission abuse.
+ */
 class PermissionExampleFragment : Fragment() {
 
     private lateinit var permissionVM: PermissionViewModel
@@ -30,13 +33,15 @@ class PermissionExampleFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * When view created get data from ViewModel and load a server application.
+     */
     @SuppressLint("SetJavaScriptEnabled", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize ViewModel
         permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
-
 
         val comFun = CommunicationFunction()
 

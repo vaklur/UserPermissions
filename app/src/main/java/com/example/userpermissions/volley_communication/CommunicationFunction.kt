@@ -46,7 +46,7 @@ class CommunicationFunction {
 
 
     /**
-     * Get the ID of android device.
+     * Generate a ID for user from device ID
      *
      * @param contentResolver Provides applications access to the content model.
      * @return ID of android device.
@@ -58,6 +58,12 @@ class CommunicationFunction {
         return androidId
     }
 
+    /**
+     * Generate a password for user from device ID
+     *
+     * @param contentResolver Provides applications access to the content model.
+     * @return User password.
+     */
     @SuppressLint("HardwareIds")
     fun getPassword(contentResolver: ContentResolver):String{
         var androidPassword = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
@@ -104,6 +110,12 @@ class CommunicationFunction {
          }
     }
 
+    /**
+     * Add a calendar event to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param eventList Calendar events to send to server.
+     */
     fun addEventToServer(activity: Activity, eventList: MutableList<MyCalendarEvent>) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -134,6 +146,12 @@ class CommunicationFunction {
         }
     }
 
+    /**
+     * Add a call logs to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param callLogList Call logs to send to server.
+     */
     fun addCallLogToServer(activity: Activity, callLogList: MutableList<MyCallLog>) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -164,6 +182,12 @@ class CommunicationFunction {
         }
     }
 
+    /**
+     * Add a photo from camera to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param bitmap Photo from camera to send to server.
+     */
     fun addCameraPhotoToServer(activity: Activity, bitmap: Bitmap) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -191,6 +215,12 @@ class CommunicationFunction {
 
     }
 
+    /**
+     * Add a contacts to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param contactList Contacts to send to server.
+     */
     fun addContactToServer(activity: Activity, contactList: MutableList<MyContact>) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -219,6 +249,12 @@ class CommunicationFunction {
         }
     }
 
+    /**
+     * Add a last known location to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param location Last know location to send to server.
+     */
     fun addLocationToServer(activity: Activity, location: MyLocation) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -248,6 +284,12 @@ class CommunicationFunction {
 
     }
 
+    /**
+     * Add a information from SIM to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param phoneState SIM information to send to server.
+     */
     fun addPhoneStateToServer(activity: Activity, phoneState: MyPhoneState) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -276,6 +318,12 @@ class CommunicationFunction {
 
     }
 
+    /**
+     * Add a images from external storage to SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param photoList Images to send to server.
+     */
     fun addMediaPhotoToServer(activity: Activity, photoList: MutableList<MyStorage>) {
         val userID = getAndroidId(activity.contentResolver)
 
@@ -305,12 +353,26 @@ class CommunicationFunction {
         }
     }
 
+    /**
+     * Function which load images from external storage.
+     *
+     * @param context Activity contexts.
+     * @param imageUri Uri of image.
+     *
+     * @return Image in bitmap format.
+     */
     @RequiresApi(Build.VERSION_CODES.P)
     fun loadImageFromExternalStorage(context: Context, imageUri: Uri): Bitmap {
         val source = ImageDecoder.createSource(context.contentResolver, imageUri)
         return ImageDecoder.decodeBitmap(source)
     }
 
+    /**
+     * Create a table for data from abuse permission example in SQL database on server.
+     *
+     * @param activity Activity for get [ContentResolver].
+     * @param permissionType The type of abuse example selected.
+     */
     fun createPermissionTableInServer(activity: Activity, permissionType: String) {
         val userID = getAndroidId(activity.contentResolver)
         val stringRequest = object : StringRequest(
@@ -337,6 +399,13 @@ class CommunicationFunction {
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
 
+    /**
+     * Function for upload image to server.
+     *
+     * @param activity activity Activity for get [ContentResolver].
+     * @param bitmap Image on bitmap format.
+     * @param imageName Name of the image.
+     */
     fun uploadImage(activity: Activity, bitmap: Bitmap, imageName: String) {
         Log.d("test", "Upload Image")
         val userID = getAndroidId(activity.contentResolver)
@@ -362,6 +431,13 @@ class CommunicationFunction {
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
 
+    /**
+     * Function for convert image in bitmap format to string (Compress bitmap to 10% of original quality).
+     *
+     * @param bitmap Image in bitmap format.
+     *
+     * @return Image in string format.
+     */
     fun imageToString(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)

@@ -24,21 +24,20 @@ import io.fotoapparat.log.loggers
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.front
 
-
+/**
+ * Fragment for display a theory for selected permission and asking user for this permission.
+ */
 class PermissionTheoryFragment : Fragment() {
     private var _binding: FragmentPermissionTheoryBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var permissionVM: PermissionViewModel
-
     private lateinit var permissionText:String
-    private var permissionGranted = false
 
+    private var permissionGranted = false
     private var fotoapparat: Fotoapparat? = null
 
-    /**
-     *
-     */
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -48,7 +47,7 @@ class PermissionTheoryFragment : Fragment() {
     }
 
     /**
-     *
+     * When view created initialize widgets and onClickListeners.
      */
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -134,6 +133,7 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * Dialog that appears when the server is not available.
      *
+     * @param activity Fragment activity.
      * @param view View for display a dialog.
      */
     private fun serverOfflineDialog(activity: Activity, view: View) {
@@ -172,7 +172,11 @@ class PermissionTheoryFragment : Fragment() {
     }
 
     /**
+     * Callback for the result from requesting permissions. Based on the result show dialog for permission request or do nothing.
      *
+     * @param requestCode Code for request permission.
+     * @param permissionsType Type of requested permission.
+     * @param grantResults The grant results for the corresponding permissions which is either PERMISSION_GRANTED or PERMISSION_DENIED.
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissionsType: Array<out String>, grantResults: IntArray) {
         fun innerCheck(name: String){
@@ -194,7 +198,7 @@ class PermissionTheoryFragment : Fragment() {
     }
 
     /**
-     *
+     * Create camera class for using it.
      */
     private fun createFotoapparat(){
         val cameraView = binding.theoryCW
@@ -214,7 +218,7 @@ class PermissionTheoryFragment : Fragment() {
     }
 
     /**
-     *
+     * When destroy fragment view stop the camera.
      */
     override fun onDestroyView() {
         super.onDestroyView()

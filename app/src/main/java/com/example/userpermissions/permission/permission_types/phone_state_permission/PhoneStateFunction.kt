@@ -5,7 +5,16 @@ import android.content.Context
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 
+/**
+ * Functions to read data from phone SIM card.
+ */
 class PhoneStateFunction {
+    /**
+     * Return a data from SIM card.
+     *
+     * @param context Application context.
+     * @return MyPhoneState variable with information from SIm card.
+     */
     @SuppressLint("MissingPermission")
     fun getDataFromSIM(context: Context):MyPhoneState{
         val subManager = context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
@@ -21,6 +30,13 @@ class PhoneStateFunction {
         return MyPhoneState(phoneNumber,networkTypeToString(dataNetworkType),getOperatorName(operator))
     }
 
+    /**
+     * Get operator name from operator code for the Czech Republic and neighboring countries.
+     *
+     * @param operator String operator code.
+     *
+     * @return String operator name.
+     */
     private fun getOperatorName (operator:String):String{
         return when (operator){
             // Czech
@@ -50,8 +66,15 @@ class PhoneStateFunction {
         }
     }
 
-    private fun networkTypeToString (IntNetworkType:Int):String{
-        return when(IntNetworkType){
+    /**
+     * Get the text type of mobile network from int value.
+     *
+     * @param intNetworkType network type in int format.
+     *
+     * @return Network type in text.
+     */
+    private fun networkTypeToString (intNetworkType:Int):String{
+        return when(intNetworkType){
             0 -> "unknown"
             1 -> "GPRS"
             2 -> "EDGE"

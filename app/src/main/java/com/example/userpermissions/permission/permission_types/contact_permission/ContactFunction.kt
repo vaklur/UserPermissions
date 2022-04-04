@@ -5,8 +5,17 @@ import android.content.ContentResolver
 import android.provider.ContactsContract
 import android.util.Log
 
+/**
+ * Functions to read contacts from phone.
+ */
 class ContactFunction {
-
+    /**
+     * Return a list of contacts, the number of contacts is specified by the variable contactsCount.
+     *
+     * @param contentResolver ContentResolver for read contacts from device.
+     * @param contactsCount The int number of contacts to be read.
+     * @return List of contacts.
+     */
     @SuppressLint("SimpleDateFormat")
     fun readContacts(contentResolver: ContentResolver, contactsCount: Int):MutableList<MyContact> {
         val contactsList: MutableList<MyContact> = ArrayList()

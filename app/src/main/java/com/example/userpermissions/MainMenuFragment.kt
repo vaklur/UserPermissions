@@ -17,9 +17,6 @@ class MainMenuFragment : Fragment() {
     private var _binding: FragmentMainMenuBinding? = null
     private val binding get() = _binding!!
 
-    private val comFun = CommunicationFunction()
-
-
     /**
      * Create a view of fragment with view bindings.
      */
@@ -38,16 +35,16 @@ class MainMenuFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // Go to PermissionFragment and delete user in server
         binding.permissionsBTN.setOnClickListener {
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_permissionFragment)
-            comFun.deleteUserInServer(requireActivity())
+            CommunicationFunction().deleteUserInServer(requireActivity())
         }
-
+        // Go to SettingsFragment
         binding.settingsBTN.setOnClickListener {
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_settingsFragment)
         }
-
+        // Go to AboutAppFragment
         binding.aboutAppBTN.setOnClickListener {
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_aboutAppFragment)
         }

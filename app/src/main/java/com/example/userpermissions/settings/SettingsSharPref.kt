@@ -26,7 +26,6 @@ class SettingsSharPref(context: Context) {
 
         editor.putString("ipAddress",address)
         editor.apply()
-        editor.commit()
     }
 
 
@@ -40,7 +39,6 @@ class SettingsSharPref(context: Context) {
 
         editor.putString("language",language)
         editor.apply()
-        editor.commit()
     }
 
     /**
@@ -86,7 +84,5 @@ class SettingsSharPref(context: Context) {
         ipAddressSet.add(address)
         editor.putStringSet("ipAddressSet",ipAddressSet)
         editor.apply()
-        editor.commit()
-
     }
 }
