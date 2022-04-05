@@ -23,22 +23,27 @@ import com.example.userpermissions.volley_communication.CommunicationFunction
  */
 class PermissionViewModel:ViewModel() {
 
+    data class PermissionVMInit(var serverAddress:String, val theoryText:String, val permissionType:String, val permissionText:String)
+
+    // ID of permission
     private var permissionId = 0
+    // Control if data was send to server
     private var dataIsSend = false
-    private var bitmapPhoto:Bitmap? = null
+    // save photo from camera for offline example
+    private var photo:Bitmap? = null
 
-    var ipSettings = ""
-    var theoryText = ""
-    var permissionType = ""
-    var permissionText= ""
-    var requestCode = 0
+    private var userCreatedInServer = false
 
-    fun savePhoto (photo:Bitmap){
-        bitmapPhoto=photo
+    private val comFun = CommunicationFunction()
+    private val permissionFun = PermissionFunction()
+
+    // Getter and Setters
+    fun savePhoto (newPhoto:Bitmap){
+        photo=newPhoto
     }
 
     fun getPhoto(): Bitmap? {
-        return bitmapPhoto
+        return photo
     }
 
     fun savePermissionID (newPermissionId:Int){
@@ -62,70 +67,83 @@ class PermissionViewModel:ViewModel() {
      *
      * @param context Application context.
      */
-    fun initialize(context: Context){
-        val settingsSP = SettingsSharPref(context)
-        ipSettings = settingsSP.getIPsettings()
-
+    fun initialize(context: Context):PermissionVMInit{
+        val serverAddress = SettingsSharPref(context).getIPsettings()
+        var theoryText =""
+        var permissionType = ""
+        var permissionText= ""
         when (permissionId) {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
-                requestCode = 101
                 permissionText = context.getString(R.string.sms)
                 theoryText = context.resources.getString(R.string.sms_theory)
             }
             2 -> {
                 permissionType = Manifest.permission.READ_CONTACTS
-                requestCode = 102
                 permissionText = context.getString(R.string.contacts)
                 theoryText = context.resources.getString(R.string.contact_theory)
             }
             3 -> {
                 permissionType = Manifest.permission.READ_CALL_LOG
-                requestCode = 103
                 permissionText = context.getString(R.string.calllog)
                 theoryText = context.resources.getString(R.string.calllog_theory)
             }
             4 -> {
                 permissionType = Manifest.permission.READ_CALENDAR
-                requestCode = 104
                 permissionText = context.getString(R.string.calendar)
                 theoryText = context.resources.getString(R.string.calendar_theory)
             }
             5 -> {
                 permissionType = Manifest.permission.ACCESS_FINE_LOCATION
-                requestCode = 105
                 permissionText = context.getString(R.string.location)
                 theoryText = context.resources.getString(R.string.location_theory)
             }
             6 -> {
                 permissionType = Manifest.permission.READ_EXTERNAL_STORAGE
-                requestCode = 106
                 permissionText = context.getString(R.string.storage)
                 theoryText = context.resources.getString(R.string.storage_theory)
             }
             7 -> {
                 permissionType = Manifest.permission.READ_PHONE_STATE
-                requestCode = 107
                 permissionText = context.getString(R.string.phone)
                 theoryText = context.resources.getString(R.string.phone_theory)
             }
             8 -> {
                 permissionType = Manifest.permission.CAMERA
-                requestCode = 108
                 permissionText = context.getString(R.string.camera)
                 theoryText = context.resources.getString(R.string.camera_theory)
             }
         }
+        return PermissionVMInit(serverAddress,theoryText,permissionType,permissionText)
     }
 
     /**
-     * Clear a set view model variables
+     * Function which send permission data to server
+     *
+     * @param activity Fragment activity.
+     * @param context Application context.
      */
-    fun clear(){
-        permissionId=0
-        dataIsSend=false
-        bitmapPhoto = null
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun sendDataToServer(activity: Activity, context: Context){
+        if (userCreatedInServer){
+            sendPermissionDataToServer(activity, context)
+        }
+        else {
+            comFun.createUserInServer(activity,
+                object : CommunicationFunction.VolleyStringResponse {
+                    override fun onSuccess() {
+                        sendPermissionDataToServer(activity, context)
+                        userCreatedInServer = true
+                    }
+
+                    override fun onError() {
+
+                    }
+                })
+        }
+
     }
+
 
     /**
      * Send permission data to server based on permission ID.
@@ -134,100 +152,38 @@ class PermissionViewModel:ViewModel() {
      * @param context Application context.
      */
     @RequiresApi(Build.VERSION_CODES.Q)
-    fun sendDataToServer (activity: Activity, context: Context){
-        val comFun = CommunicationFunction()
+    private fun sendPermissionDataToServer (activity: Activity, context: Context){
+        val permissionTableType = permissionFun.getPermissionTypeFromPermissionID(permissionId)
+        comFun.createPermissionTableInServer(activity, permissionTableType)
         when (permissionId) {
-            1 -> {
-                val sms = SmsFunction()
-                comFun.createPermissionTableInServer(activity, "sms")
-                comFun.addSMStoServer(
-                    activity,
-                    sms.readSms( 10,activity.contentResolver,context)
-                )
-            }
-            2 -> {
-                val contact = ContactFunction()
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "contact"
-                )
-                comFun.addContactToServer(
-                    activity,
-                    contact.readContacts(activity.contentResolver, 10)
-                )
-            }
-            3 -> {
-                val callLog = CallLogFunction()
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "callLog"
-                )
-                comFun.addCallLogToServer(
-                    activity,
-                    callLog.readCallLogs( 10,activity.contentResolver,context)
-                )
-
-            }
-            4 -> {
-                val calendar = CalendarFunction()
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "calendar"
-                )
-                comFun.addEventToServer(
-                    activity,
-                    calendar.readCalendarEvents(
-                        activity.contentResolver,
-                        10
-                    )
-                )
-
-            }
-            5 -> {
-                val location = LocationFunction()
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "location"
-                )
-                location.getLastLocation(activity, context)
-
-            }
-            6 -> {
-                val extStorage = StorageFunction()
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "storage"
-                )
-                comFun.addMediaPhotoToServer(
-                    activity,
-                    extStorage.getPhotosFromGallery(
-                        activity.contentResolver,
-                        10
-                    )
-                )
-
-            }
-            7 -> {
-                val simInfo = PhoneStateFunction()
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "phoneState"
-                )
-                comFun.addPhoneStateToServer(
-                    activity,
-                    simInfo.getDataFromSIM(context)
-                )
-
-            }
-            8 -> {
-                comFun.createPermissionTableInServer(
-                    activity,
-                    "camera"
-                )
-
+            1 -> comFun.addSMStoServer(activity, SmsFunction().readSms( 10,activity.contentResolver,context))
+            2 -> comFun.addContactToServer(activity, ContactFunction().readContacts(activity.contentResolver, 10))
+            3 -> comFun.addCallLogToServer(activity, CallLogFunction().readCallLogs( 10,activity.contentResolver,context))
+            4 -> comFun.addEventToServer(activity, CalendarFunction().readCalendarEvents(activity.contentResolver, 10))
+            5 -> LocationFunction().getLastLocation(activity, context)
+            6 -> comFun.addMediaPhotoToServer(activity, StorageFunction().getPhotosFromGallery(activity.contentResolver, 10))
+            7 -> comFun.addPhoneStateToServer(activity, PhoneStateFunction().getDataFromSIM(context))
             }
         }
+
+    /**
+     * Function which delete all user data in server.
+     */
+    fun deleteUserInServer (activity: Activity){
+        comFun.deleteUserInServer(activity)
+        userCreatedInServer = false
+    }
+
+    /**
+     * Function which delete user table in server and clear a View Model permission variables to default
+     */
+    fun deleteUserTableInServer (activity: Activity){
+        comFun.deleteUserTableInServer(permissionFun.getPermissionTypeFromPermissionID(permissionId),activity)
+        permissionId=0
+        dataIsSend=false
+        photo = null
     }
 
 
 }
+

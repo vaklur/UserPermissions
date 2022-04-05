@@ -225,6 +225,9 @@ class SettingsFragment : Fragment() {
             val comFun = CommunicationFunction()
             comFun.testConnectionToServer(addressToSave, object: CommunicationFunction.VolleyStringResponse {
                 override fun onSuccess() {
+                    if (binding.actualIPTV.text != addressToSave){
+                        comFun.deleteUserInServer(requireActivity())
+                    }
                     settingsSP.saveIPsettings(addressToSave)
                     settingsSP.addAddressToIPsettingsSet(addressToSave)
                     binding.actualIPTV.text= settingsSP.getIPsettings()

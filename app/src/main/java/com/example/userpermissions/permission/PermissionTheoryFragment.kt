@@ -2,7 +2,6 @@ package com.example.userpermissions.permission
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -32,11 +32,25 @@ class PermissionTheoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var permissionVM: PermissionViewModel
+    private lateinit var serverIpAddress:String
     private lateinit var permissionText:String
 
-    private var permissionGranted = false
     private var fotoapparat: Fotoapparat? = null
 
+    /**
+     * Result of request permission call, if permission is granted, call [permissionsGranted] function.
+     */
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        if (isGranted) {
+            permissionsGranted()
+            Toast.makeText(requireActivity().application, permissionText + " " + getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
+        }
+        else {
+            PermissionFunction().showSettingsDialog(requireActivity(), permissionText, requireContext())
+            Toast.makeText(requireActivity().application, permissionText + " " + getString(R.string.permission_not_granted), Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +63,6 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * When view created initialize widgets and onClickListeners.
      */
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,76 +71,73 @@ class PermissionTheoryFragment : Fragment() {
 
         // Load data from Bundle to ViewModel
         if (permissionVM.getPermissionID()==0){
-        permissionVM.savePermissionID(requireArguments().getInt("permissionType"))}
-
-        // Initialize a data variables in ViewModel
-        permissionVM.initialize(requireContext())
-
-        val permissionType = permissionVM.permissionType
-        val requestCode = permissionVM.requestCode
-        permissionText = permissionVM.permissionText
-
-        // If permission is camera permission create and start camera
-        if (permissionVM.getPermissionID()==8){
-            createFotoapparat()
-            if (PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText, requireContext())) {
-                fotoapparat?.start()
-            }
+            permissionVM.savePermissionID(requireArguments().getInt("permissionType"))
         }
 
+        // Initialize a data variables in ViewModel
+        val init = permissionVM.initialize(requireContext())
+
+        permissionText = init.permissionText
+        serverIpAddress = init.serverAddress
+
         // Load text to WebView
-        val theoryVW = binding.theoryWV
-        theoryVW.loadDataWithBaseURL(null, permissionVM.theoryText, null, "utf-8", null)
+        binding.theoryWV.loadDataWithBaseURL(null, init.theoryText, null, "utf-8", null)
 
         // On click go to permission abuse example
         binding.exampleBTN.setOnClickListener {
-            val progressBar = binding.theoryPB
-            val progressBarText = binding.theoryProgressBarTV
-            // Check if permission granted
-            permissionGranted = PermissionFunction().checkForPermissions(requireActivity(), permissionType, permissionText, requireContext())
-            if(permissionGranted) {
-                progressBar.visibility = View.VISIBLE
-                progressBarText.visibility = View.VISIBLE
-                binding.exampleBTN.isEnabled = false
-                val comFun = CommunicationFunction()
-                comFun.createUserInServer(requireActivity())
-                comFun.testConnectionToServer(permissionVM.ipSettings, object : CommunicationFunction.VolleyStringResponse {
-                    override fun onSuccess() {
-                        comFun.createUserInServer(requireActivity())
-
-                        progressBar.visibility = View.GONE
-                        progressBarText.visibility = View.GONE
-
-                        if (arguments?.getBoolean("state") == false) {
-                            if (!permissionVM.getDataIsSend()) {
-                                permissionVM.sendDataToServer(requireActivity(),requireContext())
-                                if (permissionVM.getPermissionID()==8){
-                                    fotoapparat?.takePicture()
-                                            ?.toBitmap()
-                                            ?.whenAvailable { bitmapPhoto ->
-                                                if (bitmapPhoto != null) {
-                                                    Log.d("test", "addPhotoToServer")
-                                                    comFun.addCameraPhotoToServer(requireActivity(), bitmapPhoto.bitmap)
-                                                    findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
-                                                }
-                                            }
-                                }
-                            }
-                        }
-                        if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
-                            findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
-                        }
-                    }
-                    override fun onError() {
-                        serverOfflineDialog(requireActivity(), binding.root)
-                    }
-                })
-            }
-            else{
-                @Suppress("DEPRECATION")
-                requestPermissions(arrayOf(permissionType), requestCode)
-            }
+            requestPermission.launch(init.permissionType)
         }
+    }
+
+    /**
+     * Function which, if permission is granted, checks the availability of the server.
+     * If the server is available, it sends data to it and display a fragment with a practical example.
+     * If the serve is unavailable, display a server offline dialog.
+     */
+    private fun permissionsGranted (){
+        val progressBar = binding.theoryPB
+        val progressBarText = binding.theoryProgressBarTV
+        progressBar.visibility = View.VISIBLE
+        progressBarText.visibility = View.VISIBLE
+        binding.exampleBTN.isEnabled = false
+
+        if (permissionVM.getPermissionID() == 8){
+            Log.d("test", "camera start")
+            createFotoapparat()
+            fotoapparat?.start()
+        }
+
+        val comFun = CommunicationFunction()
+        comFun.testConnectionToServer(serverIpAddress, object : CommunicationFunction.VolleyStringResponse {
+            @RequiresApi(Build.VERSION_CODES.Q)
+            override fun onSuccess() {
+                progressBar.visibility = View.GONE
+                progressBarText.visibility = View.GONE
+
+                if (arguments?.getBoolean("state") == false) {
+                    if (!permissionVM.getDataIsSend()) {
+                        permissionVM.sendDataToServer(requireActivity(),requireContext())
+                        if (permissionVM.getPermissionID()==8){
+                            fotoapparat?.takePicture()
+                                ?.toBitmap()
+                                ?.whenAvailable { bitmapPhoto ->
+                                    if (bitmapPhoto != null) {
+                                        Log.d("test", "addPhotoToServer")
+                                        comFun.addCameraPhotoToServer(requireActivity(), bitmapPhoto.bitmap)
+                                        findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
+                                    }
+                                }
+                        }
+                    }
+                }
+                if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
+                    findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
+                }
+            }
+            override fun onError() {
+                serverOfflineDialog(requireActivity(), binding.root)
+            }
+        })
     }
 
     /**
@@ -169,32 +179,6 @@ class PermissionTheoryFragment : Fragment() {
         }
 
         builder.show()
-    }
-
-    /**
-     * Callback for the result from requesting permissions. Based on the result show dialog for permission request or do nothing.
-     *
-     * @param requestCode Code for request permission.
-     * @param permissionsType Type of requested permission.
-     * @param grantResults The grant results for the corresponding permissions which is either PERMISSION_GRANTED or PERMISSION_DENIED.
-     */
-    override fun onRequestPermissionsResult(requestCode: Int, permissionsType: Array<out String>, grantResults: IntArray) {
-        fun innerCheck(name: String){
-            permissionGranted = if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(requireActivity().application, name + " " + getString(R.string.permission_not_granted), Toast.LENGTH_SHORT).show()
-                PermissionFunction().showSettingsDialog(requireActivity(), permissionText, requireContext())
-                false
-            } else{
-                Toast.makeText(requireActivity().application, name + " " + getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
-                if (permissionVM.getPermissionID() == 8){
-                fotoapparat?.start()
-                }
-                true
-            }
-        }
-        when (requestCode){
-            requestCode -> innerCheck(permissionText)
-        }
     }
 
     /**

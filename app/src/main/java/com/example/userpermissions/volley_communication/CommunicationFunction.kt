@@ -450,14 +450,14 @@ class CommunicationFunction {
      *
      * @param activity Activity for get [ContentResolver].
      */
-    fun createUserInServer(activity: Activity) {
+    fun createUserInServer(activity: Activity,volleyResponse: VolleyStringResponse) {
         val userID = getAndroidId(activity.contentResolver)
         val password = getPassword(activity.contentResolver)
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_ADD_USER, activity),
-                Response.Listener {
-                    try {
-
+                Response.Listener {response ->
+                    try {Log.d("test",response)
+                        volleyResponse.onSuccess()
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -469,6 +469,39 @@ class CommunicationFunction {
                 val params = HashMap<String, String>()
                 params["userid"] = crypto.encryptData(userID, activity)
                 params["password"] = crypto.encryptData(password, activity)
+                return params
+            }
+        }
+
+        VolleySingleton.instance?.addToRequestQueue(stringRequest)
+    }
+
+    /**
+     * Delete user permission table in SQL database on server.
+     *
+     * @param table Name of permission table.
+     * @param activity Activity for get [ContentResolver].
+     */
+    fun deleteUserTableInServer(table:String,activity: Activity) {
+        Log.d("test", "delete User table")
+        val userID = getAndroidId(activity.contentResolver)
+        val stringRequest = object : StringRequest(
+            Method.POST, getServerAddress(EndPoints.URL_DELETE_USER_TABLE, activity),
+            Response.Listener { response ->
+                try {
+                    Log.d("test", response)
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+
+            Response.ErrorListener { }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["userid"] = crypto.encryptData(userID, activity)
+                params["tablename"] = crypto.encryptData(table, activity)
                 return params
             }
         }
@@ -559,6 +592,7 @@ class CommunicationFunction {
             "add_user" -> "$urlRoot/?op=add_user"
             "add_create_permission_table" -> "$urlRoot/?op=create_permission_table"
             "delete_user" -> "$urlRoot/?op=delete_user"
+            "delete_user_table" -> "$urlRoot/?op=delete_user_table"
             "login_user" -> "$urlRoot/view/view_data.php"
             else -> urlRoot
         }

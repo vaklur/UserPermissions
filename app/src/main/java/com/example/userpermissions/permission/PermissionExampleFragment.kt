@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
@@ -45,6 +46,7 @@ class PermissionExampleFragment : Fragment() {
 
         val comFun = CommunicationFunction()
 
+        permissionVM.saveDataIsSend(true)
         // ***
 
         binding.loginTV.text = String.format(resources.getString(R.string.id),comFun.getAndroidId(requireActivity().contentResolver))+"  "+String.format(resources.getString(R.string.password),comFun.getPassword(requireActivity().contentResolver))
@@ -54,9 +56,9 @@ class PermissionExampleFragment : Fragment() {
         /*val webSettings = webView.settings
         webSettings.javaScriptEnabled = true*/
         webView .webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                if (url != null) {
-                    view?.loadUrl(url)
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                if (request?.url != null) {
+                    view?.loadUrl(request.url.toString())
                 }
                 return true
             }
@@ -64,7 +66,6 @@ class PermissionExampleFragment : Fragment() {
         webView.loadUrl(comFun.getServerAddress(EndPoints.URL_LOGIN_USER,requireActivity()))
 
         binding.theoryBTN.setOnClickListener {
-            permissionVM.saveDataIsSend(true)
             findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment)
         }
 

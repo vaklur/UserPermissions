@@ -34,8 +34,7 @@ class LocationFunction {
                     val accuracy = location.accuracy.toString()
                     val altitude =  location.altitude.toString()
                     val lastKnownLocation = MyLocation(latitude,longitude,accuracy,altitude)
-                    val comFun = CommunicationFunction()
-                    comFun.addLocationToServer(activity,lastKnownLocation)
+                    CommunicationFunction().addLocationToServer(activity,lastKnownLocation)
                 }
             }
     }

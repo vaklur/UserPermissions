@@ -30,6 +30,10 @@ object EndPoints {
      */
     const val URL_DELETE_USER = "delete_user"
     /**
+     * End of url address for delete user permission table in SQL database on server.
+     */
+    const val URL_DELETE_USER_TABLE = "delete_user_table"
+    /**
      * End of url address for view a login page for user.
      */
     const val URL_LOGIN_USER = "login_user"

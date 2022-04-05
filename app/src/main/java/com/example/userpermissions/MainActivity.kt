@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
 import com.example.userpermissions.permission.PermissionViewModel
-import com.example.userpermissions.volley_communication.CommunicationFunction
 
 /**
  * The application main activity based on BaseActivity
@@ -107,12 +106,22 @@ class MainActivity : BaseActivity() {
                 navigationController.navigate(R.id.PermissionTheoryFragment)
             }
             R.id.PermissionTheoryFragment -> {
-                CommunicationFunction().deleteUserInServer(this)
+                permissionVM.deleteUserTableInServer(this)
                 navigationController.navigate(R.id.permissionFragment)
-                permissionVM.clear()
+
             }
             R.id.permissionFragment -> {
+                permissionVM.deleteUserInServer(this)
                 navigationController.navigate(R.id.mainMenuFragment)
+            }
+            R.id.settingsFragment -> {
+                if (permissionVM.getDataIsSend()){
+                    permissionVM.saveDataIsSend(false)
+                    navigationController.navigate(R.id.PermissionTheoryFragment)
+                }
+                else {
+                    super.onBackPressed()
+                }
             }
             R.id.mainMenuFragment -> {
                 finish()
