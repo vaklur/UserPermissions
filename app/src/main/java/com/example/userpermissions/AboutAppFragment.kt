@@ -30,7 +30,6 @@ class AboutAppFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.aboutAppWV.loadDataWithBaseURL(null,resources.getString(R.string.about_app_text), null,"utf-8",null)
-        binding.aboutAppWV.setBackgroundColor(Color.TRANSPARENT)
     }
 
     override fun onDestroyView() {

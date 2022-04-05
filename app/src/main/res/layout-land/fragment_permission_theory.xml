@@ -30,20 +30,21 @@
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/example_BTN"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/theoryProgressBar_TV"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:background="@color/white"
-        android:visibility="gone"
         android:minWidth="200dp"
         android:text="@string/progres_bar_text"
         android:textAlignment="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +53,7 @@
     <ProgressBar
         android:id="@+id/theory_PB"
         android:visibility="gone"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:minWidth="200dp"

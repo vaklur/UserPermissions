@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.userpermissions.databinding.ActivityMainBinding
 import com.example.userpermissions.permission.PermissionViewModel
+import com.example.userpermissions.volley_communication.CommunicationFunction
 
 /**
  * The application main activity based on BaseActivity
@@ -30,9 +31,10 @@ class MainActivity : BaseActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
-        appAlertDialog(binding.root)
-
+        if (savedInstanceState == null) {
+            CommunicationFunction().deleteUserInServer(this)
+            appAlertDialog(binding.root)
+        }
         permissionVM = ViewModelProvider(this).get(PermissionViewModel::class.java)
     }
 
@@ -90,6 +92,8 @@ class MainActivity : BaseActivity() {
 
         builder.show()
     }
+
+
 
     /**
      * Function that manages actions when user using the HW back button

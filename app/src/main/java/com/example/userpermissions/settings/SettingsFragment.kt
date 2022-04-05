@@ -2,6 +2,7 @@ package com.example.userpermissions.settings
 
 
 import android.app.Dialog
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -64,6 +65,7 @@ class SettingsFragment : Fragment() {
      */
     private fun getServerState(){
         (activity as MainActivity).allowBackPressed=false
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
         val settingsSP = SettingsSharPref(requireContext())
         val comFun = CommunicationFunction()
         val stateActualTV = binding.stateActualTV
@@ -82,6 +84,7 @@ class SettingsFragment : Fragment() {
                 stateRefreshBTN.isEnabled = true
                 binding.changeLanguageBTN.isEnabled=true
                 (activity as MainActivity).allowBackPressed=true
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
             }
 
             override fun onError() {
@@ -91,6 +94,7 @@ class SettingsFragment : Fragment() {
                 stateRefreshBTN.isEnabled = true
                 binding.changeLanguageBTN.isEnabled=true
                 (activity as MainActivity).allowBackPressed=true
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
             }
         })
     }

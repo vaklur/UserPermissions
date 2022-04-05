@@ -38,7 +38,6 @@ class MainMenuFragment : Fragment() {
         // Go to PermissionFragment and delete user in server
         binding.permissionsBTN.setOnClickListener {
             view.findNavController().navigate(R.id.action_mainMenuFragment_to_permissionFragment)
-            CommunicationFunction().deleteUserInServer(requireActivity())
         }
         // Go to SettingsFragment
         binding.settingsBTN.setOnClickListener {
