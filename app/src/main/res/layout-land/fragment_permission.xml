@@ -27,7 +27,7 @@
         android:layout_width="731dp"
         android:layout_height="60dp"
         android:gravity="center"
-        android:text="@string/permision_title"
+        android:text="@string/permission_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
         android:textStyle="bold"

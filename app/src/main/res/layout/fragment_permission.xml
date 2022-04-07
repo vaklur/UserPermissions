@@ -29,7 +29,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:text="@string/permision_title"
+        android:text="@string/permission_title"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

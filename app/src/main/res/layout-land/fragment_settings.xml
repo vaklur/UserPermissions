@@ -87,7 +87,8 @@
             app:layout_constraintEnd_toStartOf="@+id/stateActual_TV"
             app:layout_constraintHorizontal_bias="0.035"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/actualIP_TV" />
+            app:layout_constraintTop_toBottomOf="@+id/actualIP_TV"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Button
             android:id="@+id/refreshIP_BTN"

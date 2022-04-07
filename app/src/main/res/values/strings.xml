@@ -50,20 +50,20 @@
     <string name="language_english">English</string>
     <string name="language_czech">Czech</string>
     // Permissions
-    <string name="permision_title">Dangerous permissions</string>
-    <string name="sms_permision">Access to SMS</string>
-    <string name="calendar_permision">Access to calendar</string>
-    <string name="contacts_permision">Access to contacts</string>
-    <string name="calllog_permision">Access to call logs</string>
-    <string name="location_permision">Access to location</string>
-    <string name="camera_permision">Access to Camera</string>
+    <string name="permission_title">Dangerous permissions</string>
+    <string name="sms_permission">Access to SMS</string>
+    <string name="calendar_permission">Access to calendar</string>
+    <string name="contacts_permission">Access to contacts</string>
+    <string name="call_log_permission">Access to call logs</string>
+    <string name="location_permission">Access to location</string>
+    <string name="camera_permission">Access to Camera</string>
     <string name="storage_permission">Access to storage</string>
     <string name="phone_permission">Access to SIM card</string>
 
     <string name="sms">SMS</string>
     <string name="calendar">Calendar events</string>
     <string name="contacts">Contacts</string>
-    <string name="calllog">Call logs</string>
+    <string name="call_log">Call logs</string>
     <string name="location">Location</string>
     <string name="camera">Camera</string>
     <string name="storage">External storage</string>
@@ -90,13 +90,13 @@
 
     // Permission - example + theory
     <string name="example_button">Practical example</string>
-    <string name="example_text">" ID: sms PASSWORD: xxxxxx "</string>
+    <string name="example_text">" ID: sms PASSWORD: </string>
     <string name="theory_button">Theory</string>
     <string name="id">ID: %1$s</string>
     <string name="password">PASSWORD: %1$s</string>
     <string name="refresh">Refresh</string>
 
-    <string name="progres_bar_text">Trying to connect to server…</string>
+    <string name="progress_bar_text">Trying to connect to server…</string>
 
     <string name="example_off_text">Example of abuse %1$s permission</string>
 
@@ -118,7 +118,7 @@
     <string name="calendar_endDate">End date: </string>
     <string name="calendar_description">Description: </string>
 
-    <string name="call_log_title">CallLog </string>
+    <string name="call_log_title">call_log </string>
     <string name="call_log_number">Number: </string>
     <string name="call_log_date">Date: </string>
     <string name="call_log_duration">Duration: </string>
@@ -183,7 +183,7 @@
             ]]>
         </string>
 
-    <string name="calllog_theory">
+    <string name="call_log_theory">
            <![CDATA[
                 <h2 style="text-align: center;">Permission to access call logs</h2>
                 <p>The permission gives the application the possibility to:</p>

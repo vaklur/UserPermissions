@@ -45,7 +45,7 @@ class SettingsFragment : Fragment() {
 
         val settingsSP = SettingsSharPref(requireContext())
         binding.languageTV.text = getActualLanguage(settingsSP.getLanguageSettings())
-        binding.actualIPTV.text= settingsSP.getIPsettings()
+        binding.actualIPTV.text= settingsSP.getIpSettings()
 
         getServerState()
 
@@ -76,7 +76,7 @@ class SettingsFragment : Fragment() {
         stateRefreshBTN.isEnabled = false
         stateActualTV .text = requireContext().resources.getString(R.string.state_connecting_setting)
         stateActualTV .setBackgroundColor(Color.TRANSPARENT)
-        comFun.testConnectionToServer(settingsSP.getIPsettings(), object: CommunicationFunction.VolleyStringResponse {
+        comFun.testConnectionToServer(settingsSP.getIpSettings(), object: CommunicationFunction.VolleyStringResponse {
             override fun onSuccess() {
                 stateActualTV .text = requireContext().resources.getString(R.string.state_reachable_setting)
                 stateActualTV .setBackgroundColor(Color.GREEN)
@@ -198,7 +198,7 @@ class SettingsFragment : Fragment() {
 
 
         val addressSpinner = dialog.findViewById<Spinner>(R.id.setAddress_S)
-        val list = settingsSP.getIPsettingsSet()?.toMutableList()
+        val list = settingsSP.getIpSettingsSet()?.toMutableList()
         list?.add(getString(R.string.own_address))
         val addressAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, list as MutableList<String>)
         addressSpinner!!.adapter = addressAdapter
@@ -232,9 +232,9 @@ class SettingsFragment : Fragment() {
                     if (binding.actualIPTV.text != addressToSave){
                         comFun.deleteUserInServer(requireActivity())
                     }
-                    settingsSP.saveIPsettings(addressToSave)
-                    settingsSP.addAddressToIPsettingsSet(addressToSave)
-                    binding.actualIPTV.text= settingsSP.getIPsettings()
+                    settingsSP.saveIpSettings(addressToSave)
+                    settingsSP.addAddressToIpSettingsSet(addressToSave)
+                    binding.actualIPTV.text= settingsSP.getIpSettings()
                     binding.stateActualTV.text = resources.getString(R.string.state_reachable_setting)
                     binding.stateActualTV.setBackgroundColor(Color.GREEN)
                     Toast.makeText(requireContext(),getString(R.string.connection_ok), Toast.LENGTH_LONG).show()
@@ -245,7 +245,7 @@ class SettingsFragment : Fragment() {
                 }
             })
         }
-        dialog.findViewById<Button>(R.id.exitSetAdress_BTN).setOnClickListener {
+        dialog.findViewById<Button>(R.id.exitSetAddress_BTN).setOnClickListener {
             dialog.dismiss()
         }
 

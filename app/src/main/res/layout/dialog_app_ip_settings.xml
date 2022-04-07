@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/setAddress_TV" />
 
     <Button
-        android:id="@+id/exitSetAdress_BTN"
+        android:id="@+id/exitSetAddress_BTN"
         android:layout_width="112dp"
         android:layout_height="51dp"
         android:text="@string/set_dialog_exit"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/exitSetAdress_BTN"
+        app:layout_constraintStart_toEndOf="@+id/exitSetAddress_BTN"
         app:layout_constraintTop_toBottomOf="@+id/setAddress_ET"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -59,7 +59,7 @@
         android:hint="@string/set_dialog_hint"
         android:importantForAutofill="no"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/exitSetAdress_BTN"
+        app:layout_constraintBottom_toTopOf="@+id/exitSetAddress_BTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

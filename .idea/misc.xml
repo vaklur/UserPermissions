@@ -5,10 +5,13 @@
       <map>
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout-land/fragment_main_menu.xml" value="0.264" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout-land/fragment_permission.xml" value="0.21516754850088182" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout-land/fragment_permission_example.xml" value="0.4691358024691358" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout-land/fragment_permission_theory.xml" value="0.21516754850088182" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout-land/fragment_settings.xml" value="0.4" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout-sw600dp/fragment_permission_theory.xml" value="0.190625" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/activity_main.xml" value="0.16614583333333333" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/dialog_app_ip_settings.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/dialog_app_language_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/fragment_about_app.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/fragment_main_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/fragment_permission.xml" value="0.25416666666666665" />
@@ -16,6 +19,14 @@
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/fragment_permission_offline_example.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/fragment_permission_theory.xml" value="0.2" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_calendar_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_call_log_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_contact_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_location_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_none_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_phone_state_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_sms_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/layout/list_storage_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kuba/Learning Kotlin/UserPermissions/app/src/main/res/menu/menu_main.xml" value="0.55" />
       </map>
     </option>

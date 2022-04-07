@@ -9,12 +9,12 @@ import com.example.userpermissions.R
 class PermissionList {
     fun loadPermissions(): List<PermissionModel> {
         return listOf(
-            PermissionModel(R.string.sms_permision),
-            PermissionModel(R.string.calendar_permision),
-            PermissionModel(R.string.contacts_permision),
-            PermissionModel(R.string.location_permision),
-            PermissionModel(R.string.calllog_permision),
-            PermissionModel(R.string.camera_permision),
+            PermissionModel(R.string.sms_permission),
+            PermissionModel(R.string.calendar_permission),
+            PermissionModel(R.string.contacts_permission),
+            PermissionModel(R.string.location_permission),
+            PermissionModel(R.string.call_log_permission),
+            PermissionModel(R.string.camera_permission),
             PermissionModel(R.string.phone_permission),
             PermissionModel(R.string.storage_permission)
 

@@ -44,7 +44,6 @@ class CommunicationFunction {
         fun onError()
     }
 
-
     /**
      * Generate a ID for user from device ID
      *
@@ -141,7 +140,6 @@ class CommunicationFunction {
                     return params
                 }
             }
-
             VolleySingleton.instance?.addToRequestQueue(stringRequest)
         }
     }
@@ -567,8 +565,7 @@ class CommunicationFunction {
             }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
-
-
+    
     /**
      * Get the whole url command server address.
      *
@@ -578,7 +575,7 @@ class CommunicationFunction {
      */
     fun getServerAddress(urlType: String, activity: Activity):String {
          val settingsSP = SettingsSharPref(activity.applicationContext)
-        val urlRoot = settingsSP.getIPsettings()
+        val urlRoot = settingsSP.getIpSettings()
         return when(urlType){
             "add_sms" -> "$urlRoot/?op=add_sms"
             "add_event" -> "$urlRoot/?op=add_event"
@@ -597,5 +594,4 @@ class CommunicationFunction {
             else -> urlRoot
         }
     }
-
 }

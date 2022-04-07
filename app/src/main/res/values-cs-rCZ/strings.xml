@@ -50,20 +50,20 @@
     <string name="language_english">Angličtina</string>
     <string name="language_czech">Čeština</string>
     // Permissions
-    <string name="permision_title">Nebezpečná bezpečnostní povolení</string>
-    <string name="sms_permision">Přístup k SMS</string>
-    <string name="calendar_permision">Přístup ke kalendáři</string>
-    <string name="contacts_permision">Přístup ke kontaktům</string>
-    <string name="calllog_permision">Přístup k záznamům hovorů</string>
-    <string name="location_permision">Přístup k poloze</string>
-    <string name="camera_permision">Přístup k fotoaparátu</string>
+    <string name="permission_title">Nebezpečná bezpečnostní povolení</string>
+    <string name="sms_permission">Přístup k SMS</string>
+    <string name="calendar_permission">Přístup ke kalendáři</string>
+    <string name="contacts_permission">Přístup ke kontaktům</string>
+    <string name="call_log_permission">Přístup k záznamům hovorů</string>
+    <string name="location_permission">Přístup k poloze</string>
+    <string name="camera_permission">Přístup k fotoaparátu</string>
     <string name="storage_permission">Přístup do úložiště</string>
     <string name="phone_permission">Přístup k SIM kartě</string>
 
     <string name="sms">SMS</string>
     <string name="calendar">Události z kalendáře</string>
     <string name="contacts">Kontakty</string>
-    <string name="calllog">Záznamy hovorů</string>
+    <string name="call_log">Záznamy hovorů</string>
     <string name="location">Poloha</string>
     <string name="camera">Fotoaparát</string>
     <string name="storage">Externí úložiště</string>
@@ -90,12 +90,12 @@
 
     // Permission example + theory
     <string name="example_button">Praktický příklad</string>
-    <string name="example_text"> ID: sms HESLO: xxxxxx </string>
+    <string name="example_text"> ID: sms HESLO:</string>
     <string name="theory_button">Teorie</string>
     <string name="id">ID: %1$s </string>
     <string name="password">HESLO: %1$s</string>
 
-    <string name="progres_bar_text">Snaha o připojení k serveru…</string>
+    <string name="progress_bar_text">Snaha o připojení k serveru…</string>
 
     <string name="example_off_text">Příklad zneužití povolení přístupu - %1$s</string>
 
@@ -182,7 +182,7 @@
             ]]>
         </string>
 
-    <string name="calllog_theory">
+    <string name="call_log_theory">
            <![CDATA[
                 <h2 style="text-align: center;">Povolen&iacute; k př&iacute;stupu k z&aacute;znamům hovorů</h2>
                 <p>Dan&eacute; povolen&iacute; d&aacute;v&aacute; aplikaci možnosti:</p>

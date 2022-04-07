@@ -69,7 +69,7 @@ class PermissionTheoryFragment : Fragment() {
         }
 
         // Initialize a data variables in ViewModel
-        val init = permissionVM.initialize(requireContext())
+        val init = permissionVM.initPermissionTexts(requireContext())
 
         permissionText = init.permissionText
         serverIpAddress = init.serverAddress
@@ -108,7 +108,7 @@ class PermissionTheoryFragment : Fragment() {
                         takePhoto(true)
                     }
                 }
-                else {
+                if (permissionVM.getPermissionID()!=8 || permissionVM.getDataIsSend()) {
                     findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
                 }
             }

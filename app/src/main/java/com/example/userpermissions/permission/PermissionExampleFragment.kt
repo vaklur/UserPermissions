@@ -53,8 +53,8 @@ class PermissionExampleFragment : Fragment() {
 
         // ***
         val webView = binding.WebWV
-        /*val webSettings = webView.settings
-        webSettings.javaScriptEnabled = true*/
+        val webSettings = webView.settings
+        webSettings.javaScriptEnabled = true
         webView .webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 if (request?.url != null) {

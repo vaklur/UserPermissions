@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.userpermissions.databinding.FragmentMainMenuBinding
-import com.example.userpermissions.volley_communication.CommunicationFunction
 
 /**
  * A fragment that displays the main menu for navigating in the application.

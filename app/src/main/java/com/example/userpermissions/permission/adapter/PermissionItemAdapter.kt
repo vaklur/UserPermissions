@@ -55,19 +55,19 @@ class PermissionItemAdapter (
         holder.permissionTypeBTN.setOnClickListener {
             val bundle = Bundle()
             when {
-                context.resources.getString(item.stringResourceId) == context.getString(R.string.sms_permision) -> {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.sms_permission) -> {
                     bundle.putInt("permissionType",1)
                 }
-                context.resources.getString(item.stringResourceId) == context.getString(R.string.contacts_permision) -> {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.contacts_permission) -> {
                     bundle.putInt("permissionType",2)
                 }
-                context.resources.getString(item.stringResourceId) == context.getString(R.string.calllog_permision) -> {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.call_log_permission) -> {
                     bundle.putInt("permissionType",3)
                 }
-                context.resources.getString(item.stringResourceId) == context.getString(R.string.calendar_permision) -> {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.calendar_permission) -> {
                     bundle.putInt("permissionType",4)
                 }
-                context.resources.getString(item.stringResourceId) == context.getString(R.string.location_permision) -> {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.location_permission) -> {
                     bundle.putInt("permissionType",5)
                 }
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.storage_permission) -> {
@@ -76,11 +76,11 @@ class PermissionItemAdapter (
                 context.resources.getString(item.stringResourceId) == context.getString(R.string.phone_permission) -> {
                     bundle.putInt("permissionType",7)
                 }
-                context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permision) -> {
+                context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permission) -> {
                     bundle.putInt("permissionType",8)
                 }
             }
-            if (context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permision)){
+            if (context.resources.getString(item.stringResourceId) == context.getString(R.string.camera_permission)){
                 holder.permissionTypeBTN.findNavController()
                         .navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment, bundle)
             }

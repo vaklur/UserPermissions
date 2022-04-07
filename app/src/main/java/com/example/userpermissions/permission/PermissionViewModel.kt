@@ -26,16 +26,32 @@ class PermissionViewModel:ViewModel() {
     data class PermissionVMInit(var serverAddress:String, val theoryText:String, val permissionType:String, val permissionText:String)
 
     // ID of permission
-    private var permissionId = 0
+    private var permissionId:Int
     // Control if data was send to server
-    private var dataIsSend = false
+    private var dataIsSend:Boolean
     // save photo from camera for offline example
     private var photo:Bitmap? = null
+    // User created in server
+    private var userCreatedInServer:Boolean
 
-    private var userCreatedInServer = false
+    private val comFun:CommunicationFunction
+    private val permissionFun:PermissionFunction
 
-    private val comFun = CommunicationFunction()
-    private val permissionFun = PermissionFunction()
+    private var theoryText:String
+    private var permissionType:String
+    private var permissionText:String
+
+
+    init {
+        permissionId = 0
+        dataIsSend = false
+        userCreatedInServer = false
+        comFun = CommunicationFunction()
+        permissionFun = PermissionFunction()
+        theoryText = ""
+        permissionType = ""
+        permissionText = ""
+    }
 
     // Getter and Setters
     fun savePhoto (newPhoto:Bitmap){
@@ -67,11 +83,7 @@ class PermissionViewModel:ViewModel() {
      *
      * @param context Application context.
      */
-    fun initialize(context: Context):PermissionVMInit{
-        val serverAddress = SettingsSharPref(context).getIPsettings()
-        var theoryText =""
-        var permissionType = ""
-        var permissionText= ""
+    fun initPermissionTexts(context: Context):PermissionVMInit{
         when (permissionId) {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
@@ -85,8 +97,8 @@ class PermissionViewModel:ViewModel() {
             }
             3 -> {
                 permissionType = Manifest.permission.READ_CALL_LOG
-                permissionText = context.getString(R.string.calllog)
-                theoryText = context.resources.getString(R.string.calllog_theory)
+                permissionText = context.getString(R.string.call_log)
+                theoryText = context.resources.getString(R.string.call_log_theory)
             }
             4 -> {
                 permissionType = Manifest.permission.READ_CALENDAR
@@ -114,7 +126,7 @@ class PermissionViewModel:ViewModel() {
                 theoryText = context.resources.getString(R.string.camera_theory)
             }
         }
-        return PermissionVMInit(serverAddress,theoryText,permissionType,permissionText)
+        return PermissionVMInit(SettingsSharPref(context).getIpSettings(),theoryText,permissionType,permissionText)
     }
 
     /**

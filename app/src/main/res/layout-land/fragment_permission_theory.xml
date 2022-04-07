@@ -42,7 +42,7 @@
         android:layout_marginTop="100dp"
         android:background="@color/white"
         android:minWidth="200dp"
-        android:text="@string/progres_bar_text"
+        android:text="@string/progress_bar_text"
         android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

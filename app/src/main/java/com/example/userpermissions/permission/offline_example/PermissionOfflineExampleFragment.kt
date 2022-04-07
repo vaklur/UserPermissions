@@ -84,7 +84,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                 }
             }
             3 -> {
-                binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.calllog)))
+                binding.exampleOffTV.text = String.format(resources.getString(R.string.example_off_text,resources.getString(R.string.call_log)))
                 val callLog = CallLogFunction()
                 val callLogs = callLog.readCallLogs(10,requireActivity().contentResolver,requireContext())
                 if (callLogs.size!=0){

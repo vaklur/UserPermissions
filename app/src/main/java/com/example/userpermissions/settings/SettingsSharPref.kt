@@ -21,7 +21,7 @@ class SettingsSharPref(context: Context) {
      *
      * @param address URL of server address to save.
      */
-    fun saveIPsettings(address:String){
+    fun saveIpSettings(address:String){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
         editor.putString("ipAddress",address)
@@ -55,7 +55,7 @@ class SettingsSharPref(context: Context) {
      *
      * @return Saved url address of server.
      */
-    fun getIPsettings():String{
+    fun getIpSettings():String{
         return sharedPreferences.getString("ipAddress",defaultAddress).toString()
     }
 
@@ -64,9 +64,9 @@ class SettingsSharPref(context: Context) {
      *
      * @return List of all saved server address.
      */
-    fun getIPsettingsSet(): MutableSet<String>? {
+    fun getIpSettingsSet(): MutableSet<String>? {
         val defaultSet = mutableSetOf<String>()
-        defaultSet.add(getIPsettings())
+        defaultSet.add(getIpSettings())
         return sharedPreferences.getStringSet("ipAddressSet",defaultSet)
     }
 
@@ -75,9 +75,9 @@ class SettingsSharPref(context: Context) {
      *
      * @param address New server address to save to the list.
      */
-    fun addAddressToIPsettingsSet(address:String){
+    fun addAddressToIpSettingsSet(address:String){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        val ipAddressSet = getIPsettingsSet()
+        val ipAddressSet = getIpSettingsSet()
         if (ipAddressSet?.size!! > 5){
             ipAddressSet.remove(ipAddressSet.first())
         }
