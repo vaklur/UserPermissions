@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.CalendarFunction
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.CallLogFunction
@@ -25,6 +27,12 @@ import cz.vaklur.user_permissions.volley_communication.CommunicationService
 class PermissionViewModel(application: Application):AndroidViewModel(application) {
 
     data class PermissionVMInit(var serverAddress:String, val theoryText:String, val permissionType:String, val permissionText:String)
+
+    private var _responseState = MutableLiveData<Boolean>()
+    val responseState: LiveData<Boolean>
+        get() = _responseState
+
+
 
     // ID of permission
     private var permissionId:Int
@@ -152,18 +160,35 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
                     override fun onSuccess() {
                         sendPermissionDataToServer( activity,context)
                         userCreatedInServer = true
+                        _responseState.value = true
                     }
 
-                    override fun onServerError() {
+                    override fun onJSONexception() {
                         TODO("Not yet implemented")
                     }
-
                     override fun onError() {
-
+                        _responseState.value = false
                     }
                 })
         }
 
+    }
+
+    fun testServerAvailable(context: Context){
+        comFun.testConnectionToServer(SettingsSharedPreferences(context).getIpSettings(),object : CommunicationService.VolleyStringResponse{
+            override fun onSuccess() {
+                _responseState.value = true
+            }
+
+            override fun onJSONexception() {
+                TODO("Not yet implemented")
+            }
+
+            override fun onError() {
+                _responseState.value = false
+            }
+
+        })
     }
 
 

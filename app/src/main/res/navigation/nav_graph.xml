@@ -35,25 +35,25 @@
         tools:layout="@layout/fragment_permission" >
         <action
             android:id="@+id/action_permissionFragment_to_PermissionTheoryFragment"
-            app:destination="@id/PermissionTheoryFragment" />
+            app:destination="@id/permissionTheoryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/PermissionExampleFragment"
+        android:id="@+id/permissionExampleFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionExampleFragment"
         android:label="fragment__permission_example"
         tools:layout="@layout/fragment_permission_example" >
         <action
-            android:id="@+id/action_PermissionExampleFragment_to_PermissionTheoryFragment"
-            app:destination="@id/PermissionTheoryFragment" />
+            android:id="@+id/action_permissionExampleFragment_to_permissionTheoryFragment"
+            app:destination="@id/permissionTheoryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/PermissionTheoryFragment"
+        android:id="@+id/permissionTheoryFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionTheoryFragment"
         android:label="fragment__permission_theory"
         tools:layout="@layout/fragment_permission_theory" >
         <action
-            android:id="@+id/action_PermissionTheoryFragment_to_PermissionExampleFragment"
-            app:destination="@id/PermissionExampleFragment" />
+            android:id="@+id/action_permissionTheoryFragment_to_permissionExampleFragment"
+            app:destination="@id/permissionExampleFragment" />
         <action
             android:id="@+id/action_PermissionTheoryFragment_to_permissionOfflineExampleFragment"
             app:destination="@id/permissionOfflineExampleFragment" />
@@ -65,6 +65,6 @@
         tools:layout="@layout/fragment_permission_offline_example" >
         <action
             android:id="@+id/action_permissionOfflineExampleFragment_to_PermissionTheoryFragment"
-            app:destination="@id/PermissionTheoryFragment" />
+            app:destination="@id/permissionTheoryFragment" />
     </fragment>
 </navigation>

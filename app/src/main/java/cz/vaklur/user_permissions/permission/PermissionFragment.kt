@@ -14,7 +14,6 @@ import cz.vaklur.user_permissions.permission.data.PermissionList
  */
 class PermissionFragment : Fragment() {
 
-
     private var _binding: FragmentPermissionBinding? = null
     private val binding get() = _binding!!
 
@@ -22,7 +21,7 @@ class PermissionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPermissionBinding.inflate(inflater,container,false)
+        _binding = FragmentPermissionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,12 +31,9 @@ class PermissionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val permissionData = PermissionList().loadPermissions()
-
         val recyclerView = binding.PermissionRV
         recyclerView.adapter = PermissionItemAdapter(requireContext(), permissionData)
-
         recyclerView.setHasFixedSize(true)
-
     }
 
     override fun onDestroyView() {

@@ -11,6 +11,17 @@ import cz.vaklur.user_permissions.databinding.ActivityMainBinding
 import cz.vaklur.user_permissions.permission.PermissionViewModel
 
 /**
+ * This application was created as part of diploma thesis "Android mobile application security"
+ * Created by Jakub Michálek 1.5.2020
+ * ID: 186140
+ * Brno university of technology
+ * 186140@vut.cz
+ *
+ * @author Jakub Michálek
+ */
+
+
+/**
  * The application main activity based on BaseActivity
  */
 class MainActivity : BaseActivity() {
@@ -104,14 +115,14 @@ class MainActivity : BaseActivity() {
         if (allowBackPressed) {
             val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
             when (navigationController.currentDestination?.id) {
-                R.id.PermissionExampleFragment -> {
+                R.id.permissionExampleFragment -> {
                     permissionVM.saveDataIsSend(true)
-                    navigationController.navigate(R.id.PermissionTheoryFragment)
+                    navigationController.navigate(R.id.permissionTheoryFragment)
                 }
                 R.id.permissionOfflineExampleFragment -> {
-                    navigationController.navigate(R.id.PermissionTheoryFragment)
+                    navigationController.navigate(R.id.permissionTheoryFragment)
                 }
-                R.id.PermissionTheoryFragment -> {
+                R.id.permissionTheoryFragment -> {
                     permissionVM.deleteUserTableInServer()
                     navigationController.navigate(R.id.permissionFragment)
 
@@ -123,7 +134,7 @@ class MainActivity : BaseActivity() {
                 R.id.settingsFragment -> {
                     if (permissionVM.getDataIsSend()) {
                         permissionVM.saveDataIsSend(false)
-                        navigationController.navigate(R.id.PermissionTheoryFragment)
+                        navigationController.navigate(R.id.permissionTheoryFragment)
                     } else {
                         super.onBackPressed()
                     }

@@ -38,7 +38,7 @@ class CommunicationService(application: Application) {
     val password = getPassword(application.contentResolver)
     private val settingsSP = SettingsSharedPreferences(application.applicationContext)
 
-    private val pubKeyFile = application.applicationContext.assets.open("userpublic.pem").bufferedReader().use { it.readText() }
+    private val pubKeyFile = application.applicationContext.assets.open("public_key.pem").bufferedReader().use { it.readText() }
     private val crypto = Cryptography(pubKeyFile)
 
     /**
@@ -46,7 +46,7 @@ class CommunicationService(application: Application) {
      */
     interface VolleyStringResponse {
         fun onSuccess()
-        fun onServerError()
+        fun onJSONexception()
         fun onError()
 
     }
@@ -84,8 +84,6 @@ class CommunicationService(application: Application) {
      * @param smsList Sms to send to server.
      */
     fun addSMStoServer( smsList: MutableList<MySms>) {
-
-
          for (i in smsList.size-1 downTo 0 step 1) {
              val stringRequest = object : StringRequest(
                      Method.POST, getServerAddress(EndPoints.URL_ADD_SMS),
@@ -343,7 +341,8 @@ class CommunicationService(application: Application) {
                         }
                     },
 
-                    Response.ErrorListener { }) {
+                    Response.ErrorListener {
+                    }) {
                 @Throws(AuthFailureError::class)
                 override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
@@ -550,18 +549,22 @@ class CommunicationService(application: Application) {
      * @param volleyResponse Response of Volley communication.
      */
      fun testConnectionToServer(testAddress: String, volleyResponse: VolleyStringResponse) {
+        Log.d("test","$testAddress/?op=serverstate",)
         val stringRequest = object : StringRequest(
                 Method.GET, "$testAddress/?op=serverstate",
                 Response.Listener {
                     try {
                         volleyResponse.onSuccess()
+                        Log.d("test","onSuccess")
 
                     } catch (e: JSONException) {
-                        volleyResponse.onServerError()
+                        volleyResponse.onJSONexception()
+                        Log.d("test","on JSON exception")
                     }
                 },
                 Response.ErrorListener {
                     volleyResponse.onError()
+                    Log.d("test","onError")
                 }) {
 
 

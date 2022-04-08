@@ -30,48 +30,4 @@ class Cryptography(private val pubKeyFile: String) {
         encryptedBytes = encryptedBytes.replace(System.lineSeparator(),"")
         return encryptedBytes
     }
-
-
-    // UPRAVIT!!!!
-    /*
-    fun generateAESKey(context: Context) {
-        val generator = KeyGenerator.getInstance("AES")
-        generator.init(256)
-        val key = generator.generateKey()
-        saveSecretKey(key,context)
-    }
-
-    fun saveSecretKey (secretKey: SecretKey,context:Context) {
-        val baos = ByteArrayOutputStream()
-        val oos = ObjectOutputStream(baos)
-        oos.writeObject(secretKey)
-        val strToSave = String(android.util.Base64.encode(baos.toByteArray(), android.util.Base64.DEFAULT))
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = sharedPref.edit()
-        editor.putString("secret_key", strToSave)
-        editor.apply()
-    }
-
-    fun getSavedSecretKey(context: Context): SecretKey {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val strSecretKey = sharedPref.getString("secret_key", "")
-        val bytes = android.util.Base64.decode(strSecretKey, android.util.Base64.DEFAULT)
-        val ois = ObjectInputStream(ByteArrayInputStream(bytes))
-        val secretKey = ois.readObject() as SecretKey
-        return secretKey
-    }
-
-    fun encryptDataAES(dataToEncrypt: String,context: Context):String{
-        val plainText = dataToEncrypt.toByteArray(Charsets.UTF_8)
-        val key = getSavedSecretKey(context)
-        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
-        cipher.init(Cipher.ENCRYPT_MODE, key)
-        val cipherText = cipher.doFinal(plainText)
-
-        val sb = StringBuilder()
-        for (b in cipherText) {
-            sb.append(b.toChar())
-        }
-        return sb.toString()
-    }*/
 }

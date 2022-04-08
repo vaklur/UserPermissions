@@ -1,6 +1,5 @@
 package cz.vaklur.user_permissions.permission
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
@@ -12,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionTheoryBinding
@@ -39,6 +37,7 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * Result of request permission call, if permission is granted, call [permissionsGranted] function.
      */
+    @RequiresApi(Build.VERSION_CODES.Q)
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -75,6 +74,7 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * When view created initialize widgets and onClickListeners.
      */
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,6 +85,8 @@ class PermissionTheoryFragment : Fragment() {
         if (permissionVM.getPermissionID() == 0) {
             permissionVM.savePermissionID(requireArguments().getInt("permissionType"))
         }
+
+
 
         // Initialize a data variables in ViewModel
         val init = permissionVM.initPermissionTexts(requireContext())
@@ -106,6 +108,7 @@ class PermissionTheoryFragment : Fragment() {
      * If the server is available, it sends data to it and display a fragment with a practical example.
      * If the serve is unavailable, display a server offline dialog.
      */
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun permissionsGranted() {
         progressBarOn(true)
 
@@ -115,49 +118,40 @@ class PermissionTheoryFragment : Fragment() {
             fotoapparat?.start()
         }
 
-        communicationService.testConnectionToServer(
-            serverIpAddress,
-            object : CommunicationService.VolleyStringResponse {
-                @RequiresApi(Build.VERSION_CODES.Q)
-                override fun onSuccess() {
-                    progressBarOn(false)
-                    // If the data has not been sent, send it
-                    if (!permissionVM.getDataIsSend()) {
-                        permissionVM.sendDataToServer(requireActivity(), requireContext())
-                        if (permissionVM.getPermissionID() == 8) {
-                            takePhoto(true)
-                        }
-                    }
-                    if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
-                        findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
+        permissionVM.testServerAvailable(requireContext())
+        permissionVM.responseState.observe(viewLifecycleOwner) {
+            if (it){
+                progressBarOn(false)
+                // If the data has not been sent, send it
+                if (!permissionVM.getDataIsSend()) {
+                    permissionVM.sendDataToServer(requireActivity(), requireContext())
+                    if (permissionVM.getPermissionID() == 8) {
+                        takePhoto(true)
                     }
                 }
-
-                override fun onServerError() {
-                    TODO("Not yet implemented")
+                if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
+                    findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                 }
-
-                override fun onError() {
-                    serverOfflineDialog(requireActivity(), binding.root)
-                }
-            })
+            }
+            else{
+                serverOfflineDialog(binding.root)
+            }
+        }
     }
 
     /**
      * Dialog that appears when the server is not available.
      *
-     * @param activity Fragment activity.
      * @param view View for display a dialog.
      */
-    private fun serverOfflineDialog(activity: Activity, view: View) {
+    private fun serverOfflineDialog(view: View) {
         val builder = AlertDialog.Builder(view.context)
 
         builder.setTitle(R.string.server_dialog_title)
         builder.setMessage(R.string.server_dialog_message)
 
         builder.setPositiveButton(R.string.server_dialog_yes) { _, _ ->
-            Navigation.findNavController(activity, R.id.nav_host_fragment)
-                .navigate(R.id.settingsFragment)
+            findNavController().navigate(R.id.settingsFragment)
         }
         builder.setNeutralButton(R.string.server_dialog_neutral) { _, _ ->
             if (permissionVM.getPermissionID() == 8) {
@@ -197,7 +191,7 @@ class PermissionTheoryFragment : Fragment() {
                         communicationService.addCameraPhotoToServer(
                             bitmapPhoto.bitmap
                         )
-                        findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
+                        findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                     } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)

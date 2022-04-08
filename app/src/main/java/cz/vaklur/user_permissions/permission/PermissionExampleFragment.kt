@@ -32,8 +32,9 @@ class PermissionExampleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPermissionExampleBinding.inflate(inflater,container,false)
+        _binding = FragmentPermissionExampleBinding.inflate(inflater, container, false)
         communicationService = CommunicationService(requireActivity().application)
+        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
         return binding.root
     }
 
@@ -44,20 +45,24 @@ class PermissionExampleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize ViewModel
-        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
-
         permissionVM.saveDataIsSend(true)
-        // ***
 
-        binding.loginTV.text = String.format(resources.getString(R.string.id),permissionVM.userId+"  "+String.format(resources.getString(R.string.password),permissionVM.userPassword))
+        binding.loginTV.text = String.format(
+            resources.getString(R.string.id),
+            permissionVM.userId + "  " + String.format(
+                resources.getString(R.string.password),
+                permissionVM.userPassword
+            )
+        )
 
-        // ***
         val webView = binding.WebWV
         val webSettings = webView.settings
         webSettings.javaScriptEnabled = true
-        webView .webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
                 if (request?.url != null) {
                     view?.loadUrl(request.url.toString())
                 }
@@ -67,7 +72,7 @@ class PermissionExampleFragment : Fragment() {
         webView.loadUrl(communicationService.getServerAddress(EndPoints.URL_LOGIN_USER))
 
         binding.theoryBTN.setOnClickListener {
-            findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment)
+            findNavController().navigate(R.id.action_permissionExampleFragment_to_permissionTheoryFragment)
         }
 
         binding.refreshBTN.setOnClickListener {

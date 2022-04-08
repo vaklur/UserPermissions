@@ -94,7 +94,7 @@ class SettingsFragment : Fragment() {
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
             }
 
-            override fun onServerError() {
+            override fun onJSONexception() {
                 TODO("Not yet implemented")
             }
 
@@ -251,7 +251,7 @@ class SettingsFragment : Fragment() {
                     dialog.dismiss()
                 }
 
-                override fun onServerError() {
+                override fun onJSONexception() {
                     TODO("Not yet implemented")
                 }
 
