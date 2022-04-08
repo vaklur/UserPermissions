@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".permission.offline_example.PermissionOfflineExampleFragment">
+    tools:context="cz.vaklur.user_permissions.permission.offline_example.PermissionOfflineExampleFragment">
 
     <TextView
         android:id="@+id/example_off_TV"
