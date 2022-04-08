@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.EndPoints
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionExampleBinding
-import cz.vaklur.user_permissions.volley_communication.CommunicationFunction
+import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
 /**
  * Fragment for display a practical example of selected permission abuse.
@@ -26,11 +26,14 @@ class PermissionExampleFragment : Fragment() {
     private var _binding: FragmentPermissionExampleBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var communicationService: CommunicationService
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPermissionExampleBinding.inflate(inflater,container,false)
+        communicationService = CommunicationService(requireActivity().application)
         return binding.root
     }
 
@@ -44,12 +47,10 @@ class PermissionExampleFragment : Fragment() {
         // Initialize ViewModel
         permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
 
-        val comFun = CommunicationFunction()
-
         permissionVM.saveDataIsSend(true)
         // ***
 
-        binding.loginTV.text = String.format(resources.getString(R.string.id),comFun.getAndroidId(requireActivity().contentResolver))+"  "+String.format(resources.getString(R.string.password),comFun.getPassword(requireActivity().contentResolver))
+        binding.loginTV.text = String.format(resources.getString(R.string.id),permissionVM.userId+"  "+String.format(resources.getString(R.string.password),permissionVM.userPassword))
 
         // ***
         val webView = binding.WebWV
@@ -63,7 +64,7 @@ class PermissionExampleFragment : Fragment() {
                 return true
             }
         }
-        webView.loadUrl(comFun.getServerAddress(EndPoints.URL_LOGIN_USER,requireActivity()))
+        webView.loadUrl(communicationService.getServerAddress(EndPoints.URL_LOGIN_USER))
 
         binding.theoryBTN.setOnClickListener {
             findNavController().navigate(R.id.action_PermissionExampleFragment_to_PermissionTheoryFragment)

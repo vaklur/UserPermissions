@@ -66,8 +66,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                     recyclerView.adapter = smsAdapter
                 }
                 else {
-                    val smsAdapter = NoItemAdapter()
-                    recyclerView.adapter = smsAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
             }
             2 -> {
@@ -79,8 +78,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                 recyclerView.adapter = contactAdapter
                 }
                 else{
-                    val contactAdapter = NoItemAdapter()
-                    recyclerView.adapter = contactAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
             }
             3 -> {
@@ -92,8 +90,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                     recyclerView.adapter = callLogAdapter
                 }
                 else{
-                    val callLogAdapter = NoItemAdapter()
-                    recyclerView.adapter = callLogAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
             }
             4 -> {
@@ -105,8 +102,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                     recyclerView.adapter = calendarAdapter
                 }
                 else{
-                    val calendarAdapter = NoItemAdapter()
-                    recyclerView.adapter = calendarAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
 
 
@@ -126,8 +122,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                 recyclerView.adapter = extStorageAdapter
                 }
                 else{
-                    val extStorageAdapter = NoItemAdapter()
-                    recyclerView.adapter = extStorageAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
             }
             7 -> {
@@ -139,8 +134,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                     recyclerView.adapter = simInfoAdapter
                 }
                 else {
-                    val simInfoAdapter = NoItemAdapter()
-                    recyclerView.adapter = simInfoAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
             }
             8 -> {
@@ -150,8 +144,7 @@ class PermissionOfflineExampleFragment : Fragment() {
                 val cameraAdapter = MyCameraAdapter(photo)
                 recyclerView.adapter = cameraAdapter}
                 else{
-                    val cameraAdapter = NoItemAdapter()
-                    recyclerView.adapter = cameraAdapter
+                    recyclerView.adapter = NoItemAdapter()
                 }
             }
         }

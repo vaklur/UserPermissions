@@ -2,19 +2,16 @@ package cz.vaklur.user_permissions.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import cz.vaklur.user_permissions.Constants
 
 /**
  * Functions for using [SharedPreferences] to manage server address.
  *
- * @property settingsFile The name of file for data storage.
  * @property sharedPreferences The object of [SharedPreferences].
  */
-class SettingsSharPref(context: Context) {
+class SettingsSharedPreferences(context: Context) {
 
-    private val defaultAddress = "https://vaklur.cz/permissions"
-    private val defaultLanguage = "en"
-    private var settingsFile = "settings"
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(settingsFile, Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES_FILE, Context.MODE_PRIVATE)
 
     /**
      * Save the new server address.
@@ -24,7 +21,7 @@ class SettingsSharPref(context: Context) {
     fun saveIpSettings(address:String){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-        editor.putString("ipAddress",address)
+        editor.putString(Constants.SHARED_PREFERENCES_IP_ADDRESS,address)
         editor.apply()
     }
 
@@ -37,7 +34,7 @@ class SettingsSharPref(context: Context) {
     fun saveLanguageSettings(language:String){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-        editor.putString("language",language)
+        editor.putString(Constants.SHARED_PREFERENCES_LANGUAGE,language)
         editor.apply()
     }
 
@@ -47,7 +44,7 @@ class SettingsSharPref(context: Context) {
      * @return Saved application language.
      */
     fun getLanguageSettings():String{
-        return sharedPreferences.getString("language",defaultLanguage).toString()
+        return sharedPreferences.getString(Constants.SHARED_PREFERENCES_LANGUAGE,Constants.DEFAULT_APP_LANGUAGE).toString()
     }
 
     /**
@@ -56,7 +53,7 @@ class SettingsSharPref(context: Context) {
      * @return Saved url address of server.
      */
     fun getIpSettings():String{
-        return sharedPreferences.getString("ipAddress",defaultAddress).toString()
+        return sharedPreferences.getString(Constants.SHARED_PREFERENCES_IP_ADDRESS,Constants.DEFAULT_SERVER_ADDRESS).toString()
     }
 
     /**
@@ -67,7 +64,7 @@ class SettingsSharPref(context: Context) {
     fun getIpSettingsSet(): MutableSet<String>? {
         val defaultSet = mutableSetOf<String>()
         defaultSet.add(getIpSettings())
-        return sharedPreferences.getStringSet("ipAddressSet",defaultSet)
+        return sharedPreferences.getStringSet(Constants.SHARED_PREFERENCES_IP_ADDRESS_LIST,defaultSet)
     }
 
     /**
@@ -82,7 +79,7 @@ class SettingsSharPref(context: Context) {
             ipAddressSet.remove(ipAddressSet.first())
         }
         ipAddressSet.add(address)
-        editor.putStringSet("ipAddressSet",ipAddressSet)
+        editor.putStringSet(Constants.SHARED_PREFERENCES_IP_ADDRESS_LIST,ipAddressSet)
         editor.apply()
     }
 }

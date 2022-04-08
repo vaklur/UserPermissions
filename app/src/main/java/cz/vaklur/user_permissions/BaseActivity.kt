@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cz.vaklur.user_permissions.settings.LocaleUtil
-import cz.vaklur.user_permissions.settings.SettingsSharPref
+import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 
 /**
  * Based activity which contains function for changing app language
@@ -30,7 +30,7 @@ open class BaseActivity: AppCompatActivity() {
      * Attach base context depending on the language selected
      */
     override fun attachBaseContext(newBase: Context) {
-        oldPrefLocaleCode = SettingsSharPref(newBase).getLanguageSettings()
+        oldPrefLocaleCode = SettingsSharedPreferences(newBase).getLanguageSettings()
         applyOverrideConfiguration(LocaleUtil.getLocalizedConfiguration(oldPrefLocaleCode))
         super.attachBaseContext(newBase)
     }
@@ -47,7 +47,7 @@ open class BaseActivity: AppCompatActivity() {
      * When the onResume is called, change application LocaleCode to actual saved in Shared Preferences
      */
     override fun onResume() {
-        val currentLocaleCode = SettingsSharPref(this).getLanguageSettings()
+        val currentLocaleCode = SettingsSharedPreferences(this).getLanguageSettings()
         if(oldPrefLocaleCode != currentLocaleCode){
             recreate()
             oldPrefLocaleCode = currentLocaleCode

@@ -9,7 +9,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.permission.offline_example.NoItemAdapter
-import cz.vaklur.user_permissions.volley_communication.CommunicationFunction
+import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
 /**
  * Functions to get last known phone location.
@@ -34,7 +34,7 @@ class LocationFunction {
                     val accuracy = location.accuracy.toString()
                     val altitude =  location.altitude.toString()
                     val lastKnownLocation = MyLocation(latitude,longitude,accuracy,altitude)
-                    CommunicationFunction().addLocationToServer(activity,lastKnownLocation)
+                    CommunicationService(activity.application).addLocationToServer(lastKnownLocation)
                 }
             }
     }

@@ -16,7 +16,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionTheoryBinding
-import cz.vaklur.user_permissions.volley_communication.CommunicationFunction
+import cz.vaklur.user_permissions.volley_communication.CommunicationService
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.front
@@ -29,8 +29,10 @@ class PermissionTheoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var permissionVM: PermissionViewModel
-    private lateinit var serverIpAddress:String
-    private lateinit var permissionText:String
+    private lateinit var serverIpAddress: String
+    private lateinit var permissionText: String
+
+    private lateinit var communicationService: CommunicationService
 
     private var fotoapparat: Fotoapparat? = null
 
@@ -39,18 +41,34 @@ class PermissionTheoryFragment : Fragment() {
      */
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (isGranted) {
-            permissionsGranted()
-            Toast.makeText(requireActivity().application, permissionText + " " + getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
+            if (isGranted) {
+                permissionsGranted()
+                Toast.makeText(
+                    requireActivity().application,
+                    permissionText + " " + getString(R.string.permission_granted),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                PermissionFunction().showSettingsDialog(
+                    requireActivity(),
+                    permissionText,
+                    requireContext()
+                )
+                Toast.makeText(
+                    requireActivity().application,
+                    permissionText + " " + getString(R.string.permission_not_granted),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
-        else {
-            PermissionFunction().showSettingsDialog(requireActivity(), permissionText, requireContext())
-            Toast.makeText(requireActivity().application, permissionText + " " + getString(R.string.permission_not_granted), Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentPermissionTheoryBinding.inflate(inflater, container, false)
+        communicationService = CommunicationService(requireActivity().application)
         return binding.root
     }
 
@@ -64,7 +82,7 @@ class PermissionTheoryFragment : Fragment() {
         permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
 
         // Load data from Bundle to ViewModel if permission ID is not set
-        if (permissionVM.getPermissionID()==0){
+        if (permissionVM.getPermissionID() == 0) {
             permissionVM.savePermissionID(requireArguments().getInt("permissionType"))
         }
 
@@ -88,34 +106,41 @@ class PermissionTheoryFragment : Fragment() {
      * If the server is available, it sends data to it and display a fragment with a practical example.
      * If the serve is unavailable, display a server offline dialog.
      */
-    private fun permissionsGranted (){
+    private fun permissionsGranted() {
         progressBarOn(true)
 
         // If is the camera permission, create Fotoapparat class and start camera
-        if (permissionVM.getPermissionID() == 8){
+        if (permissionVM.getPermissionID() == 8) {
             createFotoapparat()
             fotoapparat?.start()
         }
 
-        CommunicationFunction().testConnectionToServer(serverIpAddress, object : CommunicationFunction.VolleyStringResponse {
-            @RequiresApi(Build.VERSION_CODES.Q)
-            override fun onSuccess() {
-                progressBarOn(false)
-                // If the data has not been sent, send it
-                if (!permissionVM.getDataIsSend()) {
-                    permissionVM.sendDataToServer(requireActivity(),requireContext())
-                    if (permissionVM.getPermissionID()==8){
-                        takePhoto(true)
+        communicationService.testConnectionToServer(
+            serverIpAddress,
+            object : CommunicationService.VolleyStringResponse {
+                @RequiresApi(Build.VERSION_CODES.Q)
+                override fun onSuccess() {
+                    progressBarOn(false)
+                    // If the data has not been sent, send it
+                    if (!permissionVM.getDataIsSend()) {
+                        permissionVM.sendDataToServer(requireActivity(), requireContext())
+                        if (permissionVM.getPermissionID() == 8) {
+                            takePhoto(true)
+                        }
+                    }
+                    if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
+                        findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
                     }
                 }
-                if (permissionVM.getPermissionID()!=8 || permissionVM.getDataIsSend()) {
-                    findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
+
+                override fun onServerError() {
+                    TODO("Not yet implemented")
                 }
-            }
-            override fun onError() {
-                serverOfflineDialog(requireActivity(), binding.root)
-            }
-        })
+
+                override fun onError() {
+                    serverOfflineDialog(requireActivity(), binding.root)
+                }
+            })
     }
 
     /**
@@ -131,13 +156,13 @@ class PermissionTheoryFragment : Fragment() {
         builder.setMessage(R.string.server_dialog_message)
 
         builder.setPositiveButton(R.string.server_dialog_yes) { _, _ ->
-            Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(R.id.settingsFragment)
+            Navigation.findNavController(activity, R.id.nav_host_fragment)
+                .navigate(R.id.settingsFragment)
         }
-        builder.setNeutralButton(R.string.server_dialog_neutral){ _, _->
-            if (permissionVM.getPermissionID()==8){
+        builder.setNeutralButton(R.string.server_dialog_neutral) { _, _ ->
+            if (permissionVM.getPermissionID() == 8) {
                 takePhoto(false)
-            }
-            else{
+            } else {
                 findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)
             }
         }
@@ -151,7 +176,7 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * Function set the visibility of "connecting to server" progress bar
      */
-    private fun progressBarOn (visible:Boolean){
+    private fun progressBarOn(visible: Boolean) {
         var visibility = View.GONE
         if (visible) visibility = View.VISIBLE
         binding.theoryPB.visibility = visibility
@@ -163,16 +188,17 @@ class PermissionTheoryFragment : Fragment() {
      * Function that takes the photo from camera and if the server is available, send it to the server a go to online example.
      * If the server is unavailable, save the photo to View Model.
      */
-    private fun takePhoto (serverAvailability:Boolean){
+    private fun takePhoto(serverAvailability: Boolean) {
         fotoapparat?.takePicture()
             ?.toBitmap()
             ?.whenAvailable { bitmapPhoto ->
                 if (bitmapPhoto != null) {
-                    if (serverAvailability){
-                        CommunicationFunction().addCameraPhotoToServer(requireActivity(), bitmapPhoto.bitmap)
+                    if (serverAvailability) {
+                        communicationService.addCameraPhotoToServer(
+                            bitmapPhoto.bitmap
+                        )
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_PermissionExampleFragment)
-                    }
-                    else {
+                    } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)
                     }
@@ -183,12 +209,12 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * Create camera class for using it.
      */
-    private fun createFotoapparat(){
+    private fun createFotoapparat() {
         fotoapparat = Fotoapparat(
-                context = requireContext(),
-                view = binding.theoryCW,
-                scaleType = ScaleType.CenterCrop,
-                lensPosition = front(),
+            context = requireContext(),
+            view = binding.theoryCW,
+            scaleType = ScaleType.CenterCrop,
+            lensPosition = front(),
         )
     }
 

@@ -1,6 +1,5 @@
 package cz.vaklur.user_permissions
 
-import android.content.Context
 import android.util.Base64
 import java.security.KeyFactory
 import java.security.spec.X509EncodedKeySpec
@@ -9,14 +8,13 @@ import javax.crypto.Cipher
 /**
  * Class that contains functions for symmetric and asymmetric cryptography
  */
-class Cryptography {
+class Cryptography(private val pubKeyFile: String) {
 
     /**
      * Function for encrypt data with RSA algorithm and saved public key
      */
-    fun encryptData(dataToEncrypt:String,context: Context):String{
+    fun encryptData(dataToEncrypt:String):String{
         // public key generator
-        val pubKeyFile = context.assets.open("userpublic.pem").bufferedReader().use { it.readText() }
         val publicKeyPEM = pubKeyFile.replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace(System.lineSeparator(),"")
                 .replace("-----END PUBLIC KEY-----", "")

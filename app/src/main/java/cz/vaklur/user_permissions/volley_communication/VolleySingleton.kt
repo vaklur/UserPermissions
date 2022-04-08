@@ -6,7 +6,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import cz.vaklur.user_permissions.settings.LocaleUtil
-import cz.vaklur.user_permissions.settings.SettingsSharPref
+import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 
 /**
  * This class keeps track of the requests.
@@ -19,7 +19,7 @@ class VolleySingleton : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base?.let { LocaleUtil.getLocalizedContext(it,
-            SettingsSharPref(base).getLanguageSettings()) })
+            SettingsSharedPreferences(base).getLanguageSettings()) })
     }
 
     private val requestQueue: RequestQueue? = null

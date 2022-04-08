@@ -2,11 +2,12 @@ package cz.vaklur.user_permissions.permission
 
 import android.Manifest
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.CalendarFunction
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.CallLogFunction
@@ -15,13 +16,13 @@ import cz.vaklur.user_permissions.permission.permission_types.location_permissio
 import cz.vaklur.user_permissions.permission.permission_types.phone_state_permission.PhoneStateFunction
 import cz.vaklur.user_permissions.permission.permission_types.sms_permission.SmsFunction
 import cz.vaklur.user_permissions.permission.permission_types.storage_permission.StorageFunction
-import cz.vaklur.user_permissions.settings.SettingsSharPref
-import cz.vaklur.user_permissions.volley_communication.CommunicationFunction
+import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
+import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
 /**
  * View model for managing permission fragments data.
  */
-class PermissionViewModel:ViewModel() {
+class PermissionViewModel(application: Application):AndroidViewModel(application) {
 
     data class PermissionVMInit(var serverAddress:String, val theoryText:String, val permissionType:String, val permissionText:String)
 
@@ -34,19 +35,24 @@ class PermissionViewModel:ViewModel() {
     // User created in server
     private var userCreatedInServer:Boolean
 
-    private val comFun: CommunicationFunction
+    private val comFun: CommunicationService
     private val permissionFun:PermissionFunction
 
     private var theoryText:String
     private var permissionType:String
     private var permissionText:String
 
+    var userId:String
+    var userPassword:String
+
 
     init {
         permissionId = 0
         dataIsSend = false
         userCreatedInServer = false
-        comFun = CommunicationFunction()
+        comFun = CommunicationService(application)
+        userId = comFun.userId
+        userPassword = comFun.password
         permissionFun = PermissionFunction()
         theoryText = ""
         permissionType = ""
@@ -126,7 +132,7 @@ class PermissionViewModel:ViewModel() {
                 theoryText = context.resources.getString(R.string.camera_theory)
             }
         }
-        return PermissionVMInit(SettingsSharPref(context).getIpSettings(),theoryText,permissionType,permissionText)
+        return PermissionVMInit(SettingsSharedPreferences(context).getIpSettings(),theoryText,permissionType,permissionText)
     }
 
     /**
@@ -136,16 +142,20 @@ class PermissionViewModel:ViewModel() {
      * @param context Application context.
      */
     @RequiresApi(Build.VERSION_CODES.Q)
-    fun sendDataToServer(activity: Activity, context: Context){
+    fun sendDataToServer(activity:Activity,context: Context){
         if (userCreatedInServer){
-            sendPermissionDataToServer(activity, context)
+            sendPermissionDataToServer( activity,context)
         }
         else {
-            comFun.createUserInServer(activity,
-                object : CommunicationFunction.VolleyStringResponse {
+            comFun.createUserInServer(
+                object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
-                        sendPermissionDataToServer(activity, context)
+                        sendPermissionDataToServer( activity,context)
                         userCreatedInServer = true
+                    }
+
+                    override fun onServerError() {
+                        TODO("Not yet implemented")
                     }
 
                     override fun onError() {
@@ -166,31 +176,31 @@ class PermissionViewModel:ViewModel() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun sendPermissionDataToServer (activity: Activity, context: Context){
         val permissionTableType = permissionFun.getPermissionTypeFromPermissionID(permissionId)
-        comFun.createPermissionTableInServer(activity, permissionTableType)
+        comFun.createPermissionTableInServer( permissionTableType)
         when (permissionId) {
-            1 -> comFun.addSMStoServer(activity, SmsFunction().readSms( 10,activity.contentResolver,context))
-            2 -> comFun.addContactToServer(activity, ContactFunction().readContacts(activity.contentResolver, 10))
-            3 -> comFun.addCallLogToServer(activity, CallLogFunction().readCallLogs( 10,activity.contentResolver,context))
-            4 -> comFun.addEventToServer(activity, CalendarFunction().readCalendarEvents(activity.contentResolver, 10))
-            5 -> LocationFunction().getLastLocation(activity, context)
+            1 -> comFun.addSMStoServer( SmsFunction().readSms( 10,activity.contentResolver,context))
+            2 -> comFun.addContactToServer( ContactFunction().readContacts(activity.contentResolver, 10))
+            3 -> comFun.addCallLogToServer( CallLogFunction().readCallLogs( 10,activity.contentResolver,context))
+            4 -> comFun.addEventToServer( CalendarFunction().readCalendarEvents(activity.contentResolver, 10))
+            5 -> LocationFunction().getLastLocation(activity,context)
             6 -> comFun.addMediaPhotoToServer(activity, StorageFunction().getPhotosFromGallery(activity.contentResolver, 10))
-            7 -> comFun.addPhoneStateToServer(activity, PhoneStateFunction().getDataFromSIM(context))
+            7 -> comFun.addPhoneStateToServer( PhoneStateFunction().getDataFromSIM(context))
             }
         }
 
     /**
      * Function which delete all user data in server.
      */
-    fun deleteUserInServer (activity: Activity){
-        comFun.deleteUserInServer(activity)
+    fun deleteUserInServer (){
+        comFun.deleteUserInServer()
         userCreatedInServer = false
     }
 
     /**
      * Function which delete user table in server and clear a View Model permission variables to default
      */
-    fun deleteUserTableInServer (activity: Activity){
-        comFun.deleteUserTableInServer(permissionFun.getPermissionTypeFromPermissionID(permissionId),activity)
+    fun deleteUserTableInServer (){
+        comFun.deleteUserTableInServer(permissionFun.getPermissionTypeFromPermissionID(permissionId))
         permissionId=0
         dataIsSend=false
         photo = null
