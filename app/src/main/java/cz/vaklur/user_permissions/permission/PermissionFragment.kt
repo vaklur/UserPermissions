@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import cz.vaklur.user_permissions.databinding.FragmentPermissionBinding
 import cz.vaklur.user_permissions.permission.adapter.PermissionItemAdapter
 import cz.vaklur.user_permissions.permission.data.PermissionList
@@ -17,11 +18,14 @@ class PermissionFragment : Fragment() {
     private var _binding: FragmentPermissionBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var permissionVM: PermissionViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPermissionBinding.inflate(inflater, container, false)
+        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
         return binding.root
     }
 
@@ -32,7 +36,7 @@ class PermissionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val permissionData = PermissionList().loadPermissions()
         val recyclerView = binding.PermissionRV
-        recyclerView.adapter = PermissionItemAdapter(requireContext(), permissionData)
+        recyclerView.adapter = PermissionItemAdapter(requireContext(),permissionVM, permissionData)
         recyclerView.setHasFixedSize(true)
     }
 

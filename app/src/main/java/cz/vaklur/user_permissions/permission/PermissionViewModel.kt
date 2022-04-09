@@ -5,8 +5,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -76,7 +74,7 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
         return photo
     }
 
-    fun savePermissionID (newPermissionId:Int){
+    fun setPermissionID (newPermissionId:Int){
         permissionId = newPermissionId
     }
 
@@ -149,7 +147,7 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
      * @param activity Fragment activity.
      * @param context Application context.
      */
-    @RequiresApi(Build.VERSION_CODES.Q)
+    //@RequiresApi(Build.VERSION_CODES.Q)
     fun sendDataToServer(activity:Activity,context: Context){
         if (userCreatedInServer){
             sendPermissionDataToServer( activity,context)
@@ -198,7 +196,7 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
      * @param activity Fragment activity.
      * @param context Application context.
      */
-    @RequiresApi(Build.VERSION_CODES.Q)
+    //@RequiresApi(Build.VERSION_CODES.Q)
     private fun sendPermissionDataToServer (activity: Activity, context: Context){
         val permissionTableType = permissionFun.getPermissionTypeFromPermissionID(permissionId)
         comFun.createPermissionTableInServer( permissionTableType)
@@ -212,6 +210,10 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
             7 -> comFun.addPhoneStateToServer( PhoneStateFunction().getDataFromSIM(context))
             }
         }
+
+    fun sendPhotoToServer (photo:Bitmap){
+        comFun.addCameraPhotoToServer(photo)
+    }
 
     /**
      * Function which delete all user data in server.

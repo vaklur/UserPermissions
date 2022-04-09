@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionTheoryBinding
-import cz.vaklur.user_permissions.volley_communication.CommunicationService
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.front
@@ -30,7 +29,6 @@ class PermissionTheoryFragment : Fragment() {
     private lateinit var serverIpAddress: String
     private lateinit var permissionText: String
 
-    private lateinit var communicationService: CommunicationService
 
     private var fotoapparat: Fotoapparat? = null
 
@@ -67,7 +65,7 @@ class PermissionTheoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPermissionTheoryBinding.inflate(inflater, container, false)
-        communicationService = CommunicationService(requireActivity().application)
+        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
         return binding.root
     }
 
@@ -77,26 +75,12 @@ class PermissionTheoryFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Initialize ViewModel
-        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
-
-        // Load data from Bundle to ViewModel if permission ID is not set
-        if (permissionVM.getPermissionID() == 0) {
-            permissionVM.savePermissionID(requireArguments().getInt("permissionType"))
-        }
-
-
-
-        // Initialize a data variables in ViewModel
+        // Initialize permission theory variables in ViewModel
         val init = permissionVM.initPermissionTexts(requireContext())
-
         permissionText = init.permissionText
         serverIpAddress = init.serverAddress
-
         // Load text to WebView
         binding.theoryWV.loadDataWithBaseURL(null, init.theoryText, null, "utf-8", null)
-
         // On click control if permission is granted and go to permission abuse example
         binding.exampleBTN.setOnClickListener {
             requestPermission.launch(init.permissionType)
@@ -108,7 +92,7 @@ class PermissionTheoryFragment : Fragment() {
      * If the server is available, it sends data to it and display a fragment with a practical example.
      * If the serve is unavailable, display a server offline dialog.
      */
-    @RequiresApi(Build.VERSION_CODES.Q)
+
     private fun permissionsGranted() {
         progressBarOn(true)
 
@@ -118,9 +102,10 @@ class PermissionTheoryFragment : Fragment() {
             fotoapparat?.start()
         }
 
+        //
         permissionVM.testServerAvailable(requireContext())
         permissionVM.responseState.observe(viewLifecycleOwner) {
-            if (it){
+            if (it) {
                 progressBarOn(false)
                 // If the data has not been sent, send it
                 if (!permissionVM.getDataIsSend()) {
@@ -132,8 +117,7 @@ class PermissionTheoryFragment : Fragment() {
                 if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
                     findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                 }
-            }
-            else{
+            } else {
                 serverOfflineDialog(binding.root)
             }
         }
@@ -188,9 +172,7 @@ class PermissionTheoryFragment : Fragment() {
             ?.whenAvailable { bitmapPhoto ->
                 if (bitmapPhoto != null) {
                     if (serverAvailability) {
-                        communicationService.addCameraPhotoToServer(
-                            bitmapPhoto.bitmap
-                        )
+                        permissionVM.sendPhotoToServer(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                     } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)

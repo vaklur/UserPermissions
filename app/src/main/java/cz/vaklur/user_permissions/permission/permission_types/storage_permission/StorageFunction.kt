@@ -3,10 +3,8 @@ package cz.vaklur.user_permissions.permission.permission_types.storage_permissio
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentUris
-import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
-import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
 
 /**
@@ -20,7 +18,7 @@ class StorageFunction {
      * @param photosCount The int number of photos to be read.
      * @return List of photos.
      */
-    @RequiresApi(Build.VERSION_CODES.Q)
+    //@RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("SimpleDateFormat")
     fun getPhotosFromGallery(
         contentResolver: ContentResolver,
