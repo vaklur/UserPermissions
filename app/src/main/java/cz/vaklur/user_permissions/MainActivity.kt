@@ -125,7 +125,6 @@ class MainActivity : BaseActivity() {
                 R.id.permissionTheoryFragment -> {
                     permissionVM.deleteUserTableInServer()
                     navigationController.navigate(R.id.permissionFragment)
-
                 }
                 R.id.permissionFragment -> {
                     permissionVM.deleteUserInServer()

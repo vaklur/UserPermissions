@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/permissionExampleFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionExampleFragment"
-        android:label="fragment__permission_example"
+        android:label="fragment_permission_example"
         tools:layout="@layout/fragment_permission_example" >
         <action
             android:id="@+id/action_permissionExampleFragment_to_permissionTheoryFragment"
@@ -49,7 +49,7 @@
     <fragment
         android:id="@+id/permissionTheoryFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionTheoryFragment"
-        android:label="fragment__permission_theory"
+        android:label="fragment_permission_theory"
         tools:layout="@layout/fragment_permission_theory" >
         <action
             android:id="@+id/action_permissionTheoryFragment_to_permissionExampleFragment"

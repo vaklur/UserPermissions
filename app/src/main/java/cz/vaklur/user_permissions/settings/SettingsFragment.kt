@@ -94,10 +94,6 @@ class SettingsFragment : Fragment() {
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
             }
 
-            override fun onJSONexception() {
-                TODO("Not yet implemented")
-            }
-
             override fun onError() {
                 stateActualTV .text = resources.getString(R.string.state_unreachable_setting)
                 stateActualTV .setBackgroundColor(Color.RED)
@@ -251,9 +247,6 @@ class SettingsFragment : Fragment() {
                     dialog.dismiss()
                 }
 
-                override fun onJSONexception() {
-                    TODO("Not yet implemented")
-                }
 
                 override fun onError() {
                     Toast.makeText(requireContext(),getString(R.string.connection_bad), Toast.LENGTH_LONG).show()

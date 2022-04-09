@@ -46,7 +46,6 @@ class CommunicationService(application: Application) {
      */
     interface VolleyStringResponse {
         fun onSuccess()
-        fun onJSONexception()
         fun onError()
 
     }
@@ -190,14 +189,14 @@ class CommunicationService(application: Application) {
 
      * @param bitmap Photo from camera to send to server.
      */
-    fun addCameraPhotoToServer( bitmap: Bitmap) {
-
-
+    fun addCameraPhotoToServer( bitmap: Bitmap?) {
             val stringRequest = object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_CAMERA_PHOTO),
                     Response.Listener {
                         try {
-                            uploadImage(bitmap, userId)
+                            if (bitmap != null) {
+                                uploadImage(bitmap, userId)
+                            }
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
@@ -376,20 +375,22 @@ class CommunicationService(application: Application) {
 
      * @param permissionType The type of abuse example selected.
      */
-    fun createPermissionTableInServer( permissionType: String) {
+    fun createPermissionTableInServer( permissionType: String,volleyResponse: VolleyStringResponse){
 
         val stringRequest = object : StringRequest(
                 Method.POST, getServerAddress(EndPoints.URL_CREATE_PERMISSION_TABLE),
                 Response.Listener {response ->
                     try {Log.d("test",response)
-
+                        volleyResponse.onSuccess()
 
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 },
 
-                Response.ErrorListener { Log.d("problem", "no send") }) {
+                Response.ErrorListener {
+                    volleyResponse.onError()
+                    Log.d("problem", "no send") }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -549,7 +550,7 @@ class CommunicationService(application: Application) {
      * @param volleyResponse Response of Volley communication.
      */
      fun testConnectionToServer(testAddress: String, volleyResponse: VolleyStringResponse) {
-        Log.d("test","$testAddress/?op=serverstate",)
+        Log.d("test","$testAddress/?op=serverstate")
         val stringRequest = object : StringRequest(
                 Method.GET, "$testAddress/?op=serverstate",
                 Response.Listener {
@@ -558,7 +559,6 @@ class CommunicationService(application: Application) {
                         Log.d("test","onSuccess")
 
                     } catch (e: JSONException) {
-                        volleyResponse.onJSONexception()
                         Log.d("test","on JSON exception")
                     }
                 },

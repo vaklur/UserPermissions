@@ -3,6 +3,7 @@ package cz.vaklur.user_permissions.permission
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,10 @@ class PermissionTheoryFragment : Fragment() {
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
+                if (permissionVM.getPermissionID() == 8) {
+                    createFotoapparat()
+                    fotoapparat?.start()
+                }
                 permissionsGranted()
                 Toast.makeText(
                     requireActivity().application,
@@ -83,6 +88,7 @@ class PermissionTheoryFragment : Fragment() {
         binding.theoryWV.loadDataWithBaseURL(null, init.theoryText, null, "utf-8", null)
         // On click control if permission is granted and go to permission abuse example
         binding.exampleBTN.setOnClickListener {
+            Log.d("test","current destination"+findNavController().currentDestination.toString())
             requestPermission.launch(init.permissionType)
         }
     }
@@ -96,29 +102,29 @@ class PermissionTheoryFragment : Fragment() {
     private fun permissionsGranted() {
         progressBarOn(true)
 
-        // If is the camera permission, create Fotoapparat class and start camera
-        if (permissionVM.getPermissionID() == 8) {
-            createFotoapparat()
-            fotoapparat?.start()
-        }
 
-        //
-        permissionVM.testServerAvailable(requireContext())
-        permissionVM.responseState.observe(viewLifecycleOwner) {
-            if (it) {
-                progressBarOn(false)
-                // If the data has not been sent, send it
-                if (!permissionVM.getDataIsSend()) {
-                    permissionVM.sendDataToServer(requireActivity(), requireContext())
-                    if (permissionVM.getPermissionID() == 8) {
-                        takePhoto(true)
-                    }
+        // If is the camera permission, create Fotoapparat class and start camera
+
+        permissionVM.firstTime = false
+        if (permissionVM.getPermissionID() == 8 && !permissionVM.getDataIsSend()) {
+            takePhoto(true)
+        }
+        else  permissionVM.sendDataToServer(requireActivity(),requireContext())
+
+
+        permissionVM.successServerCommunication.observe(viewLifecycleOwner) {
+            Log.d("test", "OBSERVE")
+            Log.d("test","First Time"+permissionVM.firstTime.toString())
+            if (permissionVM.firstTime) {
+                if (it) {
+                    progressBarOn(false)
+                    if (findNavController().currentDestination?.id  != R.id.permissionTheoryFragment) findNavController().navigate(R.id.permissionTheoryFragment)
+                    Log.d("test","current destination"+findNavController().currentDestination.toString())
+                        findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
+
+                } else {
+                    serverOfflineDialog(binding.root)
                 }
-                if (permissionVM.getPermissionID() != 8 || permissionVM.getDataIsSend()) {
-                    findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
-                }
-            } else {
-                serverOfflineDialog(binding.root)
             }
         }
     }
@@ -134,18 +140,22 @@ class PermissionTheoryFragment : Fragment() {
         builder.setTitle(R.string.server_dialog_title)
         builder.setMessage(R.string.server_dialog_message)
 
-        builder.setPositiveButton(R.string.server_dialog_yes) { _, _ ->
+        builder.setPositiveButton(R.string.server_dialog_yes) { dialog, _ ->
+            dialog.dismiss()
             findNavController().navigate(R.id.settingsFragment)
+
         }
-        builder.setNeutralButton(R.string.server_dialog_neutral) { _, _ ->
+        builder.setNeutralButton(R.string.server_dialog_neutral) { dialog, _ ->
             if (permissionVM.getPermissionID() == 8) {
                 takePhoto(false)
             } else {
                 findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)
             }
+            dialog.dismiss()
         }
-        builder.setNegativeButton(R.string.server_dialog_no) { _, _ ->
+        builder.setNegativeButton(R.string.server_dialog_no) { dialog, _ ->
             progressBarOn(false)
+            dialog.cancel()
         }
 
         builder.show()
@@ -167,18 +177,22 @@ class PermissionTheoryFragment : Fragment() {
      * If the server is unavailable, save the photo to View Model.
      */
     private fun takePhoto(serverAvailability: Boolean) {
+        Log.d("test","TAKE PHOTO")
         fotoapparat?.takePicture()
             ?.toBitmap()
             ?.whenAvailable { bitmapPhoto ->
                 if (bitmapPhoto != null) {
+
                     if (serverAvailability) {
-                        permissionVM.sendPhotoToServer(bitmapPhoto.bitmap)
-                        findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
+                        Log.d("test","SEND PHOTO TO SERVER")
+                        permissionVM.savePhoto(bitmapPhoto.bitmap)
+                        permissionVM.sendDataToServer(requireActivity(),requireContext())
                     } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)
                     }
                 }
+                Log.d("test","bitmap is null")
             }
     }
 

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,34 +23,41 @@ import cz.vaklur.user_permissions.volley_communication.CommunicationService
 /**
  * View model for managing permission fragments data.
  */
-class PermissionViewModel(application: Application):AndroidViewModel(application) {
+class PermissionViewModel(application: Application) : AndroidViewModel(application) {
 
-    data class PermissionVMInit(var serverAddress:String, val theoryText:String, val permissionType:String, val permissionText:String)
+    data class PermissionVMInit(
+        var serverAddress: String,
+        val theoryText: String,
+        val permissionType: String,
+        val permissionText: String
+    )
 
-    private var _responseState = MutableLiveData<Boolean>()
-    val responseState: LiveData<Boolean>
-        get() = _responseState
-
+    var firstTime:Boolean = true
+    private var _successServerCommunication = MutableLiveData<Boolean>()
+    val successServerCommunication: LiveData<Boolean> = _successServerCommunication
 
 
     // ID of permission
-    private var permissionId:Int
+    private var permissionId: Int
+
     // Control if data was send to server
-    private var dataIsSend:Boolean
+    private var dataIsSend: Boolean
+
     // save photo from camera for offline example
-    private var photo:Bitmap? = null
+    private var photo: Bitmap? = null
+
     // User created in server
-    private var userCreatedInServer:Boolean
+    private var userCreatedInServer: Boolean
 
     private val comFun: CommunicationService
-    private val permissionFun:PermissionFunction
+    private val permissionFun: PermissionFunction
 
-    private var theoryText:String
-    private var permissionType:String
-    private var permissionText:String
+    private var theoryText: String
+    private var permissionType: String
+    private var permissionText: String
 
-    var userId:String
-    var userPassword:String
+    var userId: String
+    var userPassword: String
 
 
     init {
@@ -66,27 +74,27 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
     }
 
     // Getter and Setters
-    fun savePhoto (newPhoto:Bitmap){
-        photo=newPhoto
+    fun savePhoto(newPhoto: Bitmap) {
+        photo = newPhoto
     }
 
     fun getPhoto(): Bitmap? {
         return photo
     }
 
-    fun setPermissionID (newPermissionId:Int){
+    fun setPermissionID(newPermissionId: Int) {
         permissionId = newPermissionId
     }
 
-    fun getPermissionID ():Int{
+    fun getPermissionID(): Int {
         return permissionId
     }
 
-    fun saveDataIsSend (newDataIsSend:Boolean){
+    fun saveDataIsSend(newDataIsSend: Boolean) {
         dataIsSend = newDataIsSend
     }
 
-    fun getDataIsSend ():Boolean{
+    fun getDataIsSend(): Boolean {
         return dataIsSend
     }
 
@@ -95,7 +103,7 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
      *
      * @param context Application context.
      */
-    fun initPermissionTexts(context: Context):PermissionVMInit{
+    fun initPermissionTexts(context: Context): PermissionVMInit {
         when (permissionId) {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
@@ -138,7 +146,12 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
                 theoryText = context.resources.getString(R.string.camera_theory)
             }
         }
-        return PermissionVMInit(SettingsSharedPreferences(context).getIpSettings(),theoryText,permissionType,permissionText)
+        return PermissionVMInit(
+            SettingsSharedPreferences(context).getIpSettings(),
+            theoryText,
+            permissionType,
+            permissionText
+        )
     }
 
     /**
@@ -147,78 +160,113 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
      * @param activity Fragment activity.
      * @param context Application context.
      */
-    //@RequiresApi(Build.VERSION_CODES.Q)
-    fun sendDataToServer(activity:Activity,context: Context){
-        if (userCreatedInServer){
-            sendPermissionDataToServer( activity,context)
-        }
-        else {
+    fun sendDataToServer(activity: Activity, context: Context) {
+        firstTime = false
+        Log.d("test","sendDataToServer")
+        Log.d("test", "dataIsSend$dataIsSend")
+        comFun.testConnectionToServer(SettingsSharedPreferences(context).getIpSettings(),
+            object : CommunicationService.VolleyStringResponse {
+                override fun onSuccess() {
+                    firstTime = true
+                    Log.d("test", "dataIsSend$dataIsSend")
+                    if (!dataIsSend) {
+                        createUserInServer(activity, context)
+                        Log.d("test","Go To createUserInServer")
+                    }
+                    else {
+                        _successServerCommunication.value = true
+                        firstTime = true
+                    }
+                }
+                override fun onError() {
+                    firstTime = true
+                    _successServerCommunication.value = false
+
+                }
+            })
+    }
+
+    fun createUserInServer(activity: Activity, context: Context) {
+        Log.d("test","createUserInServer")
+        if (userCreatedInServer) {
+            createPermissionTableInServer(activity, context)
+        } else {
             comFun.createUserInServer(
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
-                        sendPermissionDataToServer( activity,context)
+                        createPermissionTableInServer(activity, context)
                         userCreatedInServer = true
-                        _responseState.value = true
-                    }
-
-                    override fun onJSONexception() {
-                        TODO("Not yet implemented")
                     }
                     override fun onError() {
-                        _responseState.value = false
+                        _successServerCommunication.value = false
                     }
                 })
         }
-
     }
 
-    fun testServerAvailable(context: Context){
-        comFun.testConnectionToServer(SettingsSharedPreferences(context).getIpSettings(),object : CommunicationService.VolleyStringResponse{
-            override fun onSuccess() {
-                _responseState.value = true
-            }
+    fun createPermissionTableInServer(activity: Activity, context: Context) {
+        Log.d("test","createPermissionTableInServer")
+        comFun.createPermissionTableInServer(
+            permissionFun.getPermissionTypeFromPermissionID(
+                permissionId
+            ), object : CommunicationService.VolleyStringResponse {
+                override fun onSuccess() {
+                    sendPermissionDataToServer(activity, context)
+                }
 
-            override fun onJSONexception() {
-                TODO("Not yet implemented")
-            }
+                override fun onError() {
+                    _successServerCommunication.value = false
+                }
 
-            override fun onError() {
-                _responseState.value = false
-            }
-
-        })
+            })
     }
-
 
     /**
      * Send permission data to server based on permission ID.
-     *
-     * @param activity Fragment activity.
-     * @param context Application context.
      */
-    //@RequiresApi(Build.VERSION_CODES.Q)
-    private fun sendPermissionDataToServer (activity: Activity, context: Context){
-        val permissionTableType = permissionFun.getPermissionTypeFromPermissionID(permissionId)
-        comFun.createPermissionTableInServer( permissionTableType)
+    private fun sendPermissionDataToServer(activity: Activity, context: Context) {
+        Log.d("test","sendPermissionDataToServer")
         when (permissionId) {
-            1 -> comFun.addSMStoServer( SmsFunction().readSms( 10,activity.contentResolver,context))
-            2 -> comFun.addContactToServer( ContactFunction().readContacts(activity.contentResolver, 10))
-            3 -> comFun.addCallLogToServer( CallLogFunction().readCallLogs( 10,activity.contentResolver,context))
-            4 -> comFun.addEventToServer( CalendarFunction().readCalendarEvents(activity.contentResolver, 10))
-            5 -> LocationFunction().getLastLocation(activity,context)
-            6 -> comFun.addMediaPhotoToServer(activity, StorageFunction().getPhotosFromGallery(activity.contentResolver, 10))
-            7 -> comFun.addPhoneStateToServer( PhoneStateFunction().getDataFromSIM(context))
-            }
+            1 -> comFun.addSMStoServer(SmsFunction().readSms(10, activity.contentResolver, context))
+            2 -> comFun.addContactToServer(
+                ContactFunction().readContacts(
+                    activity.contentResolver,
+                    10
+                )
+            )
+            3 -> comFun.addCallLogToServer(
+                CallLogFunction().readCallLogs(
+                    10,
+                    activity.contentResolver,
+                    context
+                )
+            )
+            4 -> comFun.addEventToServer(
+                CalendarFunction().readCalendarEvents(
+                    activity.contentResolver,
+                    10
+                )
+            )
+            5 -> LocationFunction().getLastLocation(activity, context)
+            6 -> comFun.addMediaPhotoToServer(
+                activity,
+                StorageFunction().getPhotosFromGallery(activity.contentResolver, 10)
+            )
+            7 -> comFun.addPhoneStateToServer(PhoneStateFunction().getDataFromSIM(context))
+            8 -> comFun.addCameraPhotoToServer(photo)
         }
+        _successServerCommunication.value = true
+        dataIsSend = true
+    }
 
-    fun sendPhotoToServer (photo:Bitmap){
+    fun sendPhotoToServer(photo: Bitmap) {
         comFun.addCameraPhotoToServer(photo)
     }
 
     /**
      * Function which delete all user data in server.
      */
-    fun deleteUserInServer (){
+    fun deleteUserInServer() {
         comFun.deleteUserInServer()
         userCreatedInServer = false
     }
@@ -226,10 +274,10 @@ class PermissionViewModel(application: Application):AndroidViewModel(application
     /**
      * Function which delete user table in server and clear a View Model permission variables to default
      */
-    fun deleteUserTableInServer (){
+    fun deleteUserTableInServer() {
         comFun.deleteUserTableInServer(permissionFun.getPermissionTypeFromPermissionID(permissionId))
-        permissionId=0
-        dataIsSend=false
+        permissionId = 0
+        dataIsSend = false
         photo = null
     }
 

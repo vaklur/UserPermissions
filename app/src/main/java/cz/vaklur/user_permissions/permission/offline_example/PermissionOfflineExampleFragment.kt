@@ -61,44 +61,47 @@ class PermissionOfflineExampleFragment : Fragment() {
         }
     }
 
+    /**
+     *
+     */
     private fun loadPermissionDataToRecyclerView(permissionId: Int) {
         val recyclerView = binding.exampleOffRV
         when (permissionId) {
             1 -> {
                 setOfflineExampleTitle(resources.getString(R.string.sms))
                 val sms = SmsFunction()
-                val smsMessages = sms.readSms(10, requireActivity().contentResolver, requireContext())
+                val smsMessages =
+                    sms.readSms(10, requireActivity().contentResolver, requireContext())
                 if (smsMessages.size != 0) {
                     recyclerView.adapter = MySmsAdapter(requireContext(), smsMessages)
-                }
-                else recyclerView.adapter = NoItemAdapter()
+                } else recyclerView.adapter = NoItemAdapter()
             }
             2 -> {
                 setOfflineExampleTitle(resources.getString(R.string.contacts))
                 val contacts = ContactFunction().readContacts(requireActivity().contentResolver, 10)
                 if (contacts.size != 0) {
                     recyclerView.adapter = MyContactAdapter(requireContext(), contacts)
-                }
-                else recyclerView.adapter = NoItemAdapter()
+                } else recyclerView.adapter = NoItemAdapter()
             }
             3 -> {
                 setOfflineExampleTitle(resources.getString(R.string.call_log))
-                val callLogs = CallLogFunction().readCallLogs(10, requireActivity().contentResolver, requireContext())
+                val callLogs = CallLogFunction().readCallLogs(
+                    10,
+                    requireActivity().contentResolver,
+                    requireContext()
+                )
                 if (callLogs.size != 0) {
                     recyclerView.adapter = MyCallLogAdapter(requireContext(), callLogs)
-                }
-                else recyclerView.adapter = NoItemAdapter()
+                } else recyclerView.adapter = NoItemAdapter()
 
             }
             4 -> {
                 setOfflineExampleTitle(resources.getString(R.string.calendar))
-                val calendarEvents = CalendarFunction().readCalendarEvents(requireActivity().contentResolver, 10)
+                val calendarEvents =
+                    CalendarFunction().readCalendarEvents(requireActivity().contentResolver, 10)
                 if (calendarEvents.size != 0) {
                     recyclerView.adapter = MyCalendarAdapter(requireContext(), calendarEvents)
-                }
-                else recyclerView.adapter = NoItemAdapter()
-
-
+                } else recyclerView.adapter = NoItemAdapter()
 
             }
             5 -> {
@@ -107,11 +110,11 @@ class PermissionOfflineExampleFragment : Fragment() {
             }
             6 -> {
                 setOfflineExampleTitle(resources.getString(R.string.storage))
-                val photos = StorageFunction().getPhotosFromGallery(requireActivity().contentResolver, 10)
+                val photos =
+                    StorageFunction().getPhotosFromGallery(requireActivity().contentResolver, 10)
                 if (photos.size != 0) {
                     recyclerView.adapter = MyStorageAdapter(requireContext(), photos)
-                }
-                else recyclerView.adapter = NoItemAdapter()
+                } else recyclerView.adapter = NoItemAdapter()
 
             }
             7 -> {
@@ -119,22 +122,22 @@ class PermissionOfflineExampleFragment : Fragment() {
                 val simInformation = PhoneStateFunction().getDataFromSIM(requireContext())
                 if (simInformation.phoneNumber != "") {
                     recyclerView.adapter = MyPhoneStateAdapter(simInformation)
-                }
-                else recyclerView.adapter = NoItemAdapter()
+                } else recyclerView.adapter = NoItemAdapter()
             }
             8 -> {
                 setOfflineExampleTitle(resources.getString(R.string.camera))
                 val photo: Bitmap? = permissionVM.getPhoto()
                 if (photo != null) {
-
                     recyclerView.adapter = MyCameraAdapter(photo)
-                }
-                else recyclerView.adapter = NoItemAdapter()
+                } else recyclerView.adapter = NoItemAdapter()
             }
         }
         recyclerView.setHasFixedSize(true)
     }
 
+    /**
+     *
+     */
     private fun setOfflineExampleTitle(title: String) {
         binding.exampleOffTV.text = String.format(
             resources.getString(

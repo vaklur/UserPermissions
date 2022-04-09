@@ -45,8 +45,6 @@ class PermissionExampleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        permissionVM.saveDataIsSend(true)
-
         binding.loginTV.text = String.format(
             resources.getString(R.string.id),
             permissionVM.userId + "  " + String.format(
