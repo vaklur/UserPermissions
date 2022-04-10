@@ -3,7 +3,6 @@ package cz.vaklur.user_permissions.permission
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,28 +33,29 @@ class PermissionTheoryFragment : Fragment() {
     /**
      * Result of request permission call, if permission is granted, call [permissionsGranted] function.
      */
-    @RequiresApi(Build.VERSION_CODES.Q)
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            val permissionResult: String
+            // If permission is granted by user
             if (isGranted) {
                 permissionsGranted()
-                Toast.makeText(
-                    requireActivity().application,
-                    permissionText + " " + getString(R.string.permission_granted),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+                permissionResult = getString(R.string.permission_granted)
+            }
+            // If permission is not granted by user
+            else {
                 PermissionFunction().showSettingsDialog(
                     requireActivity(),
                     permissionText,
                     requireContext()
                 )
-                Toast.makeText(
-                    requireActivity().application,
-                    permissionText + " " + getString(R.string.permission_not_granted),
-                    Toast.LENGTH_SHORT
-                ).show()
+                permissionResult = getString(R.string.permission_not_granted)
             }
+            Toast.makeText(
+                requireActivity().application,
+                "$permissionText $permissionResult",
+                Toast.LENGTH_SHORT
+            ).show()
+
         }
 
     override fun onCreateView(
@@ -90,7 +90,6 @@ class PermissionTheoryFragment : Fragment() {
      * If the server is available, it sends data to it and display a fragment with a practical example.
      * If the serve is unavailable, display a server offline dialog.
      */
-
     private fun permissionsGranted() {
         progressBarOn(true)
 
@@ -99,12 +98,10 @@ class PermissionTheoryFragment : Fragment() {
             createFotoapparat()
             fotoapparat?.start()
         }
-
+        // Try to send data to server
         permissionVM.sendDataToServer(requireActivity(), requireContext())
-
+        // Control the result of send data cycle
         permissionVM.successServerCommunication.observe(viewLifecycleOwner) {
-            Log.d("test", "OBSERVE")
-            Log.d("test", "successServerCommunication$it")
             when (it) {
                 "ok" -> {
                     progressBarOn(false)
@@ -125,8 +122,6 @@ class PermissionTheoryFragment : Fragment() {
 
     /**
      * Dialog that appears when the server is not available.
-     *
-     * @param view View for display a dialog.
      */
     private fun serverOfflineDialog(view: View) {
         val builder = AlertDialog.Builder(view.context)
@@ -171,7 +166,6 @@ class PermissionTheoryFragment : Fragment() {
      * If the server is unavailable, save the photo to View Model.
      */
     private fun takePhoto(serverAvailability: Boolean) {
-        Log.d("test", "TAKE PHOTO")
         fotoapparat?.takePicture()
             ?.toBitmap()
             ?.whenAvailable { bitmapPhoto ->
@@ -181,15 +175,12 @@ class PermissionTheoryFragment : Fragment() {
                             permissionVM.sendPermissionDataToServer(
                                 bitmapPhoto.bitmap
                             )
-                            Log.d("test", "SEND PHOTO TO SERVER")
-                        }
-                        findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
+                        } else findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                     } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)
                     }
                 }
-                Log.d("test", "bitmap is null")
             }
     }
 
