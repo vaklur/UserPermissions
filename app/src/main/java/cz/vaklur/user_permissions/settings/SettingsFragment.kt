@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.MainActivity
 import cz.vaklur.user_permissions.R
+import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
 

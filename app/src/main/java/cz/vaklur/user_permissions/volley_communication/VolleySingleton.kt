@@ -18,8 +18,12 @@ class VolleySingleton : Application() {
     }
 
     override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base?.let { LocaleUtil.getLocalizedContext(it,
-            SettingsSharedPreferences(base).getLanguageSettings()) })
+        super.attachBaseContext(base?.let {
+            LocaleUtil.getLocalizedContext(
+                it,
+                SettingsSharedPreferences(base).getLanguageSettings()
+            )
+        })
     }
 
     private val requestQueue: RequestQueue? = null
@@ -38,7 +42,8 @@ class VolleySingleton : Application() {
 
     companion object {
         private val TAG = VolleySingleton::class.java.simpleName
-        @get:Synchronized var instance: VolleySingleton? = null
+        @get:Synchronized
+        var instance: VolleySingleton? = null
             private set
     }
 }

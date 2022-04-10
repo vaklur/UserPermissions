@@ -1,5 +1,8 @@
 package cz.vaklur.user_permissions.constants
 
+/**
+ * Application constants.
+ */
 object Constants {
     // Shared Preferences
     const val SHARED_PREFERENCES_FILE = "settings"

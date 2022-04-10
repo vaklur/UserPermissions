@@ -17,7 +17,6 @@ class PermissionFunction {
     /**
      * Display a settings dialog when an permission is absolute denied.
      *
-     * @param activity Activity for get application context.
      * @param permissionName Permission name, for example: sms, camera, phone state, etc...
      */
     fun showSettingsDialog(activity: Activity, permissionName: String, context: Context) {
@@ -50,6 +49,9 @@ class PermissionFunction {
         }
     }
 
+    /**
+     * Get string name of permission from integer permission ID.
+     */
     fun getPermissionTypeFromPermissionID(permissionId: Int): String {
         return when (permissionId) {
             1 -> "sms"

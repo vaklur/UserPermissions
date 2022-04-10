@@ -17,14 +17,14 @@ import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
 /**
- *
+ * Dialog class for change application language and server ip address.
  */
 class SettingsDialog(application: Application) {
 
     val communicationService = CommunicationService(application)
 
     /**
-     * Show dialog for change language settings
+     * Show dialog for change language settings.
      */
     fun showSetLanguageDialog(activity: Activity, context: Context) {
         val languageCode = SettingsSharedPreferences(context).getLanguageSettings()
@@ -63,9 +63,9 @@ class SettingsDialog(application: Application) {
     }
 
     /**
-     * Function for updating a application actual language
+     * Function for updating a application actual language.
      *
-     * @param locale Code for new set language
+     * @param locale Code for new set language.
      */
     private fun updateAppLocale(context: Context, locale: String) {
         SettingsSharedPreferences(context).saveLanguageSettings(locale)

@@ -70,7 +70,6 @@ class LocaleUtil {
         /**
          * Get actual localized context.
          *
-         * @param baseContext Base application context.
          * @param prefLocaleCode Preferred locale language code.
          *
          * @return Application context.
@@ -91,7 +90,6 @@ class LocaleUtil {
         /**
          * Set localized context.
          *
-         * @param baseContext Base application context.
          * @param prefLocaleCode Preferred locale language code.
          */
         @Suppress("DEPRECATION")

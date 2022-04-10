@@ -145,8 +145,6 @@
     <string name="camera_image_description">Shot from front camera</string>
 
     <string name="none_title">No data is available for this mobile permission abuse example</string>
-    <string name="none_text">No data text</string>
-
 
     <string name="sms_theory">
             <![CDATA[

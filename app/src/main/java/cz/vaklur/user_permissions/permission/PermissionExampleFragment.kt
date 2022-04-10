@@ -10,8 +10,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import cz.vaklur.user_permissions.constants.EndPoints
 import cz.vaklur.user_permissions.R
+import cz.vaklur.user_permissions.constants.EndPoints
 import cz.vaklur.user_permissions.databinding.FragmentPermissionExampleBinding
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
 

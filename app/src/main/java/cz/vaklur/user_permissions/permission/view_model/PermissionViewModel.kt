@@ -307,7 +307,5 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         dataIsSent = false
         photo = null
     }
-
-
 }
 

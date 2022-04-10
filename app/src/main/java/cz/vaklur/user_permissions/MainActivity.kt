@@ -12,7 +12,7 @@ import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 
 /**
  * This application was created as part of diploma thesis "Android mobile application security"
- * Created by Jakub Michálek 1.5.2020
+ * Created by Jakub Michálek 10.4.2020
  * ID: 186140
  * Brno university of technology
  * 186140@vut.cz
@@ -51,8 +51,6 @@ class MainActivity : BaseActivity() {
 
     /**
      * Create options menu
-     *
-     * @param menu Menu Class
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -61,8 +59,6 @@ class MainActivity : BaseActivity() {
 
     /**
      * Functions that manage selection of options menu item
-     *
-     * @param item Selected menu item
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -83,8 +79,6 @@ class MainActivity : BaseActivity() {
      * agree: the application starts.
      * <p>
      * disagree: the app is terminated.
-     *
-     * @param view Need a View class for show the dialog to user in activity.
      */
     private fun appAlertDialog(view: View) {
         val builder = AlertDialog.Builder(view.context)

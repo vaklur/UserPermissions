@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream
 class CommunicationService(application: Application) {
     val userId = getAndroidId(application.contentResolver)
     val password = getPassword(application.contentResolver)
+
     private val settingsSP = SettingsSharedPreferences(application.applicationContext)
 
     private val pubKeyFile =
@@ -49,7 +50,6 @@ class CommunicationService(application: Application) {
     interface VolleyStringResponse {
         fun onSuccess()
         fun onError()
-
     }
 
     /**
@@ -81,7 +81,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a sms to SQL database on server.
      *
-
      * @param smsList Sms to send to server.
      */
     fun addSMStoServer(smsList: MutableList<MySms>, volleyResponse: VolleyStringResponse) {
@@ -118,7 +117,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a calendar event to SQL database on server.
      *
-
      * @param eventList Calendar events to send to server.
      */
     fun addEventToServer(
@@ -158,7 +156,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a call logs to SQL database on server.
      *
-
      * @param callLogList Call logs to send to server.
      */
     fun addCallLogToServer(
@@ -199,7 +196,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a photo from camera to SQL database on server.
      *
-
      * @param bitmap Photo from camera to send to server.
      */
     fun addCameraPhotoToServer(bitmap: Bitmap?, volleyResponse: VolleyStringResponse) {
@@ -234,7 +230,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a contacts to SQL database on server.
      *
-
      * @param contactList Contacts to send to server.
      */
     fun addContactToServer(
@@ -310,7 +305,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a information from SIM to SQL database on server.
      *
-
      * @param phoneState SIM information to send to server.
      */
     fun addPhoneStateToServer(phoneState: MyPhoneState, volleyResponse: VolleyStringResponse) {
@@ -341,7 +335,6 @@ class CommunicationService(application: Application) {
     /**
      * Add a images from external storage to SQL database on server.
      *
-
      * @param photoList Images to send to server.
      */
     fun addMediaPhotoToServer(
@@ -387,7 +380,6 @@ class CommunicationService(application: Application) {
     /**
      * Function which load images from external storage.
      *
-     * @param context Activity contexts.
      * @param imageUri Uri of image.
      *
      * @return Image in bitmap format.
@@ -401,7 +393,6 @@ class CommunicationService(application: Application) {
     /**
      * Create a table for data from abuse permission example in SQL database on server.
      *
-
      * @param permissionType The type of abuse example selected.
      */
     fun createPermissionTableInServer(
@@ -488,7 +479,6 @@ class CommunicationService(application: Application) {
     /**
      * Create a new user in SQL database on server.
      *
-
      */
     fun createUserInServer(volleyResponse: VolleyStringResponse) {
 
@@ -552,7 +542,6 @@ class CommunicationService(application: Application) {
     /**
      * Delete user in SQL database on server.
      *
-
      */
     fun deleteUserInServer() {
         Log.d("test", "delete User")
@@ -604,8 +593,6 @@ class CommunicationService(application: Application) {
                 volleyResponse.onError()
                 Log.d("test", "onError")
             }) {
-
-
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }

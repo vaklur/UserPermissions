@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import cz.vaklur.user_permissions.databinding.FragmentPermissionBinding
-import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 import cz.vaklur.user_permissions.permission.permission_fragment.adapter.PermissionItemAdapter
 import cz.vaklur.user_permissions.permission.permission_fragment.data.PermissionList
+import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 
 /**
  * Fragment with menu for select a abuse permission example.
