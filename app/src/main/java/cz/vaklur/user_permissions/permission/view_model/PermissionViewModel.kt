@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.permission
+package cz.vaklur.user_permissions.permission.view_model
 
 import android.Manifest
 import android.app.Activity
@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import cz.vaklur.user_permissions.R
+import cz.vaklur.user_permissions.permission.PermissionFunction
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.CalendarFunction
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.CallLogFunction
 import cz.vaklur.user_permissions.permission.permission_types.contact_permission.ContactFunction

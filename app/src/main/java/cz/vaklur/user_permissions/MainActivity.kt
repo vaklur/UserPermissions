@@ -8,7 +8,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import cz.vaklur.user_permissions.databinding.ActivityMainBinding
-import cz.vaklur.user_permissions.permission.PermissionViewModel
+import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 
 /**
  * This application was created as part of diploma thesis "Android mobile application security"

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import cz.vaklur.user_permissions.Constants
+import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.MainActivity
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
@@ -85,8 +85,8 @@ class SettingsFragment : Fragment() {
         } else {
             requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
         }
-        binding.settingsPB?.visibility = visibility
-        binding.settingsProgressBarTV?.visibility = visibility
+        binding.settingsPB.visibility = visibility
+        binding.settingsProgressBarTV.visibility = visibility
     }
 
     /**

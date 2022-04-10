@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.permission.offline_example
+package cz.vaklur.user_permissions.permission.permission_offline_example
 
 import android.view.LayoutInflater
 import android.view.View

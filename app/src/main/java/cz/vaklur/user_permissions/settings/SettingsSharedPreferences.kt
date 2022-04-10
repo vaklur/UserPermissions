@@ -2,7 +2,7 @@ package cz.vaklur.user_permissions.settings
 
 import android.content.Context
 import android.content.SharedPreferences
-import cz.vaklur.user_permissions.Constants
+import cz.vaklur.user_permissions.constants.Constants
 
 /**
  * Functions for using [SharedPreferences] to manage server address.

@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.permission.adapter
+package cz.vaklur.user_permissions.permission.permission_fragment.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import cz.vaklur.user_permissions.R
-import cz.vaklur.user_permissions.permission.PermissionViewModel
-import cz.vaklur.user_permissions.permission.model.PermissionModel
+import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
+import cz.vaklur.user_permissions.permission.permission_fragment.model.PermissionModel
 
 /**
  * Adapter for the [RecyclerView] in PermissionFragment. Displays PermissionList data object.

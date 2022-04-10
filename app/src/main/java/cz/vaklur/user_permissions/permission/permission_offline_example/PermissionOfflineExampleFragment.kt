@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.permission.offline_example
+package cz.vaklur.user_permissions.permission.permission_offline_example
 
 import android.graphics.Bitmap
 import android.os.Build
@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionOfflineExampleBinding
-import cz.vaklur.user_permissions.permission.PermissionViewModel
+import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.CalendarFunction
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.MyCalendarAdapter
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.CallLogFunction

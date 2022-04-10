@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionTheoryBinding
+import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.front

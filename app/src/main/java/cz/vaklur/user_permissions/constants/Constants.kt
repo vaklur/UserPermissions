@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions
+package cz.vaklur.user_permissions.constants
 
 object Constants {
     // Shared Preferences

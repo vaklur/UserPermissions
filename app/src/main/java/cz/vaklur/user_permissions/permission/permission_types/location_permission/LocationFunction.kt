@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import cz.vaklur.user_permissions.R
-import cz.vaklur.user_permissions.permission.offline_example.NoItemAdapter
+import cz.vaklur.user_permissions.permission.permission_offline_example.NoItemAdapter
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
 /**

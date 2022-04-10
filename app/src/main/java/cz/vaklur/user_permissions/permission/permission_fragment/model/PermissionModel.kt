@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.permission.model
+package cz.vaklur.user_permissions.permission.permission_fragment.model
 
 import androidx.annotation.StringRes
 

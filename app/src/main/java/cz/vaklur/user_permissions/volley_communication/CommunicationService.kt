@@ -17,7 +17,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import cz.vaklur.user_permissions.Cryptography
-import cz.vaklur.user_permissions.EndPoints
+import cz.vaklur.user_permissions.constants.EndPoints
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.MyCalendarEvent
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.MyCallLog
 import cz.vaklur.user_permissions.permission.permission_types.contact_permission.MyContact

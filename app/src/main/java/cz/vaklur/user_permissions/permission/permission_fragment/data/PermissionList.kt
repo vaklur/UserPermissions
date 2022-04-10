@@ -1,8 +1,8 @@
-package cz.vaklur.user_permissions.permission.data
+package cz.vaklur.user_permissions.permission.permission_fragment.data
 
 
 import cz.vaklur.user_permissions.R
-import cz.vaklur.user_permissions.permission.model.PermissionModel
+import cz.vaklur.user_permissions.permission.permission_fragment.model.PermissionModel
 
 /**
  * Load a string list of all dangerous permission with their IDs which will be demonstrated in the application.

@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions
+package cz.vaklur.user_permissions.constants
 
 /**
  * The constants which defines ends of url address for communication with php script on server.
