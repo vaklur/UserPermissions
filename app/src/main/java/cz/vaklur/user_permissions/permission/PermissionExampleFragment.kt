@@ -21,8 +21,6 @@ import cz.vaklur.user_permissions.volley_communication.CommunicationService
  */
 class PermissionExampleFragment : Fragment() {
 
-    private lateinit var permissionVM: PermissionViewModel
-
     private var _binding: FragmentPermissionExampleBinding? = null
     private val binding get() = _binding!!
 
@@ -34,7 +32,6 @@ class PermissionExampleFragment : Fragment() {
     ): View {
         _binding = FragmentPermissionExampleBinding.inflate(inflater, container, false)
         communicationService = CommunicationService(requireActivity().application)
-        permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
         return binding.root
     }
 
@@ -47,9 +44,9 @@ class PermissionExampleFragment : Fragment() {
 
         binding.loginTV.text = String.format(
             resources.getString(R.string.id),
-            permissionVM.userId + "  " + String.format(
+            communicationService.userId + "  " + String.format(
                 resources.getString(R.string.password),
-                permissionVM.userPassword
+                communicationService.password
             )
         )
 

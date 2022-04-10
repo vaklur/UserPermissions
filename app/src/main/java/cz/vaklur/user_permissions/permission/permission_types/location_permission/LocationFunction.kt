@@ -24,7 +24,7 @@ class LocationFunction {
      * @param context Application context.
      */
     @SuppressLint("MissingPermission")
-    fun getLastLocation (activity: Activity, context: Context){
+    fun getLastLocation (activity: Activity, context: Context,volleyStringResponse: CommunicationService.VolleyStringResponse){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location->
@@ -34,7 +34,7 @@ class LocationFunction {
                     val accuracy = location.accuracy.toString()
                     val altitude =  location.altitude.toString()
                     val lastKnownLocation = MyLocation(latitude,longitude,accuracy,altitude)
-                    CommunicationService(activity.application).addLocationToServer(lastKnownLocation)
+                    CommunicationService(activity.application).addLocationToServer(lastKnownLocation,volleyStringResponse)
                 }
             }
     }

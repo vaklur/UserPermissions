@@ -38,7 +38,9 @@ class CommunicationService(application: Application) {
     val password = getPassword(application.contentResolver)
     private val settingsSP = SettingsSharedPreferences(application.applicationContext)
 
-    private val pubKeyFile = application.applicationContext.assets.open("public_key.pem").bufferedReader().use { it.readText() }
+    private val pubKeyFile =
+        application.applicationContext.assets.open("public_key.pem").bufferedReader()
+            .use { it.readText() }
     private val crypto = Cryptography(pubKeyFile)
 
     /**
@@ -57,7 +59,7 @@ class CommunicationService(application: Application) {
      * @return ID of android device.
      */
     @SuppressLint("HardwareIds")
-    private fun getAndroidId(contentResolver: ContentResolver):String{
+    private fun getAndroidId(contentResolver: ContentResolver): String {
         var androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         androidId = androidId.substring(0, 6)
         return androidId
@@ -70,7 +72,7 @@ class CommunicationService(application: Application) {
      * @return User password.
      */
     @SuppressLint("HardwareIds")
-    private fun getPassword(contentResolver: ContentResolver):String{
+    private fun getPassword(contentResolver: ContentResolver): String {
         var androidPassword = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         androidPassword = androidPassword.substring(7, 12)
         return androidPassword
@@ -82,34 +84,35 @@ class CommunicationService(application: Application) {
 
      * @param smsList Sms to send to server.
      */
-    fun addSMStoServer( smsList: MutableList<MySms>) {
-         for (i in smsList.size-1 downTo 0 step 1) {
-             val stringRequest = object : StringRequest(
-                     Method.POST, getServerAddress(EndPoints.URL_ADD_SMS),
-                     Response.Listener { response ->
-                         try {
-                             Log.d("test", response)
-
-                         } catch (e: JSONException) {
-                             e.printStackTrace()
-                         }
-                     },
-
-                     Response.ErrorListener {}) {
-                 @Throws(AuthFailureError::class)
-                 override fun getParams(): Map<String, String> {
-                     val params = HashMap<String, String>()
-                     params["userid"] = crypto.encryptData(userId)
-                     params["date"] = crypto.encryptData(smsList[i].date)
-                     params["number"] = crypto.encryptData(smsList[i].number)
-                     params["text"] = crypto.encryptData(smsList[i].text)
-                     params["type"] = crypto.encryptData(smsList[i].type)
-                     return params
-                 }
-             }
-
-             VolleySingleton.instance?.addToRequestQueue(stringRequest)
-         }
+    fun addSMStoServer(smsList: MutableList<MySms>, volleyResponse: VolleyStringResponse) {
+        if (smsList.isNotEmpty()) {
+            for (i in smsList.size - 1 downTo 0 step 1) {
+                val stringRequest = object : StringRequest(
+                    Method.POST, getServerAddress(EndPoints.URL_ADD_SMS),
+                    Response.Listener {
+                        try {
+                            volleyResponse.onSuccess()
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    },
+                    Response.ErrorListener {
+                        volleyResponse.onError()
+                    }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getParams(): Map<String, String> {
+                        val params = HashMap<String, String>()
+                        params["userid"] = crypto.encryptData(userId)
+                        params["date"] = crypto.encryptData(smsList[i].date)
+                        params["number"] = crypto.encryptData(smsList[i].number)
+                        params["text"] = crypto.encryptData(smsList[i].text)
+                        params["type"] = crypto.encryptData(smsList[i].type)
+                        return params
+                    }
+                }
+                VolleySingleton.instance?.addToRequestQueue(stringRequest)
+            }
+        } else volleyResponse.onSuccess()
     }
 
     /**
@@ -118,33 +121,38 @@ class CommunicationService(application: Application) {
 
      * @param eventList Calendar events to send to server.
      */
-    fun addEventToServer( eventList: MutableList<MyCalendarEvent>) {
-
-
-        for (i in eventList.size-1 downTo 0 step 1) {
-            val stringRequest = object : StringRequest(
+    fun addEventToServer(
+        eventList: MutableList<MyCalendarEvent>,
+        volleyResponse: VolleyStringResponse
+    ) {
+        if (eventList.isNotEmpty()) {
+            for (i in eventList.size - 1 downTo 0 step 1) {
+                val stringRequest = object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_EVENT),
                     Response.Listener {
                         try {
+                            volleyResponse.onSuccess()
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     },
-
-                    Response.ErrorListener { }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userId)
-                    params["title"] = crypto.encryptData(eventList[i].title)
-                    params["startdate"] = crypto.encryptData(eventList[i].startDate)
-                    params["enddate"] = crypto.encryptData(eventList[i].endDate)
-                    params["description"] = crypto.encryptData(eventList[i].description)
-                    return params
+                    Response.ErrorListener {
+                        volleyResponse.onError()
+                    }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getParams(): Map<String, String> {
+                        val params = HashMap<String, String>()
+                        params["userid"] = crypto.encryptData(userId)
+                        params["title"] = crypto.encryptData(eventList[i].title)
+                        params["startdate"] = crypto.encryptData(eventList[i].startDate)
+                        params["enddate"] = crypto.encryptData(eventList[i].endDate)
+                        params["description"] = crypto.encryptData(eventList[i].description)
+                        return params
+                    }
                 }
+                VolleySingleton.instance?.addToRequestQueue(stringRequest)
             }
-            VolleySingleton.instance?.addToRequestQueue(stringRequest)
-        }
+        } else volleyResponse.onSuccess()
     }
 
     /**
@@ -153,34 +161,39 @@ class CommunicationService(application: Application) {
 
      * @param callLogList Call logs to send to server.
      */
-    fun addCallLogToServer( callLogList: MutableList<MyCallLog>) {
-
-
-        for (i in callLogList.size-1 downTo 0 step 1) {
-            val stringRequest = object : StringRequest(
+    fun addCallLogToServer(
+        callLogList: MutableList<MyCallLog>,
+        volleyResponse: VolleyStringResponse
+    ) {
+        if (callLogList.isNotEmpty()) {
+            for (i in callLogList.size - 1 downTo 0 step 1) {
+                val stringRequest = object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_CALL_LOG),
                     Response.Listener {
                         try {
+                            volleyResponse.onSuccess()
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     },
-
-                    Response.ErrorListener { }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userId)
-                    params["phoneNumber"] = crypto.encryptData(callLogList[i].phoneNumber)
-                    params["date"] = crypto.encryptData(callLogList[i].date)
-                    params["duration"] = crypto.encryptData(callLogList[i].duration)
-                    params["type"] = crypto.encryptData(callLogList[i].type)
-                    return params
+                    Response.ErrorListener {
+                        volleyResponse.onError()
+                    }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getParams(): Map<String, String> {
+                        val params = HashMap<String, String>()
+                        params["userid"] = crypto.encryptData(userId)
+                        params["phoneNumber"] = crypto.encryptData(callLogList[i].phoneNumber)
+                        params["date"] = crypto.encryptData(callLogList[i].date)
+                        params["duration"] = crypto.encryptData(callLogList[i].duration)
+                        params["type"] = crypto.encryptData(callLogList[i].type)
+                        return params
+                    }
                 }
-            }
 
-            VolleySingleton.instance?.addToRequestQueue(stringRequest)
-        }
+                VolleySingleton.instance?.addToRequestQueue(stringRequest)
+            }
+        } else volleyResponse.onSuccess()
     }
 
     /**
@@ -189,30 +202,32 @@ class CommunicationService(application: Application) {
 
      * @param bitmap Photo from camera to send to server.
      */
-    fun addCameraPhotoToServer( bitmap: Bitmap?) {
-            val stringRequest = object : StringRequest(
-                    Method.POST, getServerAddress(EndPoints.URL_ADD_CAMERA_PHOTO),
-                    Response.Listener {
-                        try {
-                            if (bitmap != null) {
-                                uploadImage(bitmap, userId)
-                            }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
-                    },
-
-                    Response.ErrorListener { }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userId)
-                    params["photoname"] = crypto.encryptData("$userId.jpg")
-                    return params
+    fun addCameraPhotoToServer(bitmap: Bitmap?, volleyResponse: VolleyStringResponse) {
+        val stringRequest = object : StringRequest(
+            Method.POST, getServerAddress(EndPoints.URL_ADD_CAMERA_PHOTO),
+            Response.Listener {
+                try {
+                    if (bitmap != null) {
+                        uploadImage(bitmap, userId, volleyResponse)
+                    } else volleyResponse.onSuccess()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
-            }
+            },
 
-            VolleySingleton.instance?.addToRequestQueue(stringRequest)
+            Response.ErrorListener {
+                volleyResponse.onError()
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["userid"] = crypto.encryptData(userId)
+                params["photoname"] = crypto.encryptData("$userId.jpg")
+                return params
+            }
+        }
+
+        VolleySingleton.instance?.addToRequestQueue(stringRequest)
 
     }
 
@@ -222,32 +237,38 @@ class CommunicationService(application: Application) {
 
      * @param contactList Contacts to send to server.
      */
-    fun addContactToServer( contactList: MutableList<MyContact>) {
-
-
-        for (i in contactList.size-1 downTo 0 step 1) {
-            val stringRequest = object : StringRequest(
+    fun addContactToServer(
+        contactList: MutableList<MyContact>,
+        volleyResponse: VolleyStringResponse
+    ) {
+        if (contactList.isNotEmpty()) {
+            for (i in contactList.size - 1 downTo 0 step 1) {
+                val stringRequest = object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_CONTACT),
                     Response.Listener {
                         try {
+                            volleyResponse.onSuccess()
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     },
 
-                    Response.ErrorListener { }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userId)
-                    params["name"] = crypto.encryptData(contactList[i].name)
-                    params["phoneNumber"] = crypto.encryptData(contactList[i].phoneNumber)
-                    return params
+                    Response.ErrorListener {
+                        volleyResponse.onError()
+                    }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getParams(): Map<String, String> {
+                        val params = HashMap<String, String>()
+                        params["userid"] = crypto.encryptData(userId)
+                        params["name"] = crypto.encryptData(contactList[i].name)
+                        params["phoneNumber"] = crypto.encryptData(contactList[i].phoneNumber)
+                        return params
+                    }
                 }
-            }
 
-            VolleySingleton.instance?.addToRequestQueue(stringRequest)
-        }
+                VolleySingleton.instance?.addToRequestQueue(stringRequest)
+            }
+        } else volleyResponse.onSuccess()
     }
 
     /**
@@ -256,19 +277,20 @@ class CommunicationService(application: Application) {
 
      * @param location Last know location to send to server.
      */
-    fun addLocationToServer( location: MyLocation) {
-
-
+    fun addLocationToServer(location: MyLocation, volleyResponse: VolleyStringResponse) {
         val stringRequest = object : StringRequest(
-                Method.POST, getServerAddress(EndPoints.URL_ADD_LOCATION),
-                Response.Listener {
-                    try {
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                },
+            Method.POST, getServerAddress(EndPoints.URL_ADD_LOCATION),
+            Response.Listener {
+                try {
+                    volleyResponse.onSuccess()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
 
-                Response.ErrorListener { }) {
+            Response.ErrorListener {
+                volleyResponse.onError()
+            }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -291,19 +313,18 @@ class CommunicationService(application: Application) {
 
      * @param phoneState SIM information to send to server.
      */
-    fun addPhoneStateToServer( phoneState: MyPhoneState) {
-
-
+    fun addPhoneStateToServer(phoneState: MyPhoneState, volleyResponse: VolleyStringResponse) {
         val stringRequest = object : StringRequest(
-                Method.POST, getServerAddress(EndPoints.URL_ADD_PHONE_STATE),
-                Response.Listener {
-                    try {
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                },
-
-                Response.ErrorListener { }) {
+            Method.POST, getServerAddress(EndPoints.URL_ADD_PHONE_STATE),
+            Response.Listener {
+                try {
+                    volleyResponse.onSuccess()
+                } catch (e: JSONException) {
+                }
+            },
+            Response.ErrorListener {
+                volleyResponse.onError()
+            }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -314,9 +335,7 @@ class CommunicationService(application: Application) {
                 return params
             }
         }
-
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
-
     }
 
     /**
@@ -325,34 +344,44 @@ class CommunicationService(application: Application) {
 
      * @param photoList Images to send to server.
      */
-    fun addMediaPhotoToServer( activity: Activity, photoList: MutableList<MyStorage>) {
-
-
-        for (i in photoList.size-1 downTo 0 step 1) {
-            val stringRequest = @RequiresApi(Build.VERSION_CODES.P)
-            object : StringRequest(
+    fun addMediaPhotoToServer(
+        activity: Activity,
+        photoList: MutableList<MyStorage>,
+        volleyResponse: VolleyStringResponse
+    ) {
+        if (photoList.isNotEmpty()) {
+            for (i in photoList.size - 1 downTo 0 step 1) {
+                val stringRequest = @RequiresApi(Build.VERSION_CODES.P)
+                object : StringRequest(
                     Method.POST, getServerAddress(EndPoints.URL_ADD_MEDIA_PHOTO),
                     Response.Listener {
                         try {
-                            uploadImage(loadImageFromExternalStorage(activity.applicationContext, photoList[i].uri), userId + "m" + i.toString())
+                            uploadImage(
+                                loadImageFromExternalStorage(
+                                    activity.applicationContext,
+                                    photoList[i].uri
+                                ), userId + "m" + i.toString(), volleyResponse
+                            )
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     },
 
                     Response.ErrorListener {
+                        volleyResponse.onError()
                     }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["userid"] = crypto.encryptData(userId)
-                    params["imagePath"] = crypto.encryptData(userId + "m" + i.toString())
-                    return params
+                    @Throws(AuthFailureError::class)
+                    override fun getParams(): Map<String, String> {
+                        val params = HashMap<String, String>()
+                        params["userid"] = crypto.encryptData(userId)
+                        params["imagePath"] = crypto.encryptData(userId + "m" + i.toString())
+                        return params
+                    }
                 }
-            }
 
-            VolleySingleton.instance?.addToRequestQueue(stringRequest)
-        }
+                VolleySingleton.instance?.addToRequestQueue(stringRequest)
+            }
+        } else volleyResponse.onSuccess()
     }
 
     /**
@@ -375,22 +404,27 @@ class CommunicationService(application: Application) {
 
      * @param permissionType The type of abuse example selected.
      */
-    fun createPermissionTableInServer( permissionType: String,volleyResponse: VolleyStringResponse){
+    fun createPermissionTableInServer(
+        permissionType: String,
+        volleyResponse: VolleyStringResponse
+    ) {
 
         val stringRequest = object : StringRequest(
-                Method.POST, getServerAddress(EndPoints.URL_CREATE_PERMISSION_TABLE),
-                Response.Listener {response ->
-                    try {Log.d("test",response)
-                        volleyResponse.onSuccess()
+            Method.POST, getServerAddress(EndPoints.URL_CREATE_PERMISSION_TABLE),
+            Response.Listener { response ->
+                try {
+                    Log.d("test", response)
+                    volleyResponse.onSuccess()
 
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                },
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
 
-                Response.ErrorListener {
-                    volleyResponse.onError()
-                    Log.d("problem", "no send") }) {
+            Response.ErrorListener {
+                volleyResponse.onError()
+                Log.d("problem", "no send")
+            }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -409,19 +443,22 @@ class CommunicationService(application: Application) {
      * @param bitmap Image on bitmap format.
      * @param imageName Name of the image.
      */
-    fun uploadImage( bitmap: Bitmap, imageName: String) {
+    fun uploadImage(bitmap: Bitmap, imageName: String, volleyStringResponse: VolleyStringResponse) {
         Log.d("test", "Upload Image")
 
         val stringRequest = object : StringRequest(
-                Method.POST, getServerAddress(EndPoints.URL_UPLOAD_IMAGE),
-                Response.Listener { response ->
-                    try {
-                        Log.d("test", response)
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                },
-                Response.ErrorListener {}) {
+            Method.POST, getServerAddress(EndPoints.URL_UPLOAD_IMAGE),
+            Response.Listener { response ->
+                try {
+                    volleyStringResponse.onSuccess()
+                    Log.d("test", response)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener {
+                volleyStringResponse.onError()
+            }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -456,16 +493,17 @@ class CommunicationService(application: Application) {
     fun createUserInServer(volleyResponse: VolleyStringResponse) {
 
         val stringRequest = object : StringRequest(
-                Method.POST, getServerAddress(EndPoints.URL_ADD_USER),
-                Response.Listener {response ->
-                    try {Log.d("test",response)
-                        volleyResponse.onSuccess()
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                },
+            Method.POST, getServerAddress(EndPoints.URL_ADD_USER),
+            Response.Listener { response ->
+                try {
+                    Log.d("test", response)
+                    volleyResponse.onSuccess()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
 
-                Response.ErrorListener { Log.d("problem", "no send") }) {
+            Response.ErrorListener { Log.d("problem", "no send") }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -484,7 +522,7 @@ class CommunicationService(application: Application) {
      * @param table Name of permission table.
 
      */
-    fun deleteUserTableInServer(table:String) {
+    fun deleteUserTableInServer(table: String) {
         Log.d("test", "delete User table")
 
         val stringRequest = object : StringRequest(
@@ -520,18 +558,18 @@ class CommunicationService(application: Application) {
         Log.d("test", "delete User")
 
         val stringRequest = object : StringRequest(
-                Method.POST, getServerAddress(EndPoints.URL_DELETE_USER),
-                Response.Listener { response ->
-                    try {
-                        Log.d("test", response)
-                        //activity.finish()
+            Method.POST, getServerAddress(EndPoints.URL_DELETE_USER),
+            Response.Listener { response ->
+                try {
+                    Log.d("test", response)
+                    //activity.finish()
 
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                },
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
 
-                Response.ErrorListener { }) {
+            Response.ErrorListener { }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -549,38 +587,38 @@ class CommunicationService(application: Application) {
      * @param testAddress Address of server.
      * @param volleyResponse Response of Volley communication.
      */
-     fun testConnectionToServer(testAddress: String, volleyResponse: VolleyStringResponse) {
-        Log.d("test","$testAddress/?op=serverstate")
+    fun testConnectionToServer(testAddress: String, volleyResponse: VolleyStringResponse) {
+        Log.d("test", "$testAddress/?op=serverstate")
         val stringRequest = object : StringRequest(
-                Method.GET, "$testAddress/?op=serverstate",
-                Response.Listener {
-                    try {
-                        volleyResponse.onSuccess()
-                        Log.d("test","onSuccess")
+            Method.GET, "$testAddress/?op=serverstate",
+            Response.Listener {
+                try {
+                    volleyResponse.onSuccess()
+                    Log.d("test", "onSuccess")
 
-                    } catch (e: JSONException) {
-                        Log.d("test","on JSON exception")
-                    }
-                },
-                Response.ErrorListener {
-                    volleyResponse.onError()
-                    Log.d("test","onError")
-                }) {
+                } catch (e: JSONException) {
+                    Log.d("test", "on JSON exception")
+                }
+            },
+            Response.ErrorListener {
+                volleyResponse.onError()
+                Log.d("test", "onError")
+            }) {
 
 
-            }
+        }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
-    
+
     /**
      * Get the whole url command server address.
      *
      * @param urlType Type of the server command.
      * @return Whole url for command.
      */
-    fun getServerAddress(urlType: String):String {
+    fun getServerAddress(urlType: String): String {
         val urlRoot = settingsSP.getIpSettings()
-        return when(urlType){
+        return when (urlType) {
             "add_sms" -> "$urlRoot/?op=add_sms"
             "add_event" -> "$urlRoot/?op=add_event"
             "add_call_log" -> "$urlRoot/?op=add_call_log"
