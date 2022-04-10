@@ -23,7 +23,7 @@ class MainMenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainMenuBinding.inflate(inflater,container,false)
+        _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
 

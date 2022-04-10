@@ -1,7 +1,6 @@
 package cz.vaklur.user_permissions
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cz.vaklur.user_permissions.settings.LocaleUtil
@@ -10,20 +9,15 @@ import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 /**
  * Based activity which contains function for changing app language
  */
-open class BaseActivity: AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
 
-    private lateinit var oldPrefLocaleCode : String
+    private lateinit var oldPrefLocaleCode: String
 
     /**
      * Updates the toolbar text locale if it set from the android:label property of Manifest
      */
     private fun resetTitle() {
-        try {
-            val label = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA).labelRes
-            if (label != 0) {
-                setTitle(label)
-            }
-        } catch (e: PackageManager.NameNotFoundException) {}
+        title = getString(R.string.app_name)
     }
 
     /**
@@ -48,7 +42,7 @@ open class BaseActivity: AppCompatActivity() {
      */
     override fun onResume() {
         val currentLocaleCode = SettingsSharedPreferences(this).getLanguageSettings()
-        if(oldPrefLocaleCode != currentLocaleCode){
+        if (oldPrefLocaleCode != currentLocaleCode) {
             recreate()
             oldPrefLocaleCode = currentLocaleCode
         }

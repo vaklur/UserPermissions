@@ -17,22 +17,27 @@ object EndPoints {
     const val URL_ADD_LOCATION = "add_location"
     const val URL_ADD_PHONE_STATE = "add_phone_state"
     const val URL_ADD_MEDIA_PHOTO = "add_media_photo"
+
     /**
      * End of url address for add image to server.
      */
     const val URL_UPLOAD_IMAGE = "upload_image"
+
     /**
      * End of url address for add user to SQL database on server.
      */
     const val URL_ADD_USER = "add_user"
+
     /**
      * End of url address for delete user in SQL database on server.
      */
     const val URL_DELETE_USER = "delete_user"
+
     /**
      * End of url address for delete user permission table in SQL database on server.
      */
     const val URL_DELETE_USER_TABLE = "delete_user_table"
+
     /**
      * End of url address for view a login page for user.
      */

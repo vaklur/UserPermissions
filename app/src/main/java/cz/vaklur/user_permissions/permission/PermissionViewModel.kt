@@ -35,7 +35,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     private var _successServerCommunication = MutableLiveData<String>()
     val successServerCommunication: LiveData<String> = _successServerCommunication
 
-    private val volleyAddDataToServerResponse = object :CommunicationService.VolleyStringResponse {
+    private val volleyAddDataToServerResponse = object : CommunicationService.VolleyStringResponse {
         override fun onSuccess() {
             dataIsSend = true
             _successServerCommunication.value = ok
@@ -49,7 +49,6 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     private val ok = "ok"
     private val waiting = "waiting"
     private val error = "error"
-
 
     // ID of permission
     private var permissionId: Int
@@ -230,32 +229,47 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     private fun sendPermissionDataToServer(activity: Activity, context: Context) {
         Log.d("test", "sendPermissionDataToServer")
         when (permissionId) {
-            1 -> communicationService.addSMStoServer(SmsFunction().readSms(10, activity.contentResolver, context), volleyAddDataToServerResponse)
+            1 -> communicationService.addSMStoServer(
+                SmsFunction().readSms(
+                    10,
+                    activity.contentResolver,
+                    context
+                ), volleyAddDataToServerResponse
+            )
             2 -> communicationService.addContactToServer(
                 ContactFunction().readContacts(
                     activity.contentResolver,
                     10
-                ),volleyAddDataToServerResponse
+                ), volleyAddDataToServerResponse
             )
             3 -> communicationService.addCallLogToServer(
                 CallLogFunction().readCallLogs(
                     10,
                     activity.contentResolver,
                     context
-                ),volleyAddDataToServerResponse
+                ), volleyAddDataToServerResponse
             )
             4 -> communicationService.addEventToServer(
                 CalendarFunction().readCalendarEvents(
                     activity.contentResolver,
                     10
-                ),volleyAddDataToServerResponse
+                ), volleyAddDataToServerResponse
             )
-            5 -> LocationFunction().getLastLocation(activity, context,volleyAddDataToServerResponse)
+            5 -> LocationFunction().getLastLocation(
+                activity,
+                context,
+                volleyAddDataToServerResponse
+            )
             6 -> communicationService.addMediaPhotoToServer(
                 activity,
-                StorageFunction().getPhotosFromGallery(activity.contentResolver, 10),volleyAddDataToServerResponse
+                StorageFunction().getPhotosFromGallery(activity.contentResolver, 10),
+                volleyAddDataToServerResponse
             )
-            7 -> communicationService.addPhoneStateToServer(PhoneStateFunction().getDataFromSIM(context),volleyAddDataToServerResponse)
+            7 -> communicationService.addPhoneStateToServer(
+                PhoneStateFunction().getDataFromSIM(
+                    context
+                ), volleyAddDataToServerResponse
+            )
             8 -> {
                 dataIsSend = false
                 _successServerCommunication.value = ok
@@ -267,7 +281,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
 
     fun sendPermissionDataToServer(cameraPhoto: Bitmap) {
         Log.d("test", "sendPermissionDataToServer")
-        communicationService.addCameraPhotoToServer(cameraPhoto,volleyAddDataToServerResponse)
+        communicationService.addCameraPhotoToServer(cameraPhoto, volleyAddDataToServerResponse)
         _successServerCommunication.value = ok
         dataIsSend = true
     }
@@ -284,7 +298,11 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Function which delete user table in server and clear a View Model permission variables to default
      */
     fun deleteUserTableInServer() {
-        communicationService.deleteUserTableInServer(permissionFun.getPermissionTypeFromPermissionID(permissionId))
+        communicationService.deleteUserTableInServer(
+            permissionFun.getPermissionTypeFromPermissionID(
+                permissionId
+            )
+        )
         dataIsSend = false
         photo = null
     }

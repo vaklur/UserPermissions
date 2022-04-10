@@ -8,7 +8,7 @@
         android:id="@+id/mainMenuFragment"
         android:name="cz.vaklur.user_permissions.MainMenuFragment"
         android:label="fragment_main_menu"
-        tools:layout="@layout/fragment_main_menu" >
+        tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_mainMenuFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -32,7 +32,7 @@
         android:id="@+id/permissionFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionFragment"
         android:label="fragment_permission"
-        tools:layout="@layout/fragment_permission" >
+        tools:layout="@layout/fragment_permission">
         <action
             android:id="@+id/action_permissionFragment_to_PermissionTheoryFragment"
             app:destination="@id/permissionTheoryFragment" />
@@ -41,7 +41,7 @@
         android:id="@+id/permissionExampleFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionExampleFragment"
         android:label="fragment_permission_example"
-        tools:layout="@layout/fragment_permission_example" >
+        tools:layout="@layout/fragment_permission_example">
         <action
             android:id="@+id/action_permissionExampleFragment_to_permissionTheoryFragment"
             app:destination="@id/permissionTheoryFragment" />
@@ -50,19 +50,22 @@
         android:id="@+id/permissionTheoryFragment"
         android:name="cz.vaklur.user_permissions.permission.PermissionTheoryFragment"
         android:label="fragment_permission_theory"
-        tools:layout="@layout/fragment_permission_theory" >
+        tools:layout="@layout/fragment_permission_theory">
         <action
             android:id="@+id/action_permissionTheoryFragment_to_permissionExampleFragment"
             app:destination="@id/permissionExampleFragment" />
         <action
             android:id="@+id/action_PermissionTheoryFragment_to_permissionOfflineExampleFragment"
             app:destination="@id/permissionOfflineExampleFragment" />
-    </fragment><action android:id="@+id/action_global_settingsFragment" app:destination="@id/settingsFragment"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment" />
     <fragment
         android:id="@+id/permissionOfflineExampleFragment"
         android:name="cz.vaklur.user_permissions.permission.offline_example.PermissionOfflineExampleFragment"
         android:label="fragment_permission_offline_example"
-        tools:layout="@layout/fragment_permission_offline_example" >
+        tools:layout="@layout/fragment_permission_offline_example">
         <action
             android:id="@+id/action_permissionOfflineExampleFragment_to_PermissionTheoryFragment"
             app:destination="@id/permissionTheoryFragment" />

@@ -36,7 +36,7 @@ class PermissionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val permissionData = PermissionList().loadPermissions()
         val recyclerView = binding.PermissionRV
-        recyclerView.adapter = PermissionItemAdapter(requireContext(),permissionVM, permissionData)
+        recyclerView.adapter = PermissionItemAdapter(requireContext(), permissionVM, permissionData)
         recyclerView.setHasFixedSize(true)
     }
 

@@ -1,7 +1,6 @@
 package cz.vaklur.user_permissions.permission.data
 
 
-
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.permission.model.PermissionModel
 
@@ -11,14 +10,14 @@ import cz.vaklur.user_permissions.permission.model.PermissionModel
 class PermissionList {
     fun loadPermissions(): List<PermissionModel> {
         return listOf(
-            PermissionModel(R.string.sms_permission,1),
-            PermissionModel(R.string.calendar_permission,4),
-            PermissionModel(R.string.contacts_permission,2),
-            PermissionModel(R.string.location_permission,5),
-            PermissionModel(R.string.call_log_permission,3),
-            PermissionModel(R.string.camera_permission,8),
-            PermissionModel(R.string.phone_permission,7),
-            PermissionModel(R.string.storage_permission,6)
-            )
+            PermissionModel(R.string.sms_permission, 1),
+            PermissionModel(R.string.calendar_permission, 4),
+            PermissionModel(R.string.contacts_permission, 2),
+            PermissionModel(R.string.location_permission, 5),
+            PermissionModel(R.string.call_log_permission, 3),
+            PermissionModel(R.string.camera_permission, 8),
+            PermissionModel(R.string.phone_permission, 7),
+            PermissionModel(R.string.storage_permission, 6)
+        )
     }
 }

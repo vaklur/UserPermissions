@@ -14,11 +14,11 @@ import cz.vaklur.user_permissions.permission.model.PermissionModel
 /**
  * Adapter for the [RecyclerView] in PermissionFragment. Displays PermissionList data object.
  */
-class PermissionItemAdapter (
+class PermissionItemAdapter(
     private val context: Context,
-    private val permissionVM:PermissionViewModel,
+    private val permissionVM: PermissionViewModel,
     private val permissionList: List<PermissionModel>
-    ) : RecyclerView.Adapter<PermissionItemAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<PermissionItemAdapter.ItemViewHolder>() {
 
     /**
      * Provide a reference to the views for each data item.
@@ -31,7 +31,8 @@ class PermissionItemAdapter (
      * Create a new views.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.list_permission_item, parent, false)
+        val adapterLayout = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_permission_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
@@ -45,7 +46,8 @@ class PermissionItemAdapter (
 
         holder.permissionTypeBTN.setOnClickListener {
             permissionVM.setPermissionID(item.permissionId)
-            holder.permissionTypeBTN.findNavController().navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment)
+            holder.permissionTypeBTN.findNavController()
+                .navigate(R.id.action_permissionFragment_to_PermissionTheoryFragment)
         }
     }
 

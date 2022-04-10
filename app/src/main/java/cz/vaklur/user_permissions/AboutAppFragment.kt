@@ -20,7 +20,7 @@ class AboutAppFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAboutAppBinding.inflate(inflater,container,false)
+        _binding = FragmentAboutAppBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,7 +29,13 @@ class AboutAppFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.aboutAppWV.loadDataWithBaseURL(null,resources.getString(R.string.about_app_text), null,"utf-8",null)
+        binding.aboutAppWV.loadDataWithBaseURL(
+            null,
+            resources.getString(R.string.about_app_text),
+            null,
+            "utf-8",
+            null
+        )
     }
 
     override fun onDestroyView() {

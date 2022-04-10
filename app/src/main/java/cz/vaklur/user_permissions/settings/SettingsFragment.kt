@@ -1,25 +1,17 @@
 package cz.vaklur.user_permissions.settings
 
-
-import android.app.Dialog
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.*
 import androidx.fragment.app.Fragment
 import cz.vaklur.user_permissions.Constants
 import cz.vaklur.user_permissions.MainActivity
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
-
 
 /**
  * Fragment for application settings - server address and language
@@ -29,19 +21,18 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var communicationService:CommunicationService
-
-
-
+    private lateinit var communicationService: CommunicationService
+    private lateinit var settingsSP: SettingsSharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater,container,false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        communicationService = CommunicationService(requireActivity().application)
+        settingsSP = SettingsSharedPreferences(requireContext())
         return binding.root
     }
-
 
     /**
      * * Create view, load saved settings and define onClickListeners
@@ -49,19 +40,18 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val settingsSP = SettingsSharedPreferences(requireContext())
+        val dialogs = SettingsDialog(requireActivity().application)
+        // Load and display last known settings
         binding.languageTV.text = getActualLanguage(settingsSP.getLanguageSettings())
-        binding.actualIPTV.text= settingsSP.getIpSettings()
-
-        communicationService = CommunicationService(requireActivity().application)
-
+        binding.actualIPTV.text = settingsSP.getIpSettings()
+        // Test connection to server
         getServerState()
-
+        // Initialize onClickListeners for buttons
         binding.changeIPBTN.setOnClickListener {
-            showSetAddressDialog()
+            dialogs.showSetAddressDialog(binding, requireContext())
         }
         binding.changeLanguageBTN.setOnClickListener {
-            showSetLanguageDialog()
+            dialogs.showSetLanguageDialog(requireActivity(), requireContext())
         }
         binding.refreshIPBTN.setOnClickListener {
             getServerState()
@@ -69,43 +59,35 @@ class SettingsFragment : Fragment() {
     }
 
     /**
-     * Function for get actual server state and set the widgets based on server state
+     * Function set the widget parameters if the test of server connection
      */
-    private fun getServerState(){
-        (activity as MainActivity).allowBackPressed=false
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
-        val settingsSP = SettingsSharedPreferences(requireContext())
+    private fun setServerStateWidgets(getResponse: Boolean, serverState: Boolean) {
+        binding.changeIPBTN.isEnabled = getResponse
+        binding.refreshIPBTN.isEnabled = getResponse
+        binding.changeLanguageBTN.isEnabled = getResponse
+        (activity as MainActivity).allowBackPressed = getResponse
+
         val stateActualTV = binding.stateActualTV
-        val stateChangeBTN = binding.changeIPBTN
-        val stateRefreshBTN = binding.refreshIPBTN
-        binding.changeLanguageBTN.isEnabled=false
-        stateChangeBTN.isEnabled = false
-        stateRefreshBTN.isEnabled = false
-        stateActualTV .text = requireContext().resources.getString(R.string.state_connecting_setting)
-        stateActualTV .setBackgroundColor(Color.TRANSPARENT)
-        communicationService.testConnectionToServer(settingsSP.getIpSettings(), object: CommunicationService.VolleyStringResponse {
-            override fun onSuccess() {
-                stateActualTV .text = requireContext().resources.getString(R.string.state_reachable_setting)
-                stateActualTV .setBackgroundColor(Color.GREEN)
-                stateChangeBTN.isEnabled = true
-                stateRefreshBTN.isEnabled = true
-                binding.changeLanguageBTN.isEnabled=true
-                (activity as MainActivity).allowBackPressed=true
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+        stateActualTV.text = requireContext().resources.getString(R.string.state_connecting_setting)
+        stateActualTV.setBackgroundColor(Color.TRANSPARENT)
+        var visibility = View.VISIBLE
+        if (getResponse) {
+            visibility = View.GONE
+            requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+            if (serverState) {
+                stateActualTV.text =
+                    requireContext().resources.getString(R.string.state_reachable_setting)
+                stateActualTV.setBackgroundColor(Color.GREEN)
+            } else {
+                stateActualTV.text = resources.getString(R.string.state_unreachable_setting)
+                stateActualTV.setBackgroundColor(Color.RED)
             }
-
-            override fun onError() {
-                stateActualTV .text = resources.getString(R.string.state_unreachable_setting)
-                stateActualTV .setBackgroundColor(Color.RED)
-                stateChangeBTN.isEnabled = true
-                stateRefreshBTN.isEnabled = true
-                binding.changeLanguageBTN.isEnabled=true
-                (activity as MainActivity).allowBackPressed=true
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
-            }
-        })
+        } else {
+            requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
+        binding.settingsPB?.visibility = visibility
+        binding.settingsProgressBarTV?.visibility = visibility
     }
-
 
     /**
      * Function that returns the full name of the current language, depending on the local language code.
@@ -114,150 +96,32 @@ class SettingsFragment : Fragment() {
      *
      * @return Full name of actual language.
      */
-    private fun getActualLanguage(languageCode:String):String{
-        var actualLanguage:String = resources.getString(R.string.language_english)
-        if (languageCode == Constants.ENGLISH_CODE){
-            actualLanguage = resources.getString(R.string.language_english)
+    private fun getActualLanguage(languageCode: String): String {
+        var actualLanguage: String = getString(R.string.language_english)
+        if (languageCode == Constants.ENGLISH_CODE) {
+            actualLanguage = getString(R.string.language_english)
+        } else if (languageCode == Constants.CZECH_CODE) {
+            actualLanguage = getString(R.string.language_czech)
         }
-        else if(languageCode == Constants.CZECH_CODE){
-            actualLanguage = resources.getString(R.string.language_czech)
-        }
-        return  actualLanguage
+        return actualLanguage
     }
 
     /**
-     * Show dialog for change language settings
+     * Function for get actual server state and set the widgets based on server state
      */
-    private fun showSetLanguageDialog(){
-        val settingsSP = SettingsSharedPreferences(requireContext())
-        val languageCode = settingsSP.getLanguageSettings()
-        val dialog = Dialog(requireContext())
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_app_language_settings)
-
-        if (languageCode =="en"){
-            dialog.findViewById<RadioButton>(R.id.english_RB).isChecked = true
-        }
-        else {
-            dialog.findViewById<RadioButton>(R.id.czech_RB).isChecked = true
-        }
-
-        dialog.findViewById<Button>(R.id.saveSetLanguage_BTN).setOnClickListener {
-            if (dialog.findViewById<RadioButton>(R.id.english_RB).isChecked){
-                if (languageCode!=Constants.ENGLISH_CODE){
-                    updateAppLocale(Constants.ENGLISH_CODE)
-                    dialog.dismiss()
-                    requireActivity().recreate()
-                }
-                else dialog.dismiss()
-            }
-            else {
-                if (languageCode!=Constants.CZECH_CODE){
-                    updateAppLocale(Constants.CZECH_CODE)
-                    dialog.dismiss()
-                    requireActivity().recreate()
-                }
-                else dialog.dismiss()
-            }
-
-        }
-        dialog.findViewById<Button>(R.id.exitSetLanguage_BTN).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
-    /**
-     * Function for updating a application actual language
-     *
-     * @param locale Code for new set language
-     */
-    private fun updateAppLocale(locale: String) {
-        SettingsSharedPreferences(requireContext()).saveLanguageSettings(locale)
-        LocaleUtil.applyLocalizedContext(requireContext(), locale)
-    }
-
-    /**
-     * Display a dialog for a set new server address.
-     */
-    private fun showSetAddressDialog() {
-        val settingsSP = SettingsSharedPreferences(requireContext())
-        val dialog = Dialog(requireContext())
-        var newAddress = false
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_app_ip_settings)
-        val addressEditText = dialog.findViewById<EditText>(R.id.setAddress_ET)
-        addressEditText.visibility = View.GONE
-        addressEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!Patterns.WEB_URL.matcher(addressEditText.text.toString()).matches()){
-                    addressEditText.error = getString(R.string.invalid_address)
-                }
-            }
-        })
-
-
-        val addressSpinner = dialog.findViewById<Spinner>(R.id.setAddress_S)
-        val list = settingsSP.getIpSettingsSet()?.toMutableList()
-        list?.add(getString(R.string.own_address))
-        val addressAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, list as MutableList<String>)
-        addressSpinner!!.adapter = addressAdapter
-        addressSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectItem = list[position]
-                if (selectItem == getString(R.string.own_address)){
-                    addressEditText.visibility = View.VISIBLE
-                    addressEditText.hint = ""
-                    newAddress = true
-                }
-                else{
-                    addressEditText.visibility = View.GONE
-                    newAddress=false
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-
-        dialog.findViewById<Button>(R.id.saveSetAddress_BTN).setOnClickListener {
-
-            val addressToSave:String = if (newAddress){
-                addressEditText.text.toString()
-            } else{
-                addressSpinner.selectedItem.toString()
-            }
-            communicationService.testConnectionToServer(addressToSave, object: CommunicationService.VolleyStringResponse {
+    private fun getServerState() {
+        setServerStateWidgets(getResponse = false, serverState = false)
+        communicationService.testConnectionToServer(
+            settingsSP.getIpSettings(),
+            object : CommunicationService.VolleyStringResponse {
                 override fun onSuccess() {
-                    if (binding.actualIPTV.text != addressToSave){
-                        communicationService.deleteUserInServer()
-                    }
-                    settingsSP.saveIpSettings(addressToSave)
-                    settingsSP.addAddressToIpSettingsSet(addressToSave)
-                    binding.actualIPTV.text= settingsSP.getIpSettings()
-                    binding.stateActualTV.text = resources.getString(R.string.state_reachable_setting)
-                    binding.stateActualTV.setBackgroundColor(Color.GREEN)
-                    Toast.makeText(requireContext(),getString(R.string.connection_ok), Toast.LENGTH_LONG).show()
-                    dialog.dismiss()
+                    setServerStateWidgets(getResponse = true, serverState = true)
                 }
-
 
                 override fun onError() {
-                    Toast.makeText(requireContext(),getString(R.string.connection_bad), Toast.LENGTH_LONG).show()
+                    setServerStateWidgets(getResponse = true, serverState = false)
                 }
             })
-        }
-        dialog.findViewById<Button>(R.id.exitSetAddress_BTN).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 
     override fun onDestroyView() {
