@@ -66,6 +66,8 @@ class PermissionTheoryFragment : Fragment() {
     ): View {
         _binding = FragmentPermissionTheoryBinding.inflate(inflater, container, false)
         permissionVM = ViewModelProvider(requireActivity()).get(PermissionViewModel::class.java)
+        binding.permissionViewModel = permissionVM
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -79,7 +81,7 @@ class PermissionTheoryFragment : Fragment() {
         val init = permissionVM.initPermissionTexts(requireContext())
         permissionText = init.permissionText
         // Load text to WebView
-        binding.theoryWV.loadDataWithBaseURL(null, init.theoryText, null, "utf-8", null)
+        binding.theoryWV.loadData(init.theoryText, null, "utf-8")
         // On click control if permission is granted and go to permission abuse example
         binding.exampleBTN.setOnClickListener {
             requestPermission.launch(init.permissionType)
@@ -92,8 +94,6 @@ class PermissionTheoryFragment : Fragment() {
      * If the serve is unavailable, display a server offline dialog.
      */
     private fun permissionsGranted() {
-        progressBarOn(true)
-
         // If is the camera permission, create Fotoapparat class and start camera
         if (permissionVM.getPermissionID() == 8) {
             createFotoapparat()
@@ -105,7 +105,6 @@ class PermissionTheoryFragment : Fragment() {
         permissionVM.successServerCommunication.observe(viewLifecycleOwner) {
             when (it) {
                 "ok" -> {
-                    progressBarOn(false)
                     // Control current destination
                     if (findNavController().currentDestination?.id != R.id.permissionTheoryFragment) findNavController().navigate(
                         R.id.permissionTheoryFragment
@@ -144,23 +143,12 @@ class PermissionTheoryFragment : Fragment() {
             }
         }
         builder.setNegativeButton(R.string.server_dialog_no) { dialog, _ ->
-            progressBarOn(false)
             dialog.dismiss()
         }
 
         builder.show()
     }
 
-    /**
-     * Function set the visibility of "connecting to server" progress bar
-     */
-    private fun progressBarOn(visible: Boolean) {
-        var visibility = View.GONE
-        if (visible) visibility = View.VISIBLE
-        binding.theoryPB.visibility = visibility
-        binding.theoryProgressBarTV.visibility = visibility
-        binding.exampleBTN.isEnabled = !visible
-    }
 
     /**
      * Function that takes the photo from camera and if the server is available, send it to the server a go to online example.

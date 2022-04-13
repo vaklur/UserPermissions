@@ -6,6 +6,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,15 +42,27 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     private var _successServerCommunication = MutableLiveData<String>()
     val successServerCommunication: LiveData<String> = _successServerCommunication
 
+    //Live data - progress bar
+    private var _exampleButtonEnable = MutableLiveData<Boolean>()
+    val exampleButtonEnable: LiveData<Boolean> = _exampleButtonEnable
+
+    private var _progressBarVisibility = MutableLiveData<Int>()
+    var progressBarVisibility: LiveData<Int> = _progressBarVisibility
+
+    private var _progressBarTextViewVisibility = MutableLiveData<Int>()
+    var progressBarTextViewVisibility: LiveData<Int> = _progressBarTextViewVisibility
+
     // VolleyStringResponse for managing communication states
     private val volleyAddDataToServerResponse = object : CommunicationService.VolleyStringResponse {
         override fun onSuccess() {
             dataIsSent = true
             _successServerCommunication.value = ok
+            progressBarOn(false)
         }
 
         override fun onError() {
             _successServerCommunication.value = error
+            progressBarOn(false)
         }
     }
 
@@ -111,9 +124,21 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     /**
+     * Function set the visibility of "connecting to server" progress bar
+     */
+    private fun progressBarOn(visible: Boolean) {
+        var visibility = View.GONE
+        if (visible) visibility = View.VISIBLE
+        _progressBarVisibility.value = visibility
+        _progressBarTextViewVisibility.value  = visibility
+        _exampleButtonEnable.value = !visible
+    }
+
+    /**
      * Initialize variables in permission theory fragment based on permission ID.
      */
     fun initPermissionTexts(context: Context): PermissionVMInit {
+        progressBarOn(false)
         when (permissionId) {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
@@ -168,6 +193,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Start the send data flow to server  for permission data.
      */
     fun sendDataToServer(activity: Activity, context: Context) {
+        progressBarOn(true)
         _successServerCommunication.value = waiting
         communicationService.testConnectionToServer(SettingsSharedPreferences(context).getIpSettings(),
             object : CommunicationService.VolleyStringResponse {
@@ -176,11 +202,13 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
                         createUserInServer(activity, context)
                     } else {
                         _successServerCommunication.value = ok
+                        progressBarOn(false)
                     }
                 }
 
                 override fun onError() {
                     _successServerCommunication.value = error
+                    progressBarOn(false)
                 }
             })
     }
@@ -201,6 +229,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
 
                     override fun onError() {
                         _successServerCommunication.value = error
+                        progressBarOn(false)
                     }
                 })
         }
@@ -220,6 +249,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
 
                 override fun onError() {
                     _successServerCommunication.value = error
+                    progressBarOn(false)
                 }
             })
     }
