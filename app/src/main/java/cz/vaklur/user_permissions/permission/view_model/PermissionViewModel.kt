@@ -130,7 +130,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         var visibility = View.GONE
         if (visible) visibility = View.VISIBLE
         _progressBarVisibility.value = visibility
-        _progressBarTextViewVisibility.value  = visibility
+        _progressBarTextViewVisibility.value = visibility
         _exampleButtonEnable.value = !visible
     }
 

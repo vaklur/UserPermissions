@@ -13,15 +13,13 @@
     android:layout_height="match_parent"
     tools:context="cz.vaklur.user_permissions.permission.PermissionTheoryFragment"
 >
-
-
-
     <Button
         android:id="@+id/example_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/example_button"
+        android:enabled="@{permissionViewModel.exampleButtonEnable}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -50,7 +48,7 @@
         android:minWidth="200dp"
         android:text="@string/progress_bar_text"
         android:textAlignment="center"
-        android:visibility="gone"
+        android:visibility="@{permissionViewModel.progressBarTextViewVisibility}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +56,7 @@
 
     <ProgressBar
         android:id="@+id/theory_PB"
-        android:visibility="gone"
+        android:visibility="@{permissionViewModel.progressBarVisibility}"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="true"

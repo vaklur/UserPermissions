@@ -132,10 +132,9 @@ class PermissionTheoryFragment : Fragment() {
         builder.setPositiveButton(R.string.server_dialog_yes) { dialog, _ ->
             dialog.dismiss()
             findNavController().navigate(R.id.settingsFragment)
-
         }
         builder.setNeutralButton(R.string.server_dialog_neutral) { dialog, _ ->
-            dialog.dismiss()
+            dialog.cancel()
             if (permissionVM.getPermissionID() == 8) {
                 takePhoto(false)
             } else {

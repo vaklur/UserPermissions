@@ -127,6 +127,7 @@ class MainActivity : BaseActivity() {
                 R.id.settingsFragment -> {
                     if (permissionVM.getDataIsSend()) {
                         permissionVM.saveDataIsSend(false)
+                        permissionVM.deleteUserTableInServer()
                         navigationController.navigate(R.id.permissionTheoryFragment)
                     } else {
                         super.onBackPressed()

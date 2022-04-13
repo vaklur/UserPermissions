@@ -70,7 +70,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:gravity="fill"
-            android:text="@string/actual_IP_setting"
+            android:text="@{settingsViewModel.actualIpAddress}"
             app:layout_constraintEnd_toStartOf="@+id/state_TV"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
