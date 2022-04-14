@@ -139,6 +139,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      */
     fun initPermissionTexts(context: Context): PermissionVMInit {
         progressBarOn(false)
+        userCreatedInServer = sharedPreferences.getUserCreatedState()
         when (permissionId) {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
@@ -321,15 +322,17 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Delete user account and all users data in server.
      */
     fun deleteUserInServer() {
-        if (!userCreatedInServer) {
+        if (userCreatedInServer) {
             communicationService.deleteUserInServer(object :
                 CommunicationService.VolleyStringResponse {
                 override fun onSuccess() {
                     userCreatedInServer = false
+                    Log.d("test", "User deleted in server")
                 }
 
                 override fun onError() {
                     userCreatedInServer = true
+                    Log.d("test", "User not deleted in server")
                 }
 
             })

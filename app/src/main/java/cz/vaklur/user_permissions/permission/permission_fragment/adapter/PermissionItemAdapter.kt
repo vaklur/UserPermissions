@@ -38,6 +38,7 @@ class PermissionItemAdapter(
 
     /**
      * Replace the contents of a view.
+     * <p>
      * When user click in permission type button, the permission type fragment starts.
      */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

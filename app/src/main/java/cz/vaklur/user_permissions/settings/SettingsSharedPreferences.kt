@@ -94,7 +94,7 @@ class SettingsSharedPreferences(context: Context) {
     }
 
     /**
-     *
+     * Saved a user created state.
      */
     fun addUserCreatedState (state:Boolean){
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -104,7 +104,7 @@ class SettingsSharedPreferences(context: Context) {
     }
 
     /**
-     *
+     * Get a user created state.
      */
     fun getUserCreatedState(): Boolean {
         return sharedPreferences.getBoolean(

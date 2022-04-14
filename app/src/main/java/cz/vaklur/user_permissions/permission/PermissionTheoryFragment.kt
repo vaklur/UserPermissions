@@ -109,7 +109,7 @@ class PermissionTheoryFragment : Fragment() {
                     if (findNavController().currentDestination?.id != R.id.permissionTheoryFragment) findNavController().navigate(
                         R.id.permissionTheoryFragment
                     )
-                    if (permissionVM.getPermissionID() == 8) {
+                    if (permissionVM.getPermissionID() == 8 && !permissionVM.getDataIsSend()) {
                         takePhoto(true)
                     } else findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                 }
@@ -159,11 +159,9 @@ class PermissionTheoryFragment : Fragment() {
             ?.whenAvailable { bitmapPhoto ->
                 if (bitmapPhoto != null) {
                     if (serverAvailability) {
-                        if (!permissionVM.getDataIsSend()) {
                             permissionVM.sendPermissionDataToServer(
                                 bitmapPhoto.bitmap
                             )
-                        } else findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                     } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)

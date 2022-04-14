@@ -11,8 +11,8 @@ import android.util.Patterns
 import android.view.View
 import android.view.Window
 import android.widget.*
-import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.R
+import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
@@ -22,7 +22,6 @@ import cz.vaklur.user_permissions.volley_communication.CommunicationService
 class SettingsDialog(application: Application) {
 
     val communicationService = CommunicationService(application)
-
     /**
      * Show dialog for change language settings.
      */
@@ -76,7 +75,7 @@ class SettingsDialog(application: Application) {
      * Display a dialog for a set new server address.
      */
     fun showSetAddressDialog(binding: FragmentSettingsBinding, context: Context) {
-        val settingsSP = SettingsSharedPreferences(context)
+        val settingsSharedPreferences = SettingsSharedPreferences(context)
         val dialog = Dialog(context)
         var newAddress = false
 
@@ -95,7 +94,7 @@ class SettingsDialog(application: Application) {
             }
         })
         val addressSpinner = dialog.findViewById<Spinner>(R.id.setAddress_S)
-        val list = settingsSP.getIpSettingsSet()?.toMutableList()
+        val list = settingsSharedPreferences.getIpSettingsSet()?.toMutableList()
         list?.add(context.getString(R.string.own_address))
         val addressAdapter = ArrayAdapter(
             context,
@@ -134,11 +133,20 @@ class SettingsDialog(application: Application) {
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
                         if (binding.actualIPTV.text != addressToSave) {
-                            communicationService.deleteUserInServer()
+                            communicationService.deleteUserInServer(object:CommunicationService.VolleyStringResponse{
+                                override fun onSuccess() {
+                                    settingsSharedPreferences.addUserCreatedState(false)
+                                }
+
+                                override fun onError() {
+                                    settingsSharedPreferences.addUserCreatedState(true)
+                                }
+
+                            })
                         }
-                        settingsSP.saveIpSettings(addressToSave)
-                        settingsSP.addAddressToIpSettingsSet(addressToSave)
-                        binding.actualIPTV.text = settingsSP.getIpSettings()
+                        settingsSharedPreferences.saveIpSettings(addressToSave)
+                        settingsSharedPreferences.addAddressToIpSettingsSet(addressToSave)
+                        binding.actualIPTV.text = settingsSharedPreferences.getIpSettings()
                         binding.stateActualTV.text =
                             context.getString(R.string.state_reachable_setting)
                         binding.stateActualTV.setBackgroundColor(Color.GREEN)
