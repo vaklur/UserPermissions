@@ -46,7 +46,6 @@ class MainActivity : BaseActivity() {
             permissionVM.deleteUserInServer()
             appAlertDialog(binding.root)
         }
-
     }
 
     /**
@@ -110,7 +109,7 @@ class MainActivity : BaseActivity() {
             val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
             when (navigationController.currentDestination?.id) {
                 R.id.permissionExampleFragment -> {
-                    permissionVM.saveDataIsSend(true)
+                    //permissionVM.saveDataIsSend(true)
                     navigationController.navigate(R.id.permissionTheoryFragment)
                 }
                 R.id.permissionOfflineExampleFragment -> {

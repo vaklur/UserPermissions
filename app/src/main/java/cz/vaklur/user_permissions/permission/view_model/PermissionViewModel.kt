@@ -92,10 +92,10 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     init {
         permissionId = 0
         dataIsSent = false
-        userCreatedInServer = false
         communicationService = CommunicationService(application)
         permissionFunction = PermissionFunction()
         sharedPreferences = SettingsSharedPreferences(application.applicationContext)
+        userCreatedInServer = sharedPreferences.getUserCreatedState()
     }
 
     // Getter and Setters
@@ -321,8 +321,20 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Delete user account and all users data in server.
      */
     fun deleteUserInServer() {
-        communicationService.deleteUserInServer()
-        userCreatedInServer = false
+        if (!userCreatedInServer) {
+            communicationService.deleteUserInServer(object :
+                CommunicationService.VolleyStringResponse {
+                override fun onSuccess() {
+                    userCreatedInServer = false
+                }
+
+                override fun onError() {
+                    userCreatedInServer = true
+                }
+
+            })
+        }
+
     }
 
     /**
@@ -336,6 +348,11 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         )
         dataIsSent = false
         photo = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        sharedPreferences.addUserCreatedState(userCreatedInServer)
     }
 }
 

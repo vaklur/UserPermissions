@@ -543,22 +543,23 @@ class CommunicationService(application: Application) {
      * Delete user in SQL database on server.
      *
      */
-    fun deleteUserInServer() {
+    fun deleteUserInServer(volleyResponse: VolleyStringResponse) {
         Log.d("test", "delete User")
 
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_DELETE_USER),
-            Response.Listener { response ->
+            Response.Listener {
                 try {
-                    Log.d("test", response)
-                    //activity.finish()
+                    volleyResponse.onSuccess()
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             },
 
-            Response.ErrorListener { }) {
+            Response.ErrorListener {
+                volleyResponse.onError()
+            }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()

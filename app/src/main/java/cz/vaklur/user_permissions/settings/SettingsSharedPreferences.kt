@@ -92,4 +92,24 @@ class SettingsSharedPreferences(context: Context) {
         editor.putStringSet(Constants.SHARED_PREFERENCES_IP_ADDRESS_LIST, ipAddressSet)
         editor.apply()
     }
+
+    /**
+     *
+     */
+    fun addUserCreatedState (state:Boolean){
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+        editor.putBoolean(Constants.SHARED_PREFERENCES_USER_CREATED, state)
+        editor.apply()
+    }
+
+    /**
+     *
+     */
+    fun getUserCreatedState(): Boolean {
+        return sharedPreferences.getBoolean(
+            Constants.SHARED_PREFERENCES_USER_CREATED,
+            Constants.DEFAULT_USER_CREATED
+        )
+    }
 }
