@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
+import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.databinding.FragmentPermissionTheoryBinding
 import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 import io.fotoapparat.Fotoapparat
@@ -104,7 +105,7 @@ class PermissionTheoryFragment : Fragment() {
         // Control the result of send data cycle
         permissionVM.successServerCommunication.observe(viewLifecycleOwner) {
             when (it) {
-                "ok" -> {
+                Constants.STATE_OK -> {
                     // Control current destination
                     if (findNavController().currentDestination?.id != R.id.permissionTheoryFragment) findNavController().navigate(
                         R.id.permissionTheoryFragment
@@ -113,7 +114,7 @@ class PermissionTheoryFragment : Fragment() {
                         takePhoto(true)
                     } else findNavController().navigate(R.id.action_permissionTheoryFragment_to_permissionExampleFragment)
                 }
-                "error" -> {
+                Constants.STATE_ERROR -> {
                     serverOfflineDialog(binding.root)
                 }
             }

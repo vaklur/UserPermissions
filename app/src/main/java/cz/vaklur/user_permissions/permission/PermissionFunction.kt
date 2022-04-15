@@ -13,7 +13,6 @@ import cz.vaklur.user_permissions.R
  * Functions for a check that a dangerous permission is granted.
  */
 class PermissionFunction {
-
     /**
      * Display a settings dialog when an permission is absolute denied.
      *

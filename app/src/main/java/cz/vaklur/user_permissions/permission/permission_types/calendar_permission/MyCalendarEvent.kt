@@ -8,4 +8,9 @@ package cz.vaklur.user_permissions.permission.permission_types.calendar_permissi
  * @param endDate End date of calendar event.
  * @param description Description of calendar event.
  */
-data class MyCalendarEvent(val title:String,val startDate:String,val endDate:String,val description:String)
+data class MyCalendarEvent(
+    val title: String,
+    val startDate: String,
+    val endDate: String,
+    val description: String
+)

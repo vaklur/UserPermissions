@@ -2,7 +2,6 @@ package cz.vaklur.user_permissions.permission.permission_types.storage_permissio
 
 import android.net.Uri
 
-
 /**
  * Class represent Image from external storage with its parameters.
  *
@@ -11,4 +10,4 @@ import android.net.Uri
  * @param date Date and time when the Image was taken.
  * @param uri URI of the image.
  */
-data class MyStorage(val id:String,val name:String, val date:String, val uri: Uri)
+data class MyStorage(val id: String, val name: String, val date: String, val uri: Uri)

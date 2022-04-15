@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.vaklur.user_permissions.R
 
 class MyPhoneStateAdapter(
-        private val phoneState:MyPhoneState
-):RecyclerView.Adapter<MyPhoneStateAdapter.ItemViewHolder>(){
+    private val phoneState: MyPhoneState
+) : RecyclerView.Adapter<MyPhoneStateAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val numberTV: TextView = view.findViewById(R.id.phone_state_number_TV)
@@ -18,10 +18,10 @@ class MyPhoneStateAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.list_phone_state_item, parent, false)
+        val adapterLayout = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_phone_state_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
-
 
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

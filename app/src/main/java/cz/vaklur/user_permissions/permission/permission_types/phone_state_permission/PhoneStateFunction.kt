@@ -16,18 +16,24 @@ class PhoneStateFunction {
      * @return MyPhoneState variable with information from SIm card.
      */
     @SuppressLint("MissingPermission")
-    fun getDataFromSIM(context: Context):MyPhoneState{
-        val subManager = context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
+    fun getDataFromSIM(context: Context): MyPhoneState {
+        val subManager =
+            context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
         val telManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         var phoneNumber = ""
-       subManager.activeSubscriptionInfoList?.forEach {
+        subManager.activeSubscriptionInfoList?.forEach {
             val number: String? = it.number
             if (!number.isNullOrBlank()) phoneNumber += "$number,"
         }
+        phoneNumber = phoneNumber.dropLast(1)
         val dataNetworkType = telManager.dataNetworkType
         val operator = telManager.networkOperator
 
-        return MyPhoneState(phoneNumber,networkTypeToString(dataNetworkType),getOperatorName(operator))
+        return MyPhoneState(
+            phoneNumber,
+            networkTypeToString(dataNetworkType),
+            getOperatorName(operator)
+        )
     }
 
     /**
@@ -37,8 +43,8 @@ class PhoneStateFunction {
      *
      * @return String operator name.
      */
-    private fun getOperatorName (operator:String):String{
-        return when (operator){
+    private fun getOperatorName(operator: String): String {
+        return when (operator) {
             // Czech
             "23003" -> "$operator(Vodafone)"
             "23002" -> "$operator(O2)"
@@ -73,8 +79,8 @@ class PhoneStateFunction {
      *
      * @return Network type in text.
      */
-    private fun networkTypeToString (intNetworkType:Int):String{
-        return when(intNetworkType){
+    private fun networkTypeToString(intNetworkType: Int): String {
+        return when (intNetworkType) {
             0 -> "unknown"
             1 -> "GPRS"
             2 -> "EDGE"

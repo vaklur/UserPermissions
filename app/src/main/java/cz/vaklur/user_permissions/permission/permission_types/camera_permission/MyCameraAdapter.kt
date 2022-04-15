@@ -8,16 +8,17 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import cz.vaklur.user_permissions.R
 
-class MyCameraAdapter (
-        private val photo:Bitmap
-        ):RecyclerView.Adapter<MyCameraAdapter.ItemViewHolder>(){
+class MyCameraAdapter(
+    private val photo: Bitmap
+) : RecyclerView.Adapter<MyCameraAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val photoIV: ImageView= view.findViewById(R.id.camera_image_IV)
+        val photoIV: ImageView = view.findViewById(R.id.camera_image_IV)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.list_camera_item, parent, false)
+        val adapterLayout =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_camera_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 

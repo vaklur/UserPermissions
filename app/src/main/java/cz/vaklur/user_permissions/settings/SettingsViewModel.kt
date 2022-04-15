@@ -15,8 +15,12 @@ import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.volley_communication.CommunicationService
 
+/**
+ * View model for settings fragment
+ */
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
+    // Live data for widgets data binding
     private var _serverState = MutableLiveData<String>()
     val serverState: LiveData<String> = _serverState
 
@@ -38,13 +42,14 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private var _progressBarTextViewVisibility = MutableLiveData<Int>()
     var progressBarTextViewVisibility: LiveData<Int> = _progressBarTextViewVisibility
 
-
+    // Variables for functions
     private var settingsSharedPreferences =
         SettingsSharedPreferences(application.applicationContext)
     private var communicationService = CommunicationService(application)
 
-    lateinit var actualLanguage:String
-    var actualIpAddress:String
+    // Variables for actual settings
+    lateinit var actualLanguage: String
+    var actualIpAddress: String
 
     init {
         _serverState.value =
@@ -59,6 +64,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         actualIpAddress = settingsSharedPreferences.getIpSettings()
     }
 
+    /**
+     * Get server state
+     */
     fun getServerState(activity: Activity, context: Context) {
         (activity as MainActivity).allowBackPressed = false
         _serverState.value = context.getString(R.string.state_connecting_setting)

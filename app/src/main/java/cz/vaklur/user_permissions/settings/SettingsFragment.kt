@@ -37,7 +37,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val dialogs = SettingsDialog(requireActivity().application)
         // Test connection to server
-        settingsViewModel.getServerState(requireActivity(),requireContext())
+        settingsViewModel.getServerState(requireActivity(), requireContext())
         // Initialize onClickListeners for buttons
         binding.changeIPBTN.setOnClickListener {
             dialogs.showSetAddressDialog(binding, requireContext())
@@ -46,7 +46,7 @@ class SettingsFragment : Fragment() {
             dialogs.showSetLanguageDialog(requireActivity(), requireContext())
         }
         binding.refreshIPBTN.setOnClickListener {
-            settingsViewModel.getServerState(requireActivity(),requireContext())
+            settingsViewModel.getServerState(requireActivity(), requireContext())
         }
     }
 

@@ -17,34 +17,32 @@ class ContactFunction {
      * @return List of contacts.
      */
     @SuppressLint("SimpleDateFormat")
-    fun readContacts(contentResolver: ContentResolver, contactsCount: Int):MutableList<MyContact> {
+    fun readContacts(contentResolver: ContentResolver, contactsCount: Int): MutableList<MyContact> {
         val contactsList: MutableList<MyContact> = ArrayList()
         val nameCol = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
         val numberCol = ContactsContract.CommonDataKinds.Phone.NUMBER
 
         val projection = arrayOf(nameCol, numberCol)
-        Log.d("test","Read contacts")
         val cursor =
-                contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        projection, null, null, null
-                )
+            contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                projection, null, null, null
+            )
 
         val nameColIdx = cursor!!.getColumnIndex(nameCol)
         val numberColIdx = cursor.getColumnIndex(numberCol)
 
-        val contactsCountHelp: Int = if (contactsCount < cursor.count){
+        val contactsCountHelp: Int = if (contactsCount < cursor.count) {
             contactsCount
-        }
-        else{
+        } else {
             cursor.count
         }
 
-        for (i in contactsCountHelp downTo 1 step 1){
+        for (i in contactsCountHelp downTo 1 step 1) {
             cursor.moveToNext()
             val number = cursor.getString(numberColIdx)
             val name = cursor.getString(nameColIdx)
-            contactsList.add(MyContact(name,number))
+            contactsList.add(MyContact(name, number))
         }
         cursor.close()
         return contactsList

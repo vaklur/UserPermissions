@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Base64
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -402,9 +401,8 @@ class CommunicationService(application: Application) {
 
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_CREATE_PERMISSION_TABLE),
-            Response.Listener { response ->
+            Response.Listener {
                 try {
-                    Log.d("test", response)
                     volleyResponse.onSuccess()
 
                 } catch (e: JSONException) {
@@ -414,7 +412,6 @@ class CommunicationService(application: Application) {
 
             Response.ErrorListener {
                 volleyResponse.onError()
-                Log.d("problem", "no send")
             }) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
@@ -435,14 +432,11 @@ class CommunicationService(application: Application) {
      * @param imageName Name of the image.
      */
     fun uploadImage(bitmap: Bitmap, imageName: String, volleyStringResponse: VolleyStringResponse) {
-        Log.d("test", "Upload Image")
-
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_UPLOAD_IMAGE),
-            Response.Listener { response ->
+            Response.Listener {
                 try {
                     volleyStringResponse.onSuccess()
-                    Log.d("test", response)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -481,19 +475,17 @@ class CommunicationService(application: Application) {
      *
      */
     fun createUserInServer(volleyResponse: VolleyStringResponse) {
-
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_ADD_USER),
-            Response.Listener { response ->
+            Response.Listener {
                 try {
-                    Log.d("test", response)
                     volleyResponse.onSuccess()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             },
 
-            Response.ErrorListener { Log.d("problem", "no send") }) {
+            Response.ErrorListener {}) {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -513,13 +505,10 @@ class CommunicationService(application: Application) {
 
      */
     fun deleteUserTableInServer(table: String) {
-        Log.d("test", "delete User table")
-
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_DELETE_USER_TABLE),
-            Response.Listener { response ->
+            Response.Listener {
                 try {
-                    Log.d("test", response)
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -544,8 +533,6 @@ class CommunicationService(application: Application) {
      *
      */
     fun deleteUserInServer(volleyResponse: VolleyStringResponse) {
-        Log.d("test", "delete User")
-
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_DELETE_USER),
             Response.Listener {
@@ -578,21 +565,17 @@ class CommunicationService(application: Application) {
      * @param volleyResponse Response of Volley communication.
      */
     fun testConnectionToServer(testAddress: String, volleyResponse: VolleyStringResponse) {
-        Log.d("test", "$testAddress/?op=serverstate")
         val stringRequest = object : StringRequest(
             Method.GET, "$testAddress/?op=serverstate",
             Response.Listener {
                 try {
                     volleyResponse.onSuccess()
-                    Log.d("test", "onSuccess")
 
                 } catch (e: JSONException) {
-                    Log.d("test", "on JSON exception")
                 }
             },
             Response.ErrorListener {
                 volleyResponse.onError()
-                Log.d("test", "onError")
             }) {
         }
         VolleySingleton.instance?.addToRequestQueue(stringRequest)

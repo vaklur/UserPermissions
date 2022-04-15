@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.provider.MediaStore
-import android.util.Log
+import cz.vaklur.user_permissions.constants.Constants
 import java.text.SimpleDateFormat
 
 /**
@@ -18,7 +18,7 @@ class StorageFunction {
      * @param photosCount The int number of photos to be read.
      * @return List of photos.
      */
-    //@RequiresApi(Build.VERSION_CODES.Q)
+
     @SuppressLint("SimpleDateFormat")
     fun getPhotosFromGallery(
         contentResolver: ContentResolver,
@@ -29,7 +29,6 @@ class StorageFunction {
         val idCol = MediaStore.Images.Media._ID
         val nameCol = MediaStore.Images.Media.DISPLAY_NAME
         val dateCol = MediaStore.Images.Media.DATE_TAKEN
-
 
         val projection = arrayOf(idCol, nameCol, dateCol)
 
@@ -53,8 +52,7 @@ class StorageFunction {
             val id = cursor.getString(idColIdx)
             val name = cursor.getString(nameColIdx)
             val dateMSC = cursor.getLong(dateColIdx)
-            Log.d("test", name)
-            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+            val simpleDateFormat = SimpleDateFormat(Constants.MY_DATE_FORMAT)
             val date = simpleDateFormat.format(dateMSC)
             photoNameList.add(
                 MyStorage(

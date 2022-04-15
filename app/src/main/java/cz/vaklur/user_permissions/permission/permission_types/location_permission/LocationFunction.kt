@@ -24,17 +24,24 @@ class LocationFunction {
      * @param context Application context.
      */
     @SuppressLint("MissingPermission")
-    fun getLastLocation (activity: Activity, context: Context,volleyStringResponse: CommunicationService.VolleyStringResponse){
+    fun getLastLocation(
+        activity: Activity,
+        context: Context,
+        volleyStringResponse: CommunicationService.VolleyStringResponse
+    ) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         fusedLocationClient.lastLocation
-            .addOnSuccessListener { location->
+            .addOnSuccessListener { location ->
                 if (location != null) {
                     val latitude = location.latitude.toString()
                     val longitude = location.longitude.toString()
                     val accuracy = location.accuracy.toString()
-                    val altitude =  location.altitude.toString()
-                    val lastKnownLocation = MyLocation(latitude,longitude,accuracy,altitude)
-                    CommunicationService(activity.application).addLocationToServer(lastKnownLocation,volleyStringResponse)
+                    val altitude = location.altitude.toString()
+                    val lastKnownLocation = MyLocation(latitude, longitude, accuracy, altitude)
+                    CommunicationService(activity.application).addLocationToServer(
+                        lastKnownLocation,
+                        volleyStringResponse
+                    )
                 }
             }
     }
@@ -46,24 +53,23 @@ class LocationFunction {
      * @param view View for display location in offline example.
      */
     @SuppressLint("MissingPermission")
-    fun getLastLocation (context: Context,view: View){
+    fun getLastLocation(context: Context, view: View) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         fusedLocationClient.lastLocation
-                .addOnSuccessListener { location->
-                    val recyclerView =  view.findViewById<RecyclerView>(R.id.example_off_RV)
-                    if (location != null) {
-                        val latitude = location.latitude.toString()
-                        val longitude = location.longitude.toString()
-                        val accuracy = location.accuracy.toString()
-                        val altitude =  location.altitude.toString()
-                        val lastKnownLocation = MyLocation(latitude,longitude,accuracy,altitude)
-                        val locationAdapter = MyLocationAdapter(lastKnownLocation)
-                        recyclerView.adapter = locationAdapter
-                    }
-                    else{
-                        val locationAdapter = NoItemAdapter()
-                        recyclerView.adapter = locationAdapter
-                    }
+            .addOnSuccessListener { location ->
+                val recyclerView = view.findViewById<RecyclerView>(R.id.example_off_RV)
+                if (location != null) {
+                    val latitude = location.latitude.toString()
+                    val longitude = location.longitude.toString()
+                    val accuracy = location.accuracy.toString()
+                    val altitude = location.altitude.toString()
+                    val lastKnownLocation = MyLocation(latitude, longitude, accuracy, altitude)
+                    val locationAdapter = MyLocationAdapter(lastKnownLocation)
+                    recyclerView.adapter = locationAdapter
+                } else {
+                    val locationAdapter = NoItemAdapter()
+                    recyclerView.adapter = locationAdapter
                 }
+            }
     }
 }

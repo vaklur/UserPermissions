@@ -8,4 +8,9 @@ package cz.vaklur.user_permissions.permission.permission_types.call_log_permissi
  * @param duration Duration of call.
  * @param type Type of call.
  */
-data class MyCallLog(val phoneNumber:String,val date:String, val duration:String,val type:String)
+data class MyCallLog(
+    val phoneNumber: String,
+    val date: String,
+    val duration: String,
+    val type: String
+)

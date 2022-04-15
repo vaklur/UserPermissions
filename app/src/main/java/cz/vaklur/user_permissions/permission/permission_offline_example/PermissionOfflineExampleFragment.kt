@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.databinding.FragmentPermissionOfflineExampleBinding
-import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.CalendarFunction
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.MyCalendarAdapter
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.CallLogFunction
@@ -27,6 +26,7 @@ import cz.vaklur.user_permissions.permission.permission_types.sms_permission.MyS
 import cz.vaklur.user_permissions.permission.permission_types.sms_permission.SmsFunction
 import cz.vaklur.user_permissions.permission.permission_types.storage_permission.MyStorageAdapter
 import cz.vaklur.user_permissions.permission.permission_types.storage_permission.StorageFunction
+import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 
 /**
  * Fragment for display a offline practical example of selected permission abuse.
@@ -62,16 +62,15 @@ class PermissionOfflineExampleFragment : Fragment() {
     }
 
     /**
-     *
+     * Load permission data and give it to permission adapters
      */
     private fun loadPermissionDataToRecyclerView(permissionId: Int) {
         val recyclerView = binding.exampleOffRV
         when (permissionId) {
             1 -> {
                 setOfflineExampleTitle(resources.getString(R.string.sms))
-                val sms = SmsFunction()
                 val smsMessages =
-                    sms.readSms(10, requireActivity().contentResolver, requireContext())
+                    SmsFunction().readSms(10, requireActivity().contentResolver, requireContext())
                 if (smsMessages.size != 0) {
                     recyclerView.adapter = MySmsAdapter(requireContext(), smsMessages)
                 } else recyclerView.adapter = NoItemAdapter()
@@ -136,7 +135,7 @@ class PermissionOfflineExampleFragment : Fragment() {
     }
 
     /**
-     *
+     * Set the title of offline example fragment
      */
     private fun setOfflineExampleTitle(title: String) {
         binding.exampleOffTV.text = String.format(

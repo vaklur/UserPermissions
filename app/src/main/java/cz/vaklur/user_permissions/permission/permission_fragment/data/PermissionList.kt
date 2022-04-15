@@ -1,6 +1,5 @@
 package cz.vaklur.user_permissions.permission.permission_fragment.data
 
-
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.permission.permission_fragment.model.PermissionModel
 

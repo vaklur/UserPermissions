@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.vaklur.user_permissions.R
 
 class MyCallLogAdapter(
-        private val context:Context,
-        private val callLogList:List<MyCallLog>
-): RecyclerView.Adapter<MyCallLogAdapter.ItemViewHolder>() {
+    private val context: Context,
+    private val callLogList: List<MyCallLog>
+) : RecyclerView.Adapter<MyCallLogAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val titleTV: TextView = view.findViewById(R.id.call_log_title_TV)
@@ -22,13 +22,14 @@ class MyCallLogAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.list_call_log_item, parent, false)
+        val adapterLayout =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_call_log_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = callLogList[position]
-        val callLogTitle = context.getString(R.string.call_log_title)+" "+position.toString()
+        val callLogTitle = context.getString(R.string.call_log_title) + " " + position.toString()
         holder.titleTV.text = callLogTitle
         holder.dateTV.text = item.date
         holder.numberTV.text = item.phoneNumber

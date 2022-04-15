@@ -22,6 +22,7 @@ import cz.vaklur.user_permissions.volley_communication.CommunicationService
 class SettingsDialog(application: Application) {
 
     val communicationService = CommunicationService(application)
+
     /**
      * Show dialog for change language settings.
      */
@@ -133,7 +134,8 @@ class SettingsDialog(application: Application) {
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
                         if (binding.actualIPTV.text != addressToSave) {
-                            communicationService.deleteUserInServer(object:CommunicationService.VolleyStringResponse{
+                            communicationService.deleteUserInServer(object :
+                                CommunicationService.VolleyStringResponse {
                                 override fun onSuccess() {
                                     settingsSharedPreferences.addUserCreatedState(false)
                                 }

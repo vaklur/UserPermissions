@@ -8,4 +8,9 @@ package cz.vaklur.user_permissions.permission.permission_types.location_permissi
  * @param accuracy Last known accuracy.
  * @param altitude Last known altitude.
  */
-data class MyLocation(val latitude:String, val longitude:String, val accuracy:String,val altitude:String)
+data class MyLocation(
+    val latitude: String,
+    val longitude: String,
+    val accuracy: String,
+    val altitude: String
+)

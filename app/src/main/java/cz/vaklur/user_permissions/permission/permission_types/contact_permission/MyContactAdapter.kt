@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import cz.vaklur.user_permissions.R
 
-class MyContactAdapter (
-        private val context:Context,
-        private val contactList: List<MyContact>
+class MyContactAdapter(
+    private val context: Context,
+    private val contactList: List<MyContact>
 ) : RecyclerView.Adapter<MyContactAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -20,13 +20,14 @@ class MyContactAdapter (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.list_contact_item, parent, false)
+        val adapterLayout =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_contact_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = contactList[position]
-        val contactTitle = context.getString(R.string.contact_title)+" "+position.toString()
+        val contactTitle = context.getString(R.string.contact_title) + " " + position.toString()
         holder.titleTV.text = contactTitle
         holder.nameTV.text = item.name
         holder.numberTV.text = item.phoneNumber

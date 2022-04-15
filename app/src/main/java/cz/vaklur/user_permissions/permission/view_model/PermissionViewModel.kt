@@ -5,12 +5,12 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import cz.vaklur.user_permissions.R
+import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.permission.PermissionFunction
 import cz.vaklur.user_permissions.permission.permission_types.calendar_permission.CalendarFunction
 import cz.vaklur.user_permissions.permission.permission_types.call_log_permission.CallLogFunction
@@ -27,16 +27,13 @@ import cz.vaklur.user_permissions.volley_communication.CommunicationService
  */
 class PermissionViewModel(application: Application) : AndroidViewModel(application) {
 
+    // Sms theory initialize strings
     data class PermissionVMInit(
         var serverAddress: String,
         val theoryText: String,
         val permissionType: String,
         val permissionText: String
     )
-
-    private lateinit var theoryText: String
-    private lateinit var permissionType: String
-    private lateinit var permissionText: String
 
     // Live data - server communication
     private var _successServerCommunication = MutableLiveData<String>()
@@ -66,9 +63,10 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    private val ok = "ok"
-    private val waiting = "waiting"
-    private val error = "error"
+    // States of server communication
+    private val ok = Constants.STATE_OK
+    private val waiting = Constants.STATE_WAITING
+    private val error = Constants.STATE_ERROR
 
     // ID of permission
     private var permissionId: Int
@@ -82,6 +80,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     // User created in server
     private var userCreatedInServer: Boolean
 
+    // Variables for functions
     private val communicationService: CommunicationService
     private val permissionFunction: PermissionFunction
     private val sharedPreferences: SettingsSharedPreferences
@@ -139,6 +138,9 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      */
     fun initPermissionTexts(context: Context): PermissionVMInit {
         progressBarOn(false)
+        var theoryText = ""
+        var permissionType = ""
+        var permissionText = ""
         userCreatedInServer = sharedPreferences.getUserCreatedState()
         when (permissionId) {
             1 -> {
@@ -312,7 +314,6 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Send permission data to server - only for camera permission.
      */
     fun sendPermissionDataToServer(cameraPhoto: Bitmap) {
-        Log.d("test", "sendPermissionDataToServer")
         communicationService.addCameraPhotoToServer(cameraPhoto, volleyAddDataToServerResponse)
         _successServerCommunication.value = ok
         dataIsSent = true
@@ -327,12 +328,10 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
                 CommunicationService.VolleyStringResponse {
                 override fun onSuccess() {
                     userCreatedInServer = false
-                    Log.d("test", "User deleted in server")
                 }
 
                 override fun onError() {
                     userCreatedInServer = true
-                    Log.d("test", "User not deleted in server")
                 }
 
             })

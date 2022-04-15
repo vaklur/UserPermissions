@@ -7,4 +7,4 @@ package cz.vaklur.user_permissions.permission.permission_types.phone_state_permi
  * @param dataNetworkState Actual mobile network state.
  * @param operator Actual mobile operator.
  */
-data class MyPhoneState(val phoneNumber:String,val dataNetworkState:String,val operator:String)
+data class MyPhoneState(val phoneNumber: String, val dataNetworkState: String, val operator: String)
