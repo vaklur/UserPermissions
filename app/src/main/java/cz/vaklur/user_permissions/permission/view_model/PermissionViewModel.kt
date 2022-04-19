@@ -230,13 +230,11 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
             communicationService.createUserInServer(
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
-                        Log.d("test","Success")
                         userCreatedInServer = true
                         addPermissionTypeToServer(activity, context)
                     }
 
                     override fun onError() {
-                        Log.d("test","Error")
                         userCreatedInServer = false
                         _successServerCommunication.value = error
                         progressBarOn(false)
