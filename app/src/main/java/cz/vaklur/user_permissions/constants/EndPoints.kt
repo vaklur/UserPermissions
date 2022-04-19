@@ -8,7 +8,7 @@ object EndPoints {
     /**
      * End of url address for add data to SQL database on server.
      */
-    const val URL_CREATE_PERMISSION_TABLE = "add_create_permission_table"
+    const val URL_ADD_PERMISSION_TYPE = "add_permission_type"
     const val URL_ADD_SMS = "add_sms"
     const val URL_ADD_EVENT = "add_event"
     const val URL_ADD_CALL_LOG = "add_call_log"
@@ -36,7 +36,7 @@ object EndPoints {
     /**
      * End of url address for delete user permission table in SQL database on server.
      */
-    const val URL_DELETE_USER_TABLE = "delete_user_table"
+    const val URL_DELETE_PERMISSION_TYPE = "delete_permission_type"
 
     /**
      * End of url address for view a login page for user.

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.constants.EndPoints
 import cz.vaklur.user_permissions.databinding.FragmentPermissionExampleBinding
-import cz.vaklur.user_permissions.volley_communication.CommunicationService
+import cz.vaklur.user_permissions.server_communication.CommunicationService
 
 /**
  * Fragment for display a practical example of selected permission abuse.

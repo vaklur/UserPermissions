@@ -3,7 +3,6 @@ package cz.vaklur.user_permissions
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import cz.vaklur.user_permissions.settings.LocaleUtil
 import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 
 /**

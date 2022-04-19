@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.settings
+package cz.vaklur.user_permissions
 
 import android.content.Context
 import android.content.res.Configuration

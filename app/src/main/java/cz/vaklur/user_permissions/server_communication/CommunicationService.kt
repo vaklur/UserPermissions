@@ -1,4 +1,4 @@
-package cz.vaklur.user_permissions.volley_communication
+package cz.vaklur.user_permissions.server_communication
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -390,17 +390,17 @@ class CommunicationService(application: Application) {
     }
 
     /**
-     * Create a table for data from abuse permission example in SQL database on server.
+     * Add the permission type to user table in SQL database on server.
      *
      * @param permissionType The type of abuse example selected.
      */
-    fun createPermissionTableInServer(
+    fun addPermissionTypeToServer(
         permissionType: String,
         volleyResponse: VolleyStringResponse
     ) {
 
         val stringRequest = object : StringRequest(
-            Method.POST, getServerAddress(EndPoints.URL_CREATE_PERMISSION_TABLE),
+            Method.POST, getServerAddress(EndPoints.URL_ADD_PERMISSION_TYPE),
             Response.Listener {
                 try {
                     volleyResponse.onSuccess()
@@ -499,14 +499,14 @@ class CommunicationService(application: Application) {
     }
 
     /**
-     * Delete user permission table in SQL database on server.
+     * Delete user permission type in SQL database on server.
      *
      * @param table Name of permission table.
 
      */
-    fun deleteUserTableInServer(table: String) {
+    fun deletePermissionTypeInServer(table: String) {
         val stringRequest = object : StringRequest(
-            Method.POST, getServerAddress(EndPoints.URL_DELETE_USER_TABLE),
+            Method.POST, getServerAddress(EndPoints.URL_DELETE_PERMISSION_TYPE),
             Response.Listener {
                 try {
 
@@ -520,7 +520,7 @@ class CommunicationService(application: Application) {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
                 params["userid"] = crypto.encryptData(userId)
-                params["tablename"] = crypto.encryptData(table)
+                params["permissionType"] = crypto.encryptData(table)
                 return params
             }
         }
@@ -600,9 +600,9 @@ class CommunicationService(application: Application) {
             "add_media_photo" -> "$urlRoot/?op=add_media_photo"
             "upload_image" -> "$urlRoot/?op=upload_image"
             "add_user" -> "$urlRoot/?op=add_user"
-            "add_create_permission_table" -> "$urlRoot/?op=create_permission_table"
+            "add_permission_type" -> "$urlRoot/?op=add_permission_type"
             "delete_user" -> "$urlRoot/?op=delete_user"
-            "delete_user_table" -> "$urlRoot/?op=delete_user_table"
+            "delete_permission_type" -> "$urlRoot/?op=delete_permission_type"
             "login_user" -> "$urlRoot/view/view_data.php"
             else -> urlRoot
         }

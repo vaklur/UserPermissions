@@ -56,7 +56,7 @@ class PermissionFunction {
             1 -> "sms"
             2 -> "contact"
             3 -> "callLog"
-            4 -> "calendar"
+            4 -> "event"
             5 -> "location"
             6 -> "storage"
             7 -> "phoneState"

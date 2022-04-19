@@ -1,11 +1,11 @@
-package cz.vaklur.user_permissions.volley_communication
+package cz.vaklur.user_permissions.server_communication
 
 import android.app.Application
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-import cz.vaklur.user_permissions.settings.LocaleUtil
+import cz.vaklur.user_permissions.LocaleUtil
 import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 
 /**

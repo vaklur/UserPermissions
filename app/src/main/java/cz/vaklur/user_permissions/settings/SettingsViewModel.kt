@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import cz.vaklur.user_permissions.MainActivity
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.constants.Constants
-import cz.vaklur.user_permissions.volley_communication.CommunicationService
+import cz.vaklur.user_permissions.server_communication.CommunicationService
 
 /**
  * View model for settings fragment

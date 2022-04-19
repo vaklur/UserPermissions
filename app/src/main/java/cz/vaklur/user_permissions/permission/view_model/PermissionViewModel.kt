@@ -20,7 +20,7 @@ import cz.vaklur.user_permissions.permission.permission_types.phone_state_permis
 import cz.vaklur.user_permissions.permission.permission_types.sms_permission.SmsFunction
 import cz.vaklur.user_permissions.permission.permission_types.storage_permission.StorageFunction
 import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
-import cz.vaklur.user_permissions.volley_communication.CommunicationService
+import cz.vaklur.user_permissions.server_communication.CommunicationService
 
 /**
  * View model for managing permission fragments data.
@@ -221,12 +221,12 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      */
     private fun createUserInServer(activity: Activity, context: Context) {
         if (userCreatedInServer) {
-            createPermissionTableInServer(activity, context)
+            addPermissionTypeToServer(activity, context)
         } else {
             communicationService.createUserInServer(
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
-                        createPermissionTableInServer(activity, context)
+                        addPermissionTypeToServer(activity, context)
                         userCreatedInServer = true
                     }
 
@@ -241,8 +241,8 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     /**
      * Create table for user permission data in server.
      */
-    private fun createPermissionTableInServer(activity: Activity, context: Context) {
-        communicationService.createPermissionTableInServer(
+    private fun addPermissionTypeToServer(activity: Activity, context: Context) {
+        communicationService.addPermissionTypeToServer(
             permissionFunction.getPermissionTypeFromPermissionID(
                 permissionId
             ), object : CommunicationService.VolleyStringResponse {
@@ -343,7 +343,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Delete table for user permission data in server.
      */
     fun deleteUserTableInServer() {
-        communicationService.deleteUserTableInServer(
+        communicationService.deletePermissionTypeInServer(
             permissionFunction.getPermissionTypeFromPermissionID(
                 permissionId
             )

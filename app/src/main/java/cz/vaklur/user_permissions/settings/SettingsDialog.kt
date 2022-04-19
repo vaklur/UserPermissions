@@ -11,10 +11,11 @@ import android.util.Patterns
 import android.view.View
 import android.view.Window
 import android.widget.*
+import cz.vaklur.user_permissions.LocaleUtil
 import cz.vaklur.user_permissions.R
 import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
-import cz.vaklur.user_permissions.volley_communication.CommunicationService
+import cz.vaklur.user_permissions.server_communication.CommunicationService
 
 /**
  * Dialog class for change application language and server ip address.
