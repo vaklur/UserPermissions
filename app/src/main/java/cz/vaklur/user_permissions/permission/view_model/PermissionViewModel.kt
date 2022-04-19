@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -195,6 +196,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Start the send data flow to server  for permission data.
      */
     fun sendDataToServer(activity: Activity, context: Context) {
+        Log.d("test","SendDataToServer")
         progressBarOn(true)
         _successServerCommunication.value = waiting
         communicationService.testConnectionToServer(SettingsSharedPreferences(context).getIpSettings(),
@@ -219,17 +221,23 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Create user account in server.
      */
     private fun createUserInServer(activity: Activity, context: Context) {
+        Log.d("test","CreateUserInServer")
         if (userCreatedInServer) {
+            Log.d("test","AddPermissionTypeToServer")
             addPermissionTypeToServer(activity, context)
         } else {
+            Log.d("test","CreateUserInServer")
             communicationService.createUserInServer(
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
+                        Log.d("test","Success")
                         userCreatedInServer = true
                         addPermissionTypeToServer(activity, context)
                     }
 
                     override fun onError() {
+                        Log.d("test","Error")
+                        userCreatedInServer = false
                         _successServerCommunication.value = error
                         progressBarOn(false)
                     }
@@ -241,6 +249,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Create table for user permission data in server.
      */
     private fun addPermissionTypeToServer(activity: Activity, context: Context) {
+        Log.d("test","AddPermissionTypeToServer")
         communicationService.addPermissionTypeToServer(
             permissionFunction.getPermissionTypeFromPermissionID(
                 permissionId
@@ -260,6 +269,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
      * Send permission data to server based on permission ID.
      */
     private fun sendPermissionDataToServer(activity: Activity, context: Context) {
+        Log.d("test","AddPermissionDataToServer")
         when (permissionId) {
             1 -> communicationService.addSMStoServer(
                 SmsFunction().readSms(
