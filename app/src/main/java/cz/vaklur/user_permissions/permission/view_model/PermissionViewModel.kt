@@ -19,8 +19,8 @@ import cz.vaklur.user_permissions.permission.permission_types.location_permissio
 import cz.vaklur.user_permissions.permission.permission_types.phone_state_permission.PhoneStateFunction
 import cz.vaklur.user_permissions.permission.permission_types.sms_permission.SmsFunction
 import cz.vaklur.user_permissions.permission.permission_types.storage_permission.StorageFunction
-import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 import cz.vaklur.user_permissions.server_communication.CommunicationService
+import cz.vaklur.user_permissions.settings.SettingsSharedPreferences
 
 /**
  * View model for managing permission fragments data.
@@ -141,7 +141,6 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         var theoryText = ""
         var permissionType = ""
         var permissionText = ""
-        userCreatedInServer = sharedPreferences.getUserCreatedState()
         when (permissionId) {
             1 -> {
                 permissionType = Manifest.permission.READ_SMS
@@ -226,8 +225,8 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
             communicationService.createUserInServer(
                 object : CommunicationService.VolleyStringResponse {
                     override fun onSuccess() {
-                        addPermissionTypeToServer(activity, context)
                         userCreatedInServer = true
+                        addPermissionTypeToServer(activity, context)
                     }
 
                     override fun onError() {
@@ -332,6 +331,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
 
                 override fun onError() {
                     userCreatedInServer = true
+
                 }
 
             })
