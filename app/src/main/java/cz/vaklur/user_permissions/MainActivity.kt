@@ -12,7 +12,7 @@ import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 
 /**
  * This application was created as part of diploma thesis "Android mobile application security"
- * Created by Jakub Michálek 10.4.2020
+ * Created by Jakub Michálek 1.5.2022
  * ID: 186140
  * Brno university of technology
  * 186140@vut.cz
@@ -109,7 +109,6 @@ class MainActivity : BaseActivity() {
             val navigationController = Navigation.findNavController(this, R.id.nav_host_fragment)
             when (navigationController.currentDestination?.id) {
                 R.id.permissionExampleFragment -> {
-                    //permissionVM.saveDataIsSend(true)
                     navigationController.navigate(R.id.permissionTheoryFragment)
                 }
                 R.id.permissionOfflineExampleFragment -> {

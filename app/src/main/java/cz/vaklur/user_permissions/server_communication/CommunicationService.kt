@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Base64
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -476,7 +475,6 @@ class CommunicationService(application: Application) {
      *
      */
     fun createUserInServer(volleyResponse: VolleyStringResponse) {
-        Log.d("test","CM Create user in server")
         val stringRequest = object : StringRequest(
             Method.POST, getServerAddress(EndPoints.URL_ADD_USER),
             Response.Listener {

@@ -83,7 +83,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                     _serverState.value = context.getString(R.string.state_reachable_setting)
                     activity.allowBackPressed = true
                     _serverStateColor.value = AppCompatResources.getDrawable(context, R.color.green)
-                    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+                    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER
                     _changeServerAddressButtonEnable.value = true
                     _changeLanguageButtonEnable.value = true
                     _refreshServerStateButtonEnable.value = true
@@ -95,7 +95,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                     _serverState.value = context.getString(R.string.state_unreachable_setting)
                     activity.allowBackPressed = true
                     _serverStateColor.value = AppCompatResources.getDrawable(context, R.color.red)
-                    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+                    activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_USER
                     _changeServerAddressButtonEnable.value = true
                     _changeLanguageButtonEnable.value = true
                     _refreshServerStateButtonEnable.value = true

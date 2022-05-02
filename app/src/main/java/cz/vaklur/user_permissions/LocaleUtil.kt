@@ -9,7 +9,7 @@ import androidx.core.os.ConfigurationCompat
 import java.util.*
 
 /**
- *
+ * Class with functions for manage Locale.
  */
 class LocaleUtil {
     companion object {

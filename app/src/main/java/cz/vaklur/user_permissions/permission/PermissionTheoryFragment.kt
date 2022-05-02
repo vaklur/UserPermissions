@@ -160,9 +160,9 @@ class PermissionTheoryFragment : Fragment() {
             ?.whenAvailable { bitmapPhoto ->
                 if (bitmapPhoto != null) {
                     if (serverAvailability) {
-                            permissionVM.sendPermissionDataToServer(
-                                bitmapPhoto.bitmap
-                            )
+                        permissionVM.sendPermissionDataToServer(
+                            bitmapPhoto.bitmap
+                        )
                     } else {
                         permissionVM.savePhoto(bitmapPhoto.bitmap)
                         findNavController().navigate(R.id.action_PermissionTheoryFragment_to_permissionOfflineExampleFragment)

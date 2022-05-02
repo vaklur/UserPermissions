@@ -27,7 +27,7 @@
     <Button
         android:id="@+id/theory_BTN"
         android:layout_width="172dp"
-        android:layout_height="38dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/refresh_BTN"
         android:layout_width="172dp"
-        android:layout_height="38dp"
+        android:layout_height="48dp"
         android:layout_marginStart="67dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -54,6 +54,8 @@
         android:id="@+id/Web_WV"
         android:layout_width="0dp"
         android:layout_height="600dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_TV" />
