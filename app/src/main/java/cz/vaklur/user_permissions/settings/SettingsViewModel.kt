@@ -16,7 +16,7 @@ import cz.vaklur.user_permissions.constants.Constants
 import cz.vaklur.user_permissions.server_communication.CommunicationService
 
 /**
- * View model for settings fragment
+ * View model for settings fragment.
  */
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -65,7 +65,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     /**
-     * Get server state
+     * Get server state.
      */
     fun getServerState(activity: Activity, context: Context) {
         (activity as MainActivity).allowBackPressed = false

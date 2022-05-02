@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import cz.vaklur.user_permissions.databinding.FragmentSettingsBinding
 
 /**
- * Fragment for application settings - server address and language
+ * Fragment for application settings - server address and language.
  */
 class SettingsFragment : Fragment() {
 
@@ -31,7 +31,7 @@ class SettingsFragment : Fragment() {
     }
 
     /**
-     * * Create view, load saved settings and define onClickListeners
+     * * Create view, load saved settings and define onClickListeners.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

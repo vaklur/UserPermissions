@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background = "@color/gray"
+        android:background="@color/gray"
         android:text="@string/calendar_event"
         android:textAlignment="center"
         android:textStyle="bold" />
@@ -17,14 +17,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/rectangle_back_v1">
+        android:background="@drawable/rectangle_back_v1"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/calendar_title1_text_TV"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/calendar_title" />
+            android:text="@string/calendar_title"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/calendar_title1_TV"
@@ -37,14 +38,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/rectangle_back_v1">
+        android:background="@drawable/rectangle_back_v1"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/calendar_startDate_text_TV"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/calendar_startDate" />
+            android:text="@string/calendar_startDate"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/calendar_startDate_TV"
@@ -57,14 +59,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/rectangle_back_v1">
+        android:background="@drawable/rectangle_back_v1"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/calendar_endDate_text_TV"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/calendar_endDate" />
+            android:text="@string/calendar_endDate"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/calendar_endDate_TV"
@@ -77,14 +80,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/rectangle_back_v1">
+        android:background="@drawable/rectangle_back_v1"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/calendar_description_text_TV"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/calendar_description" />
+            android:text="@string/calendar_description"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/calendar_description_TV"

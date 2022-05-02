@@ -123,7 +123,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     /**
-     * Function set the visibility of "connecting to server" progress bar
+     * Function set the visibility of "connecting to server" progress bar.
      */
     private fun progressBarOn(visible: Boolean) {
         var visibility = View.GONE
@@ -233,6 +233,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
                         userCreatedInServer = false
                         _successServerCommunication.value = error
                         progressBarOn(false)
+                        deleteUserInServerProtect()
                     }
                 })
         }
@@ -340,6 +341,23 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     /**
+     * Delete user account and all users data in server - protect from bugs, when OS Android force terminate app.
+     */
+    fun deleteUserInServerProtect() {
+            communicationService.deleteUserInServer(object :
+                CommunicationService.VolleyStringResponse {
+                override fun onSuccess() {
+                    userCreatedInServer = false
+                }
+
+                override fun onError() {
+                    userCreatedInServer = true
+                }
+
+            })
+    }
+
+    /**
      * Delete table for user permission data in server.
      */
     fun deleteUserTableInServer() {
@@ -353,7 +371,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     /**
-     * When ViewModel is cleared, save UserCreated state
+     * When ViewModel is cleared, save UserCreated state.
      */
     override fun onCleared() {
         super.onCleared()

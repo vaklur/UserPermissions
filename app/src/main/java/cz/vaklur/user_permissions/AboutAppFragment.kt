@@ -9,7 +9,7 @@ import cz.vaklur.user_permissions.databinding.FragmentAboutAppBinding
 
 
 /**
- * Fragment which display information about application
+ * Fragment which display information about application.
  */
 class AboutAppFragment : Fragment() {
 
@@ -25,7 +25,7 @@ class AboutAppFragment : Fragment() {
     }
 
     /**
-     * When view is created load information about app to WebView
+     * When view is created load information about app to WebView.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

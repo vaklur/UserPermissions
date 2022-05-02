@@ -22,7 +22,7 @@ import cz.vaklur.user_permissions.permission.view_model.PermissionViewModel
 
 
 /**
- * The application main activity based on BaseActivity
+ * The application main activity based on BaseActivity.
  */
 class MainActivity : BaseActivity() {
 
@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
     private lateinit var permissionVM: PermissionViewModel
 
     /**
-     * Create main activity and display dialog with warning for user
+     * Create main activity and display dialog with warning for user.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
     }
 
     /**
-     * Create options menu
+     * Create options menu.
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -57,7 +57,7 @@ class MainActivity : BaseActivity() {
     }
 
     /**
-     * Functions that manage selection of options menu item
+     * Functions that manage selection of options menu item.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -102,7 +102,7 @@ class MainActivity : BaseActivity() {
 
 
     /**
-     * Function that manages actions when user using the HW back button
+     * Function that manages actions when user using the HW back button.
      */
     override fun onBackPressed() {
         if (allowBackPressed) {

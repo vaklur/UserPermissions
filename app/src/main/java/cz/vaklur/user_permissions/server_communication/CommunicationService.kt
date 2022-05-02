@@ -52,7 +52,7 @@ class CommunicationService(application: Application) {
     }
 
     /**
-     * Generate a ID for user from device ID
+     * Generate a ID for user from device ID.
      *
      * @param contentResolver Provides applications access to the content model.
      * @return ID of android device.
@@ -65,7 +65,7 @@ class CommunicationService(application: Application) {
     }
 
     /**
-     * Generate a password for user from device ID
+     * Generate a password for user from device ID.
      *
      * @param contentResolver Provides applications access to the content model.
      * @return User password.

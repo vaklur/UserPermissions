@@ -1,225 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="permissionViewModel"
             type="cz.vaklur.user_permissions.settings.SettingsViewModel" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cz.vaklur.user_permissions.settings.SettingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rectangle_back"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_TV">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="cz.vaklur.user_permissions.settings.SettingsFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rectangle_back"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV">
+
+            <TextView
+                android:id="@+id/settings_TV2"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:gravity="center"
+                android:text="@string/IP_settings"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/settings_TV3"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:gravity="fill"
+                android:text="@string/actual_IP_text"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/state_TV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settings_TV2" />
+
+            <TextView
+                android:id="@+id/state_TV"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/state_setting"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/settings_TV3"
+                app:layout_constraintTop_toBottomOf="@+id/settings_TV2" />
+
+            <TextView
+                android:id="@+id/actualIP_TV"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:gravity="fill"
+                android:text="@{settingsViewModel.actualIpAddress}"
+                app:layout_constraintEnd_toStartOf="@+id/state_TV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settings_TV3" />
+
+            <TextView
+                android:id="@+id/stateActual_TV"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@{settingsViewModel.serverStateColor}"
+                android:gravity="center"
+                android:text="@{settingsViewModel.serverState}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/actualIP_TV"
+                app:layout_constraintTop_toBottomOf="@+id/state_TV" />
+
+            <Button
+                android:id="@+id/changeIP_BTN"
+                android:layout_width="110dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:enabled="@{settingsViewModel.changeServerAddressButtonEnable}"
+                android:text="@string/change_setting"
+                app:layout_constraintEnd_toStartOf="@+id/stateActual_TV"
+                app:layout_constraintHorizontal_bias="0.035"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/actualIP_TV"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+            <Button
+                android:id="@+id/refreshIP_BTN"
+                android:layout_width="110dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="36dp"
+                android:enabled="@{settingsViewModel.refreshServerStateButtonEnable}"
+                android:text="@string/refresh_setting"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stateActual_TV" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout1"
+            android:layout_width="316dp"
+            android:layout_height="200dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rectangle_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_TV">
+
+            <TextView
+                android:id="@+id/settings_TV4"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:gravity="center"
+                android:text="@string/language_settings"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/settings_TV5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/settings_TV5"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:gravity="fill"
+                android:text="@string/actual_language_text"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/changeLanguage_BTN"
+                app:layout_constraintEnd_toStartOf="@+id/language_TV"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settings_TV4" />
+
+            <TextView
+                android:id="@+id/language_TV"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="@{settingsViewModel.actualLanguage}"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/settings_TV5"
+                app:layout_constraintTop_toBottomOf="@+id/settings_TV4"
+                app:layout_constraintVertical_bias="0.144" />
+
+            <Button
+                android:id="@+id/changeLanguage_BTN"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:enabled="@{settingsViewModel.changeLanguageButtonEnable}"
+                android:text="@string/change_setting"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settings_TV5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/settings_TV2"
+            android:id="@+id/settingsProgressBar_TV"
             android:layout_width="0dp"
-            android:layout_height="47dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="@color/white"
+            android:minWidth="200dp"
+            android:text="@string/progress_bar_text"
+            android:textAlignment="center"
+            android:visibility="@{settingsViewModel.progressBarTextViewVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/settings_PB"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:minWidth="200dp"
+            android:minHeight="50dp"
+            android:visibility="@{settingsViewModel.progressBarVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_TV"
+            android:layout_width="390dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="@string/IP_settings"
-            android:textSize="18sp"
+            android:text="@string/settings"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="27sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/settings_TV3"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:gravity="fill"
-            android:text="@string/actual_IP_text"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/state_TV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_TV2" />
 
-        <TextView
-            android:id="@+id/state_TV"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/state_setting"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/settings_TV3"
-            app:layout_constraintTop_toBottomOf="@+id/settings_TV2" />
-
-        <TextView
-            android:id="@+id/actualIP_TV"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:gravity="fill"
-            android:text="@{settingsViewModel.actualIpAddress}"
-            app:layout_constraintEnd_toStartOf="@+id/state_TV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_TV3" />
-
-        <TextView
-            android:id="@+id/stateActual_TV"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@{settingsViewModel.serverState}"
-            android:background="@{settingsViewModel.serverStateColor}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/actualIP_TV"
-            app:layout_constraintTop_toBottomOf="@+id/state_TV" />
-
-        <Button
-            android:id="@+id/changeIP_BTN"
-            android:layout_width="110dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/change_setting"
-            android:enabled="@{settingsViewModel.changeServerAddressButtonEnable}"
-            app:layout_constraintEnd_toStartOf="@+id/stateActual_TV"
-            app:layout_constraintHorizontal_bias="0.035"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/actualIP_TV"
-            tools:ignore="DuplicateSpeakableTextCheck" />
-
-        <Button
-            android:id="@+id/refreshIP_BTN"
-            android:layout_width="110dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="36dp"
-            android:text="@string/refresh_setting"
-            android:enabled="@{settingsViewModel.refreshServerStateButtonEnable}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stateActual_TV" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout1"
-        android:layout_width="316dp"
-        android:layout_height="200dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rectangle_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_TV">
-
-        <TextView
-            android:id="@+id/settings_TV4"
-            android:layout_width="0dp"
-            android:layout_height="47dp"
-            android:gravity="center"
-            android:text="@string/language_settings"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/settings_TV5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/settings_TV5"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="16dp"
-            android:gravity="fill"
-            android:text="@string/actual_language_text"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/changeLanguage_BTN"
-            app:layout_constraintEnd_toStartOf="@+id/language_TV"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_TV4" />
-
-        <TextView
-            android:id="@+id/language_TV"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="@{settingsViewModel.actualLanguage}"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/settings_TV5"
-            app:layout_constraintTop_toBottomOf="@+id/settings_TV4"
-            app:layout_constraintVertical_bias="0.144" />
-
-        <Button
-            android:id="@+id/changeLanguage_BTN"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="@string/change_setting"
-            android:enabled="@{settingsViewModel.changeLanguageButtonEnable}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/settings_TV5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/settingsProgressBar_TV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@color/white"
-        android:minWidth="200dp"
-        android:text="@string/progress_bar_text"
-        android:textAlignment="center"
-        android:visibility="@{settingsViewModel.progressBarTextViewVisibility}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/settings_PB"
-        android:visibility="@{settingsViewModel.progressBarVisibility}"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:minWidth="200dp"
-        android:minHeight="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/settings_TV"
-        android:layout_width="390dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="@string/settings"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="27sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

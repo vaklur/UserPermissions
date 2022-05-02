@@ -62,7 +62,7 @@ class PermissionOfflineExampleFragment : Fragment() {
     }
 
     /**
-     * Load permission data and give it to permission adapters
+     * Load permission data and give it to permission adapters.
      */
     private fun loadPermissionDataToRecyclerView(permissionId: Int) {
         val recyclerView = binding.exampleOffRV
@@ -135,7 +135,7 @@ class PermissionOfflineExampleFragment : Fragment() {
     }
 
     /**
-     * Set the title of offline example fragment
+     * Set the title of offline example fragment.
      */
     private fun setOfflineExampleTitle(title: String) {
         binding.exampleOffTV.text = String.format(
